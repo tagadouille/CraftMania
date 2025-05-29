@@ -1,5 +1,5 @@
 package main.java.com.models;
 
-public class Tile {
+public class Player {
     
 }

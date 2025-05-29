@@ -1,5 +1,5 @@
 package main.java.com.models;
 
-public class Map {
+public class Item {
     
 }
