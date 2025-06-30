@@ -2,7 +2,6 @@ package main.java.com.models.map;
 
 import java.util.Random;
 
-import main.java.com.models.TileType;
 import main.java.com.models.Ressources.RessourceEnum;
 
 public class Map {
@@ -37,6 +36,11 @@ public class Map {
         map[height/2][width/2] = new Tile(TileType.START);
         generateMarket();
         generateRessource();
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                System.out.println(map[i][j].getType());
+            }
+        }
     }
     /**
      * Method for generate the ressources of the map
@@ -52,7 +56,7 @@ public class Map {
                 do{
                     i = rand.nextInt(height);
                     j = rand.nextInt(width);
-                }while(map[i][j].getType() == TileType.EMPTY);
+                }while(map[i][j].getType() != TileType.EMPTY);
                 map[i][j] = new Tile(TileType.RESSOURCE, resType.getRessource());
             }
         }
@@ -65,13 +69,13 @@ public class Map {
 
         //If the market is in a row
         if(rand.nextInt(2) == 0){
-            int i = height;
+            int i = height - 1;
             if(rand.nextInt(2) == 0){
                 i = 0;
             }
             map[i][rand.nextInt(width)] = new Tile(TileType.MARKET);
         }else{//If the market is in a col
-            int j = width;
+            int j = width - 1;
             if(rand.nextInt(2) == 0){
                 j = 0;
             }

@@ -1,4 +1,4 @@
-package main.java.com.models;
+package main.java.com.models.map;
 
 public class Tile {
 
