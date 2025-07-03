@@ -24,4 +24,7 @@ public class Tile {
     public void setType(TileType type) {
         this.type = type;
     }
+    public boolean isAccessible(){
+        return this.type == TileType.START || this.type == TileType.EMPTY;
+    }
 }

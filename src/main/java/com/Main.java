@@ -6,7 +6,6 @@ import javax.swing.JPanel;
 import main.java.com.views.MainMenu;
 
 import java.awt.CardLayout;
-import java.awt.Dimension;
 
 public class Main{
     public static CardLayout card = new CardLayout();
@@ -24,9 +23,10 @@ public class Main{
         card.show(mainPanel, "mainMenu");
 
         window.add(mainPanel);
-        window.setSize(new Dimension(screen.getWidth(), screen.getWidth()));
+        window.setSize(screen.getSize());
         window.setLocationRelativeTo(null);
         window.setVisible(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setResizable(false);
     }
 }

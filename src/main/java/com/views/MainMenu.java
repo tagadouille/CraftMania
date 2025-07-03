@@ -22,6 +22,8 @@ public class MainMenu extends JPanel{
         quit.addActionListener((e) -> {System.exit(0);});
         newGame.addActionListener((e) -> {
             Main.card.show(Main.mainPanel, "screen");
+            Main.screen.setFocusable(true);
+            Main.screen.requestFocusInWindow();
             Main.screen.launchGameThread();
         });
 

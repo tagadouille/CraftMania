@@ -27,7 +27,7 @@ public class Screen extends JPanel implements Runnable{
     MapDisplay dis;
     private Player player;
 
-    private KeyHandler kh;;
+    private KeyHandler kh;
 
     public Screen(){
         this.setSize(new Dimension(screenWidth, screenHeight));
@@ -36,8 +36,6 @@ public class Screen extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
         kh = new KeyHandler();
         this.addKeyListener(kh);
-        this.setFocusable(true);
-        this.requestFocusInWindow();
 
         map = new Map(15, 15);
         dis = new MapDisplay(map.getMap());
@@ -86,7 +84,7 @@ public class Screen extends JPanel implements Runnable{
         }
     }
     public void update(){
-        player.globalMove(kh);
+        player.globalMove(kh, map);
     }
 
     public void paintComponent(Graphics g){
@@ -94,7 +92,7 @@ public class Screen extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D) g;
 
         dis.displayMap(g2);
-        new Sprite(player.getX()*multiplicator, player.getX()*multiplicator, TILE_SIZE, TILE_SIZE, ImageLoader.loadImage("src/ressources/image/player.png").getImage()).display(g2);
+        new Sprite((int) (player.getX()*TILE_SIZE), (int) (player.getY()*TILE_SIZE), TILE_SIZE, TILE_SIZE, ImageLoader.loadImage("src/ressources/image/player.png").getImage()).display(g2);
         g2.dispose();
     }
 }
