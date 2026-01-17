@@ -1,4 +1,4 @@
-package com.app.main.controllers;
+package com.app.main.controllers.menu;
 
 import java.io.IOException;
 

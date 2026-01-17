@@ -1,8 +1,7 @@
-/*package main.java.com.views;
-import java.awt.Graphics2D;
-import java.awt.Image;
+package com.app.main.views;
 
-import main.java.com.Screen;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 public class Sprite {
     private int posX, posY;
@@ -16,6 +15,8 @@ public class Sprite {
         this.height = height;
         this.image = image;
     }
+
+    /* Getters and setters : */
     public int getPosX() {
         return posX;
     }
@@ -31,6 +32,7 @@ public class Sprite {
     public Image getImage() {
         return image;
     }
+    
     public void setHeight(int height) {
         this.height = height;
     }
@@ -47,8 +49,8 @@ public class Sprite {
         this.width = width;
     }
 
-    public void display(Graphics2D g){
-        g.drawImage(image, posX * Screen.getMultiplicator(), posY * Screen.getMultiplicator(),
-        width * Screen.getMultiplicator(), height * Screen.getMultiplicator(), null);
+    public void display(GraphicsContext g){
+        g.drawImage(image, posX * GameView.getMultiplicator(), posY * GameView.getMultiplicator(),
+        width * GameView.getMultiplicator(), height * GameView.getMultiplicator());
     }
-}*/
+}

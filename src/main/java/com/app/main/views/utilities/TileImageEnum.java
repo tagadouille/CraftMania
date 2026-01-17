@@ -2,9 +2,9 @@ package com.app.main.views.utilities;
 
 public enum TileImageEnum {
 
-    EMPTY("src/ressources/image/grass.png"),
-    START("src/ressources/image/start.png"),
-    MARKET("src/ressources/image/shop.png");
+    EMPTY("src/main/ressources/com/app/image/grass.png"),
+    START("src/main/ressources/com/app/image/start.png"),
+    MARKET("src/main/ressources/com/app/image/shop.png");
     
     private String imagePath;
 

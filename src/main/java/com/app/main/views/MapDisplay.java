@@ -1,42 +1,52 @@
-/*package main.java.com.views;
+package com.app.main.views;
 
-import java.awt.Graphics2D;
+import com.app.main.models.map.Tile;
+import com.app.main.models.map.TileType;
+import com.app.main.util.ImageLoader;
+import com.app.main.views.utilities.RessourceImageEnum;
+import com.app.main.views.utilities.TileImageEnum;
 
-import javax.swing.ImageIcon;
-
-import main.java.com.Screen;
-import main.java.com.models.map.Tile;
-import main.java.com.models.map.TileType;
-import main.java.com.views.utilities.ImageLoader;
-import main.java.com.views.utilities.RessourceImageEnum;
-import main.java.com.views.utilities.TileImageEnum;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 public class MapDisplay {
+
     private Tile[][] map;
 
     public MapDisplay(Tile[][] map){
         this.map = map;
     }
+
     public Tile[][] getMap() {
         return map;
     }
+
     public void setMap(Tile[][] map) {
         this.map = map;
     }
-    public void displayMap(Graphics2D g){
+
+    public void displayMap(GraphicsContext g){
+
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
+                
                 String imagePath = "";
                 Tile tile = map[i][j];
 
-                if(tile.getType() != TileType.HARVESTER && tile.getType() != TileType.FACTORY && tile.getType() != TileType.RESSOURCE){
+                if(tile.getType() != TileType.HARVESTER && tile.getType() != 
+                    TileType.FACTORY && tile.getType() != TileType.RESSOURCE){
+                    
                     for(TileImageEnum type : TileImageEnum.values()){
                         if(tile.getType().toString().equals(type.toString())){
                             imagePath = type.getImagePath();
                             break;
                         }
                     }
-                }else if(tile.getType() == TileType.RESSOURCE){
+                }
+
+                // Display ressource : 
+                else if(tile.getType() == TileType.RESSOURCE){
+                    
                     for(RessourceImageEnum type : RessourceImageEnum.values()){
                         if(tile.getItem().getName().equals(type.toString())){
                             imagePath = type.getImagePath();
@@ -44,12 +54,12 @@ public class MapDisplay {
                         }
                     }
                 }
-                ImageIcon img = ImageLoader.loadImage(imagePath);
+                Image img = ImageLoader.loadImage(imagePath);
 
                 if(img != null){
-                    new Sprite(j * Screen.getTileSize(), i * Screen.getTileSize(), Screen.getTileSize(), Screen.getTileSize(), img.getImage()).display(g);
+                    new Sprite(j * GameView.TILE_SIZE, i * GameView.TILE_SIZE, GameView.TILE_SIZE, GameView.TILE_SIZE, img).display(g);
                 }
             }
         }
     }
-}*/
+}

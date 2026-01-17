@@ -1,13 +1,12 @@
 package com.app.main;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import com.app.main.audio.GamePlaylist;
+import com.app.main.views.GameScene;
 
 /**
  * This class is the entry point of the code
@@ -26,23 +25,24 @@ public final class Game extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        /*FXMLLoader fxmlLoader = new FXMLLoader(Game.class.getResource("MainMenu.fxml"));
-        scene = new Scene(fxmlLoader.load());
+        //FXMLLoader fxmlLoader = new FXMLLoader(Game.class.getResource("MainMenu.fxml"));
+        //scene = new Scene(fxmlLoader.load());
+        scene = new GameScene();
 
-        css = getClass().getResource("Style.css").toExternalForm();
-        scene.getStylesheets().add(css);
+        /*css = getClass().getResource("Style.css").toExternalForm();
+        scene.getStylesheets().add(css);*/
 
         primaryStage = stage;
 
-        primaryStage.setTitle("Still Water??");
+        primaryStage.setTitle("CraftMania Beta");
         primaryStage.setResizable(false);
 
         primaryStage.setOnCloseRequest(event -> System.exit(0));
 
-        GamePlaylist.getPlaylist().playOnlyOne(0, true);
+        //GamePlaylist.getPlaylist().playOnlyOne(0, true);
 
         primaryStage.setScene(scene);
-        primaryStage.show();*/
+        primaryStage.show();
     }
 
     public static Scene getScene() {
@@ -51,7 +51,7 @@ public final class Game extends Application {
 
     public static void setScene(Scene scene) {
         Game.scene = scene;
-        Game.scene.getStylesheets().add(css);
+        //Game.scene.getStylesheets().add(css);
     }
 
     public static Stage getPrimaryStage() {

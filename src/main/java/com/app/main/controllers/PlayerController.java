@@ -6,12 +6,12 @@ import com.app.main.models.map.GameMap;
 import com.app.main.models.map.Tile;
 import com.app.main.models.ressources.RessourceEnum;
 
+import javafx.scene.input.KeyCode;
+
 public class PlayerController{
     
     private Player player;
     private boolean harvest = false;
-
-    //private Screen screen;
 
     public static final long harvestTime = 5000;
     private long stopHarvestTime;
@@ -20,13 +20,21 @@ public class PlayerController{
     private int pathIndex = 0;
     private boolean go = false;
 
-    /*public PlayerController(Player player, Screen screen){
+    private KeyHandler keyHandler;
+
+    public PlayerController(Player player, KeyHandler keyHandler){
         this.player = player;
-        this.screen = screen;
+        this.keyHandler = keyHandler;
     }
+
     public boolean isHarvest() {
         return harvest;
-    }**/
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
     /**
      * For harvest the ressource in a tile
      * @param tile Tile the tile where the ressource is
@@ -40,57 +48,55 @@ public class PlayerController{
     private void stuckInHarvest(){
         long currentTime = System.currentTimeMillis();
 
-        /*screen.getHarvestBar().setValue((int) ((stopHarvestTime - currentTime) / 50));
+        //screen.getHarvestBar().setValue((int) ((stopHarvestTime - currentTime) / 50));
 
         if(currentTime >= stopHarvestTime){
             harvest = false;
             player.addRessource(ressourceTypeHarvest);
-            screen.despawnHarvestBar();
-        }*/
+            //screen.despawnHarvestBar();
+        }
 
     }
     /**
      * Handle the behavior of the player
-     * @param keyHandler
      * @param map
      */
-    public void process(KeyHandler keyHandler, GameMap map){
+    public void process(GameMap map){
         if(harvest){
             stuckInHarvest();
         }else{
-            globalMove(keyHandler, map);
+            globalMove(map);
         }
     }
     /**
      * handle the movement of the player in fonction of wich key is pressed
-     * @param keyHandler
      * @param map
      */
-    private void globalMove(KeyHandler keyHandler, GameMap map){
+    private void globalMove(GameMap map){
         if(go){
             this.movementToPos();
         }else{
-            if(keyHandler.getUp()){
+            if(keyHandler.keylist.contains(KeyCode.UP)){
                 player.moveUp();
                 if(player.isPositionIncorrect(map)){
                     player.moveDown();
                 }
                 return;
             }
-            if(keyHandler.getDown()){
+            if(keyHandler.keylist.contains(KeyCode.DOWN)){
                 player.moveDown();
                 if(player.isPositionIncorrect(map)){
                     player.moveUp();
                 }
                 return;
             }
-            if(keyHandler.getLeft()){
+            if(keyHandler.keylist.contains(KeyCode.LEFT)){
                 player.moveLeft();
                 if(player.isPositionIncorrect(map)){
                     player.moveRight();
                 }
             }
-            if(keyHandler.getRight()){
+            if(keyHandler.keylist.contains(KeyCode.RIGHT)){
                 player.moveRight();
                 if(player.isPositionIncorrect(map)){
                     player.moveLeft();

@@ -15,11 +15,13 @@ public enum ItemImageEnum {
     private String imagePath;
 
     private ItemImageEnum(String imageName){
-        this.imagePath = "src/ressources/image/item/" + imageName + ".png";
+        this.imagePath = "src/main/ressources/com/app/image/item/" + imageName + ".png";
     }
+
     public String getImagePath() {
         return imagePath;
     }
+    
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }

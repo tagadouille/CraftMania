@@ -10,7 +10,7 @@ public enum RessourceImageEnum {
     private String imagePath;
 
     private RessourceImageEnum(String imageName){
-        this.imagePath = "src/ressources/image/Ressource/" + imageName + ".png";
+        this.imagePath = "src/main/ressources/com/app/image/Ressource/" + imageName + ".png";
     }
     public String getImagePath() {
         return imagePath;

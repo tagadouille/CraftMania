@@ -1,27 +1,28 @@
-/*package main.java.com.views;
+package com.app.main.views;
 
-import java.awt.Graphics2D;
+import com.app.main.models.Player;
+import com.app.main.util.ImageLoader;
 
-import main.java.com.Screen;
-import main.java.com.models.Player;
-import main.java.com.views.utilities.ImageLoader;
+import javafx.scene.canvas.GraphicsContext;
 
 public class PlayerSprite extends Sprite{
     
     private Player player;
 
     public PlayerSprite(Player player){
-        super(0, 0, Screen.getTileSize(), Screen.getTileSize(), ImageLoader.loadImage("src/ressources/image/player.png").getImage());
+        super(0, 0, GameView.TILE_SIZE, GameView.TILE_SIZE, ImageLoader.loadImage("src/ressources/image/player.png"));
         this.player = player;
                 this.updateCord();
     }
+
     public void updateCord(){
-        this.setPosX((int) (player.getX()*Screen.getTileSize()));
-        this.setPosY((int) (player.getY()*Screen.getTileSize()));
+        this.setPosX((int) (player.getX()*GameView.TILE_SIZE));
+        this.setPosY((int) (player.getY()*GameView.TILE_SIZE));
     }
+
     @Override
-    public void display(Graphics2D g){
+    public void display(GraphicsContext g){
         updateCord();
         super.display(g);
     }
-}*/
+}
