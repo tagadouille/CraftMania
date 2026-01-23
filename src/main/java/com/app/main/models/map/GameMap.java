@@ -18,18 +18,23 @@ public class GameMap {
         map = new Tile[width][height];
         generateMap();
     }
+
     public Tile[][] getMap() {
         return map;
     }
+
     public int getHeight() {
         return height;
     }
+
     public int getWidth() {
         return width;
     }
+
     public Point getMarketPos() {
         return marketPos;
     }
+
     /**
      * Method which generate the map
      */
@@ -42,11 +47,6 @@ public class GameMap {
         map[height/2][width/2] = new Tile(TileType.START);
         generateMarket();
         generateRessource();
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[i].length; j++) {
-                System.out.println(map[i][j].getType());
-            }
-        }
     }
     /**
      * Method for generate the ressources of the map
@@ -95,9 +95,10 @@ public class GameMap {
             y = rand.nextInt(height);
             x = j;
         }
-        map[y][x] = new Tile(TileType.MARKET);
-        marketPos = new Point(x, y);
+        map[6][6] = new Tile(TileType.MARKET);
+        marketPos = new Point(6, 6);
     }
+    
     public boolean inBound(int x, int y){
         return x >= 0 && x < this.width && y >=0 && y < this.height;
     }

@@ -22,7 +22,11 @@ public class GameController {
         return gameMap;
     }
 
+    public PlayerController getPlayerController() {
+        return playerController;
+    }
+
     public void proceed() {
-        // TODO
+        playerController.process(gameMap);
     }
 }

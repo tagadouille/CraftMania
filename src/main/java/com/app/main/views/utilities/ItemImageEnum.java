@@ -1,5 +1,9 @@
 package com.app.main.views.utilities;
 
+import com.app.main.util.ImageLoader;
+
+import javafx.scene.image.Image;
+
 public enum ItemImageEnum {
     WOOD("wood"),
     QUARTZ("quartz"),
@@ -12,17 +16,13 @@ public enum ItemImageEnum {
     HAMMER("hammer"),
     DOG("dog");
 
-    private String imagePath;
+    private Image image;
 
     private ItemImageEnum(String imageName){
-        this.imagePath = "src/main/ressources/com/app/image/item/" + imageName + ".png";
+        this.image = ImageLoader.loadImage("src/main/resources/com/app/image/item/" + imageName + ".png");
     }
 
-    public String getImagePath() {
-        return imagePath;
-    }
-    
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public Image getImage() {
+        return image;
     }
 }

@@ -1,20 +1,21 @@
 package com.app.main.views.utilities;
 
+import com.app.main.util.ImageLoader;
+
+import javafx.scene.image.Image;
+
 public enum TileImageEnum {
 
-    EMPTY("src/main/ressources/com/app/image/grass.png"),
-    START("src/main/ressources/com/app/image/start.png"),
-    MARKET("src/main/ressources/com/app/image/shop.png");
+    EMPTY("src/main/resources/com/app/image/grass.png"),
+    START("src/main/resources/com/app/image/start.png"),
+    MARKET("src/main/resources/com/app/image/shop.png");
     
-    private String imagePath;
+    private Image image;
 
     private TileImageEnum(String imagePath){
-        this.imagePath = imagePath;
+        this.image = ImageLoader.loadImage(imagePath);
     }
-    public String getImagePath() {
-        return imagePath;
-    }
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public Image getImage() {
+        return image;
     }
 }

@@ -1,0 +1,6 @@
+.harvest-bar {
+    -fx-accent: green;
+    -fx-box-border: black;
+    -fx-background-color: gray; 
+    -fx-padding: 15;
+}

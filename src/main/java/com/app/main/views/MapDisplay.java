@@ -2,7 +2,6 @@ package com.app.main.views;
 
 import com.app.main.models.map.Tile;
 import com.app.main.models.map.TileType;
-import com.app.main.util.ImageLoader;
 import com.app.main.views.utilities.RessourceImageEnum;
 import com.app.main.views.utilities.TileImageEnum;
 
@@ -30,7 +29,7 @@ public class MapDisplay {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
                 
-                String imagePath = "";
+                Image img = null;
                 Tile tile = map[i][j];
 
                 if(tile.getType() != TileType.HARVESTER && tile.getType() != 
@@ -38,7 +37,7 @@ public class MapDisplay {
                     
                     for(TileImageEnum type : TileImageEnum.values()){
                         if(tile.getType().toString().equals(type.toString())){
-                            imagePath = type.getImagePath();
+                            img = type.getImage();
                             break;
                         }
                     }
@@ -49,12 +48,11 @@ public class MapDisplay {
                     
                     for(RessourceImageEnum type : RessourceImageEnum.values()){
                         if(tile.getItem().getName().equals(type.toString())){
-                            imagePath = type.getImagePath();
+                            img = type.getImage();
                             break;
                         }
                     }
                 }
-                Image img = ImageLoader.loadImage(imagePath);
 
                 if(img != null){
                     new Sprite(j * GameView.TILE_SIZE, i * GameView.TILE_SIZE, GameView.TILE_SIZE, GameView.TILE_SIZE, img).display(g);

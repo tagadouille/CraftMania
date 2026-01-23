@@ -1,12 +1,15 @@
 package com.app.main.controllers;
 
 import java.awt.Point;
-import java.awt.event.MouseEvent;
 
 import com.app.main.PathFinder;
 import com.app.main.models.Player;
 import com.app.main.models.map.GameMap;
 import com.app.main.models.map.Tile;
+import com.app.main.views.GameView;
+import com.app.main.views.MarketDialog;
+import com.app.main.models.map.TileType;
+import com.app.main.models.Market;
 
 public class MouseController {
     
@@ -19,34 +22,48 @@ public class MouseController {
         this.player = player;
         this.playerController = playerController;
     }
-    public void process(MouseEvent e){
-        //Point mousePos = new Point(e.getX()/Screen.getSpriteSize(), e.getY()/Screen.getSpriteSize());
+    
+    public void setUp(double mouseX, double mouseY){
 
-        //Tile clickedTile = map.getMap()[(int) mousePos.getY()][(int) mousePos.getX()];
+        Point mousePos = new Point((int) (mouseX/GameView.getSpriteSize()), (int) (mouseY/GameView.getSpriteSize()));
 
-        /*if(player.isAdjacentToTile(mousePos)){
+        Tile clickedTile = map.getMap()[(int) mousePos.getY()][(int) mousePos.getX()];
+
+        if(player.isAdjacentToTile(mousePos)){
             switch (clickedTile.getType()) {
+
                 case TileType.MARKET :
-                    MarketDialog marketDialog = new MarketDialog(new Market(player));
-                    marketDialog.setVisible(true);
+                    MarketDialog marketDialog = new MarketDialog();
+                    new MarketDialogController(marketDialog, new Market(player));
+                    marketDialog.show();
                     return;
+
                 case TileType.RESSOURCE :
                     System.out.println("Récolte");
                     playerController.harvest(clickedTile);
                     return;
+
                 case TileType.HARVESTER : 
                     System.out.println("Ouverture de la récolteuse");
                     return;
+                    
                 case TileType.FACTORY :
                     System.out.println("Ouverture de l'usine");
                     return;
+                
+                default:
+                    break;
             }
         }
+
         if(clickedTile.isAccessible()){
-            PathFinder.findShortPath(map, new int[]{(int) player.getY(), (int) player.getX()},
-             new int[]{(int) mousePos.getY(), (int) mousePos.getX()});
+
+            PathFinder.findShortPath(
+                map, new int[]{(int) player.getY(), (int) player.getX()},
+                new int[]{(int) mousePos.getY(), (int) mousePos.getX()}
+            );
             playerController.movementToPos();
-        }*/
+        }
     }
 
 }

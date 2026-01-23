@@ -1,153 +1,167 @@
-/*package main.java.com.views;
+package com.app.main.views;
 
-import java.awt.CardLayout;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
+import java.io.IOException;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import com.app.main.models.Market;
+import com.app.main.models.ressources.RessourceEnum;
+import com.app.main.util.ImageUtil;
+import com.app.main.views.utilities.ItemImageEnum;
 
-import main.java.com.Screen;
-import main.java.com.models.Market;
-import main.java.com.models.Ressources.RessourceEnum;
-import main.java.com.views.utilities.Background;
-import main.java.com.views.utilities.ImageLoader;
-import main.java.com.views.utilities.ItemImageEnum;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
-public class MarketDialog extends JDialog{
-    private CardLayout card = new CardLayout();
-    private JPanel mainPanel = new JPanel(card);
+public class MarketDialog extends Stage{
 
-    private Market market; 
+    private Scene mainScene;
 
-    public MarketDialog(Market market){
-        super();
-        this.setModal(true);
+    private Button buy = new Button("Buy");
+    private Button sell = new Button("Sell");
+    private Text money;
+
+    public MarketDialog(){
+        
+        this.setAlwaysOnTop(true);
         this.setTitle("Market Screen");
         this.setResizable(false);
-        this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        this.setLayout(card);
+        this.setWidth(250);
+        this.setHeight(250);
+        this.requestFocus();
+        this.initModality(Modality.APPLICATION_MODAL);
 
-        this.setSize(new Dimension(Screen.getScreenWidth()/2, Screen.getScreenHeight()/2));
-        this.add(mainPanel);
+        HBox root = new HBox(5);
+        this.mainScene = new Scene(root);
 
-        this.market = market;
+        this.setScene(mainScene);
 
-        mainPanel.add(new BuyPanel(), "buyPanel");
-        mainPanel.add(new SellPanel(), "sellPanel");
-
-
-        JPanel homePage = new JPanel();
-        JButton buy = new JButton("Buy");
-        buy.addActionListener((e) -> card.show(mainPanel, "buyPanel"));
-        JButton sell = new JButton("Sell");
-        sell.addActionListener((e) -> card.show(mainPanel, "sellPanel"));
-
-        homePage.add(buy);
-        homePage.add(sell);
-        mainPanel.add(homePage, "homePage");
-        card.show(mainPanel, "homePage");
+        root.getChildren().add(buy);
+        root.getChildren().add(sell);
+        //root.getChildren().add(money);
     }
-    private class BuyPanel extends JPanel{
+
+    public Button getBuy() {
+        return buy;
+    }
+
+    public Button getSell() {
+        return sell;
+    }
+
+    public Scene getMainScene() {
+        return mainScene;
+    }
+
+    public static class BuyPanel extends Scene{
+
+        private GridPane root;
+        private Button back = new Button("Back");
 
         public BuyPanel(){
-            this.setLayout(new GridLayout(2,1));
-            JLabel title = new JLabel("What do you want to buy ?");
-            this.add(title);
+            super(new GridPane(2, 1));
+            root = (GridPane) this.getRoot();
 
-            JButton back = new JButton("Back");
-            back.addActionListener((e) -> {
-                card.show(mainPanel, "homePage");
-            });
-            this.add(back);
+            Text title = new Text("What do you want to buy ?");
+            root.getChildren().add(title);
+            
+            root.getChildren().add(back);
+        }
+
+        public Button getBack() {
+            return back;
         }
     }
-    private class SellPanel extends JPanel{
+
+    public static class SellPanel extends Scene{
+
         private String imagePath;
-        private JPanel panel = new JPanel(new GridBagLayout());
 
-        public SellPanel(){
-            GridBagConstraints constraints = new GridBagConstraints();
-            constraints.gridx = 0;
-            constraints.gridy = 0;
+        private VBox root;
 
-            JLabel title = new JLabel("What do you want to sell ?");
-            panel.add(title, constraints);
-            constraints.gridy++;
+        private Button back = new Button("Back");
 
-            displayRessources(constraints);
-            constraints.gridy++;
+        private Market market;
 
-            JButton back = new JButton("Back");
-            back.addActionListener((e) -> {
-                card.show(mainPanel, "homePage");
-            });
-            panel.add(back, constraints);
+        public SellPanel(Market market){
+            super(new VBox());
+            this.root = (VBox) this.getRoot();
 
-            this.add(panel);
+            this.market = market;
+
+            Text title = new Text("What do you want to sell ?");
+            root.getChildren().add(title);
+
+            displayRessources();
+            root.getChildren().add(back);
         }
-        private void displayRessources(GridBagConstraints constraints){
-            JScrollPane scrollPane = new JScrollPane();
-            
-            JPanel ressourcePanel = new JPanel(new GridBagLayout());
 
-            GridBagConstraints ressourceConstraints = new GridBagConstraints();
-            ressourceConstraints.gridx = 0;
-            ressourceConstraints.gridy = 0;
+        public Button getBack() {
+            return back;
+        }
+
+        private void displayRessources(){
+            ScrollPane scrollPane = new ScrollPane();
+            
+            VBox ressourcePanel = new VBox();
 
             for (RessourceEnum res : RessourceEnum.values()) {
-                JPanel line = new JPanel(new GridBagLayout());
+                HBox line = new HBox();
 
-                GridBagConstraints lineConstraints = new GridBagConstraints();
-                lineConstraints.gridx = 0;
-                lineConstraints.gridy = 0;
-                lineConstraints.gridheight = 2;
-                lineConstraints.insets = new Insets(0, 0, 0, 10);
+                // Ressource image display :
+                Image img = null;
 
-                //Affichage de l'image de la ressource
-                imagePath = "";
                 for(ItemImageEnum type : ItemImageEnum.values()){
                     if(res.getRessource().getName().equals(type.toString())){
-                        imagePath = type.getImagePath();
+                        img = type.getImage();
                         break;
                     }
                 }
-                if(imagePath.equals("")){
-                    return;
+
+                try {
+                    ImageView imageView = new ImageView(ImageUtil.resizeImage(img, 50, 50));
+
+                    line.getChildren().add(imageView);
                 }
-                JPanel imagePanel = new Background(imagePath, new Dimension(50, 50));
+                catch(IOException e){
 
-                line.add(imagePanel, lineConstraints);
-                lineConstraints.gridx++;
+                }
 
-                JLabel resName = new JLabel(res.toString().toLowerCase());
-                line.add(resName, lineConstraints);
-                lineConstraints.gridy++;
+                VBox infoBox = new VBox(0);
+                HBox title = new HBox(1);
 
-                JLabel price = new JLabel(res.getRessource().getPrice() +"$");
-                line.add(price, lineConstraints);
-                lineConstraints.gridx++;
+                // Informations display :
+                Text resName = new Text(res.toString().toLowerCase());
+                title.getChildren().add(resName);
 
-                JLabel number = new JLabel(market.getPlayer().numberRessourceInInventory(res) + " already in inventory");
-                line.add(number, lineConstraints);
-                lineConstraints.gridx++;
+                Text price = new Text(res.getRessource().getPrice() +"$");
+                title.getChildren().add(price);
 
-                ressourcePanel.add(line, ressourceConstraints);
-                ressourceConstraints.gridy++;
+                infoBox.getChildren().add(title);
+
+                Text number = new Text(market.getPlayer().numberRessourceInInventory(res) + " already in inventory");
+                infoBox.getChildren().add(number);
+
+                line.getChildren().add(infoBox);
+
+                Button sellRes = new Button("Sell");
+                //TODO MVC
+                sellRes.setOnAction((e) -> {
+                    market.sellRessource(res.getRessource());
+                });
+                
+                line.getChildren().add(sellRes);
+
+                ressourcePanel.getChildren().add(line);
             }
-            scrollPane.setViewportView(ressourcePanel);
-            panel.add(scrollPane, constraints);
-            this.revalidate();
-            this.repaint(); 
+            scrollPane.setContent(ressourcePanel);
+            root.getChildren().add(scrollPane);
         }
     }
-}*/
+}

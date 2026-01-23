@@ -1,14 +1,21 @@
 package com.app.main.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.app.main.PathFinder;
 import com.app.main.models.Player;
 import com.app.main.models.map.GameMap;
 import com.app.main.models.map.Tile;
 import com.app.main.models.ressources.RessourceEnum;
+import com.app.main.util.Observable;
+import com.app.main.util.Observer;
+import com.app.main.util.Point;
+import com.app.main.views.GameView;
 
 import javafx.scene.input.KeyCode;
 
-public class PlayerController{
+public class PlayerController implements Observable{
     
     private Player player;
     private boolean harvest = false;
@@ -21,6 +28,8 @@ public class PlayerController{
     private boolean go = false;
 
     private KeyHandler keyHandler;
+
+    private List<Observer> observers = new ArrayList<>();
 
     public PlayerController(Player player, KeyHandler keyHandler){
         this.player = player;
@@ -35,6 +44,10 @@ public class PlayerController{
         return player;
     }
 
+    public void setGameView(GameView gameView) {
+        this.observers.add(gameView);
+    }
+
     /**
      * For harvest the ressource in a tile
      * @param tile Tile the tile where the ressource is
@@ -43,17 +56,18 @@ public class PlayerController{
         harvest = true;
         stopHarvestTime = System.currentTimeMillis() + harvestTime;
         ressourceTypeHarvest = RessourceEnum.getRessourceEnum(tile.getItem().getName());
-        //screen.spawnHarvestBar();
+        observers.get(0).update(this, new Point((int) player.getX(), (int) player.getY()), "harvest-sp");
     }
+
     private void stuckInHarvest(){
         long currentTime = System.currentTimeMillis();
 
-        //screen.getHarvestBar().setValue((int) ((stopHarvestTime - currentTime) / 50));
+        observers.get(0).update(this, (int) ((stopHarvestTime - currentTime) / 50), "harvest");
 
         if(currentTime >= stopHarvestTime){
             harvest = false;
             player.addRessource(ressourceTypeHarvest);
-            //screen.despawnHarvestBar();
+            this.observers.get(0).update(this, null, "harvest-dp");
         }
 
     }
@@ -76,27 +90,27 @@ public class PlayerController{
         if(go){
             this.movementToPos();
         }else{
-            if(keyHandler.keylist.contains(KeyCode.UP)){
+            if(keyHandler.keylist.contains(KeyCode.Z)){
                 player.moveUp();
                 if(player.isPositionIncorrect(map)){
                     player.moveDown();
                 }
                 return;
             }
-            if(keyHandler.keylist.contains(KeyCode.DOWN)){
+            if(keyHandler.keylist.contains(KeyCode.S)){
                 player.moveDown();
                 if(player.isPositionIncorrect(map)){
                     player.moveUp();
                 }
                 return;
             }
-            if(keyHandler.keylist.contains(KeyCode.LEFT)){
+            if(keyHandler.keylist.contains(KeyCode.Q)){
                 player.moveLeft();
                 if(player.isPositionIncorrect(map)){
                     player.moveRight();
                 }
             }
-            if(keyHandler.keylist.contains(KeyCode.RIGHT)){
+            if(keyHandler.keylist.contains(KeyCode.D)){
                 player.moveRight();
                 if(player.isPositionIncorrect(map)){
                     player.moveLeft();
@@ -150,5 +164,10 @@ public class PlayerController{
         }if(px == x && py == y){
             pathIndex++;
         }
+    }
+
+    @Override
+    public List<Observer> getObservers() {
+        return observers;
     }
 }

@@ -12,9 +12,11 @@ public class Inventory {
     public Inventory(){
         inventory = new HashMap<>();
     }
+
     public HashMap<RessourceEnum, Stack<Ressource>> getInventory() {
         return inventory;
     }
+
     /**
      * Method for add a ressource in the inventory
      * @param ressource
@@ -25,6 +27,7 @@ public class Inventory {
         }
         this.inventory.get(ressource).add(ressource.getRessource());
     }
+
     /**
      * Method for remove a ressource of the inventory
      * @param ressource
@@ -38,5 +41,9 @@ public class Inventory {
             }
         }
         return null;
+    }
+
+    public int countRessource(RessourceEnum ressource) {
+        return inventory.get(ressource).size();
     }
 }
