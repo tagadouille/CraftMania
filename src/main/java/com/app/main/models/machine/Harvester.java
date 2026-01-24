@@ -20,7 +20,7 @@ public sealed abstract class Harvester extends Machine permits com.app.main.mode
      * @param capacity the capacity of the harvester
      * @param production_duration the duration of production cycle
      */
-    public Harvester(int price, ResourceEnum product, long capacity, long production_duration) {
+    private Harvester(int price, ResourceEnum product, long capacity, long production_duration) {
         super(price, product, capacity, production_duration);
         this.typeName = "harvester";
     }
@@ -30,7 +30,7 @@ public sealed abstract class Harvester extends Machine permits com.app.main.mode
      * @param price the price of the harvester
      * @param product the resource produced by the harvester
      */
-    public Harvester(int price, ResourceEnum product) {
+    private Harvester(int price, ResourceEnum product) {
         this(price, product, 100,5000);
     }
 
@@ -40,7 +40,7 @@ public sealed abstract class Harvester extends Machine permits com.app.main.mode
      * @param product the resource produced by the harvester
      * @param capacity the capacity of the harvester
      */
-    public Harvester(int price, ResourceEnum product, long capacity){
+    private Harvester(int price, ResourceEnum product, long capacity){
         this(price, product, capacity, 5000);
     }
 
@@ -102,8 +102,7 @@ public sealed abstract class Harvester extends Machine permits com.app.main.mode
      */
     public final static class SimpleHarvester extends Harvester {
 
-        public SimpleHarvester(ResourceEnum product) {
-
+        private SimpleHarvester(ResourceEnum product) {
             super(100, product);
         }
     }
@@ -116,7 +115,7 @@ public sealed abstract class Harvester extends Machine permits com.app.main.mode
      */
     public final static class FastHarvester extends Harvester {
         
-        public FastHarvester(ResourceEnum product) {
+        private FastHarvester(ResourceEnum product) {
             super(250, product, 150, 2500);
         }
     }
@@ -129,7 +128,7 @@ public sealed abstract class Harvester extends Machine permits com.app.main.mode
      */
     public final static class XLHarvester extends Harvester {
         
-        public XLHarvester(ResourceEnum product) {
+        private XLHarvester(ResourceEnum product) {
             super(175, product, 350);
         }
     }
@@ -142,7 +141,7 @@ public sealed abstract class Harvester extends Machine permits com.app.main.mode
      */
     public final static class PolyHarvester extends Harvester {
 
-        public PolyHarvester(ResourceEnum product) {
+        private PolyHarvester(ResourceEnum product) {
             super(150, product);
         }
     }
@@ -157,7 +156,7 @@ public sealed abstract class Harvester extends Machine permits com.app.main.mode
 
         private boolean broken = false;
         
-        public WeakHarvester(ResourceEnum product) {
+        private WeakHarvester(ResourceEnum product) {
             super(50, product);
         }
 
@@ -171,6 +170,13 @@ public sealed abstract class Harvester extends Machine permits com.app.main.mode
                 broken = true;
             }
             if(!broken) product();
+        }
+
+        /**
+         * Repair the harvester to make it operational again.
+         */
+        public void repair() {
+            broken = false;
         }
     }
 }
