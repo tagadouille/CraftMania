@@ -1,10 +1,10 @@
-package com.app.main.views;
+package com.app.main.views.props_ui;
 
 import java.io.IOException;
 
 import com.app.main.models.Market;
 import com.app.main.models.ressources.RessourceEnum;
-import com.app.main.util.ImageUtil;
+import com.app.main.util.image.ImageUtil;
 import com.app.main.views.utilities.ItemImageEnum;
 
 import javafx.scene.Scene;

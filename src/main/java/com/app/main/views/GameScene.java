@@ -1,8 +1,8 @@
 package com.app.main.views;
 
 import com.app.main.controllers.GameController;
-import com.app.main.controllers.KeyHandler;
 import com.app.main.controllers.PlayerController;
+import com.app.main.controllers.input.KeyHandler;
 import com.app.main.models.Player;
 import com.app.main.models.map.GameMap;
 

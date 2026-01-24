@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.app.main.PathFinder;
+import com.app.main.controllers.input.KeyHandler;
 import com.app.main.models.Player;
 import com.app.main.models.map.GameMap;
 import com.app.main.models.map.Tile;
 import com.app.main.models.ressources.RessourceEnum;
-import com.app.main.util.Observable;
-import com.app.main.util.Observer;
 import com.app.main.util.Point;
+import com.app.main.util.design_pattern.Observable;
+import com.app.main.util.design_pattern.Observer;
 import com.app.main.views.GameView;
 
 import javafx.scene.input.KeyCode;

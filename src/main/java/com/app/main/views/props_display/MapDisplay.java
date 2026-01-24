@@ -1,7 +1,8 @@
-package com.app.main.views;
+package com.app.main.views.props_display;
 
 import com.app.main.models.map.Tile;
 import com.app.main.models.map.TileType;
+import com.app.main.views.GameView;
 import com.app.main.views.utilities.RessourceImageEnum;
 import com.app.main.views.utilities.TileImageEnum;
 

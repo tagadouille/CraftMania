@@ -1,4 +1,4 @@
-package com.app.main.util;
+package com.app.main.util.design_pattern;
 
 /**
  *

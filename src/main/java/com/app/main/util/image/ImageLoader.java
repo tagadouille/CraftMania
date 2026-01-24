@@ -1,4 +1,4 @@
-package com.app.main.util;
+package com.app.main.util.image;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;

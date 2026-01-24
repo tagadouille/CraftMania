@@ -1,9 +1,10 @@
 package com.app.main.models.machine;
 
 import com.app.main.models.Inventory;
+import com.app.main.models.Item;
 import com.app.main.models.ressources.RessourceEnum;
 
-public abstract class Machine {
+public abstract class Machine extends Item {
     
     protected long production_duration;
     private long production_start;
@@ -12,6 +13,14 @@ public abstract class Machine {
     protected Inventory inventory = new Inventory();
 
     protected long capacity;
+
+    public Machine(int price, RessourceEnum product, long capacity, long production_duration) {
+        super(price);
+        this.production_duration = production_duration;
+        this.capacity = capacity;
+        this.product = product;
+        startProduct(product);
+    }
 
     protected final void product() {
 

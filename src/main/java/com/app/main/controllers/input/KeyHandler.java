@@ -1,4 +1,4 @@
-package com.app.main.controllers;
+package com.app.main.controllers.input;
 
 import java.util.HashSet;
 import java.util.Set;

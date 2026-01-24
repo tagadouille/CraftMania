@@ -1,11 +1,13 @@
 package com.app.main.views;
 
 import com.app.main.controllers.GameController;
-import com.app.main.controllers.KeyHandler;
-import com.app.main.controllers.MouseController;
-import com.app.main.util.Observable;
-import com.app.main.util.Observer;
+import com.app.main.controllers.input.KeyHandler;
+import com.app.main.controllers.input.MouseController;
 import com.app.main.util.Point;
+import com.app.main.util.design_pattern.Observable;
+import com.app.main.util.design_pattern.Observer;
+import com.app.main.views.props_display.MapDisplay;
+import com.app.main.views.props_display.PlayerSprite;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
@@ -23,7 +25,7 @@ public final class GameView extends StackPane implements Observer{
     private AnimationTimer gameLoop;
 
     private static double multiplicator = 2;
-    static final int TILE_SIZE = 16;
+    public static final int TILE_SIZE = 16;
     private static double spriteSize = multiplicator*TILE_SIZE;
 
     private GameController gameController;

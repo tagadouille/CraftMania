@@ -1,6 +1,6 @@
 package com.app.main.views.utilities;
 
-import com.app.main.util.ImageLoader;
+import com.app.main.util.image.ImageLoader;
 
 import javafx.scene.image.Image;
 

@@ -1,13 +1,15 @@
-package com.app.main.controllers;
+package com.app.main.controllers.input;
 
 import java.awt.Point;
 
 import com.app.main.PathFinder;
+import com.app.main.controllers.PlayerController;
+import com.app.main.controllers.view_controller.MarketDialogController;
 import com.app.main.models.Player;
 import com.app.main.models.map.GameMap;
 import com.app.main.models.map.Tile;
 import com.app.main.views.GameView;
-import com.app.main.views.MarketDialog;
+import com.app.main.views.props_ui.MarketDialog;
 import com.app.main.models.map.TileType;
 import com.app.main.models.Market;
 

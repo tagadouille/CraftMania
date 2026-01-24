@@ -1,9 +1,9 @@
-package com.app.main.controllers;
+package com.app.main.controllers.view_controller;
 
 import com.app.main.models.Market;
-import com.app.main.views.MarketDialog;
-import com.app.main.views.MarketDialog.BuyPanel;
-import com.app.main.views.MarketDialog.SellPanel;
+import com.app.main.views.props_ui.MarketDialog;
+import com.app.main.views.props_ui.MarketDialog.BuyPanel;
+import com.app.main.views.props_ui.MarketDialog.SellPanel;
 
 public final class MarketDialogController {
     

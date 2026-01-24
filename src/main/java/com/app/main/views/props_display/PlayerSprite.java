@@ -1,7 +1,8 @@
-package com.app.main.views;
+package com.app.main.views.props_display;
 
 import com.app.main.models.Player;
-import com.app.main.util.ImageLoader;
+import com.app.main.util.image.ImageLoader;
+import com.app.main.views.GameView;
 
 import javafx.scene.canvas.GraphicsContext;
 
