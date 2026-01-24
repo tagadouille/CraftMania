@@ -3,22 +3,50 @@ package com.app.main.models.map;
 import java.awt.Point;
 import java.util.Random;
 
-import com.app.main.models.ressources.RessourceEnum;
+import com.app.main.models.map.Tile.TileType;
+import com.app.main.models.resources.ResourceEnum;
 
-public class GameMap {
+/**
+ * Class GameMap representing the game map
+ * @author Dai Elias
+ */
+public final class GameMap {
     private Tile[][] map;
     private int width;
     private int height;
 
     private Point marketPos = new Point();
 
-    public GameMap(int width, int height){
+    private GameMap(int width, int height){
         this.height = height;
         this.width = width;
         map = new Tile[width][height];
         generateMap();
     }
 
+    /**
+     * Factory method to create a default GameMap with size 15x15
+     * @return the created map
+     */
+    public static GameMap createDefaultMap(){
+        return new GameMap(15, 15);
+    }
+
+    /**
+     * Factory method to create a GameMap with given width and height
+     * @param width the width of the map
+     * @param height the height of the map
+     * @return the created map
+     */
+    public static GameMap createMap(int width, int height){
+
+        if(width <= 0 || height <= 0){
+            throw new IllegalArgumentException("Width and height must be positive integers.");
+        }
+        return new GameMap(width, height);
+    }
+
+    /* Getters : */
     public Tile[][] getMap() {
         return map;
     }
@@ -41,21 +69,21 @@ public class GameMap {
     private void generateMap(){
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
-                map[i][j] = new Tile(TileType.EMPTY);
+                map[i][j] = Tile.createTile(TileType.EMPTY, null);
             }
         }
-        map[height/2][width/2] = new Tile(TileType.START);
+        map[height/2][width/2] = Tile.createTile(TileType.START, null);
         generateMarket();
-        generateRessource();
+        generateResource();
     }
     /**
-     * Method for generate the ressources of the map
+     * Method for generate the resources of the map
      */
-    private void generateRessource(){
+    private void generateResource(){
         Random rand = new Random();
         int t = 0;
 
-        for (RessourceEnum resType : RessourceEnum.values()) {
+        for (ResourceEnum resType : ResourceEnum.values()) {
             for (int k = 0; k < 2; k++) {
                 int i;
                 int j;
@@ -64,7 +92,7 @@ public class GameMap {
                     i = rand.nextInt(height);
                     j = rand.nextInt(width);
                 }while(map[i][j].getType() != TileType.EMPTY);
-                map[i][j] = new Tile(TileType.RESSOURCE, resType.getRessource());
+                map[i][j] = Tile.createTile(TileType.RESOURCE, resType.getResource());
             }
             t++;
             if(t == 4){
@@ -95,7 +123,7 @@ public class GameMap {
             y = rand.nextInt(height);
             x = j;
         }
-        map[6][6] = new Tile(TileType.MARKET);
+        map[6][6] = Tile.createTile(TileType.MARKET, null);
         marketPos = new Point(6, 6);
     }
     

@@ -17,7 +17,7 @@ import javafx.scene.control.Alert.AlertType;
  * 
  * @author Dai Elias
  */
-public class MenuSwitcher {
+public final class MenuSwitcher {
 
     /**
      * For switching to a new scene.

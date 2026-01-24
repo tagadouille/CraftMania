@@ -3,7 +3,7 @@ package com.app.main.views.props_ui;
 import java.io.IOException;
 
 import com.app.main.models.Market;
-import com.app.main.models.ressources.RessourceEnum;
+import com.app.main.models.resources.ResourceEnum;
 import com.app.main.util.image.ImageUtil;
 import com.app.main.views.utilities.ItemImageEnum;
 
@@ -19,7 +19,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class MarketDialog extends Stage{
+/**
+ * The MarketDialog class represents a dialog window for the market interface in the game.
+ * It allows players to buy and sell resources.
+ * Extends the Stage class from JavaFX.
+ * @author Dai Elias
+ */
+public final class MarketDialog extends Stage{
 
     private Scene mainScene;
 
@@ -27,6 +33,9 @@ public class MarketDialog extends Stage{
     private Button sell = new Button("Sell");
     private Text money;
 
+    /**
+     * The constructor initializes the MarketDialog with its properties and UI components.
+     */
     public MarketDialog(){
         
         this.setAlwaysOnTop(true);
@@ -47,6 +56,7 @@ public class MarketDialog extends Stage{
         //root.getChildren().add(money);
     }
 
+    /* Getters : */
     public Button getBuy() {
         return buy;
     }
@@ -59,11 +69,17 @@ public class MarketDialog extends Stage{
         return mainScene;
     }
 
+    /**
+     * The BuyPanel class represents the panel where the user can buy items
+     */
     public static class BuyPanel extends Scene{
 
         private GridPane root;
         private Button back = new Button("Back");
 
+        /**
+         * Constructor for BuyPanel
+         */
         public BuyPanel(){
             super(new GridPane(2, 1));
             root = (GridPane) this.getRoot();
@@ -74,11 +90,17 @@ public class MarketDialog extends Stage{
             root.getChildren().add(back);
         }
 
+        /* Getters : */
         public Button getBack() {
             return back;
         }
     }
 
+    /**
+     * The SellPanel class represents the panel where the user can sell items.
+     * Extends Scene class from JavaFX.
+     * @author Dai Elias
+     */
     public static class SellPanel extends Scene{
 
         private String imagePath;
@@ -89,7 +111,7 @@ public class MarketDialog extends Stage{
 
         private Market market;
 
-        public SellPanel(Market market){
+        private SellPanel(Market market){
             super(new VBox());
             this.root = (VBox) this.getRoot();
 
@@ -98,27 +120,41 @@ public class MarketDialog extends Stage{
             Text title = new Text("What do you want to sell ?");
             root.getChildren().add(title);
 
-            displayRessources();
+            displayResources();
             root.getChildren().add(back);
         }
+
+        /**
+         * The factory method to create a SellPanel instance.
+         * @param market the market associated with the SellPanel
+         * @return a new SellPanel instance
+         */
+        public static SellPanel createSellPanel(Market market){
+            if(market == null){
+                throw new IllegalArgumentException("Market cannot be null");
+            }
+            return new SellPanel(market);
+        }
+
+        /* Getters */
 
         public Button getBack() {
             return back;
         }
 
-        private void displayRessources(){
+        private void displayResources(){
             ScrollPane scrollPane = new ScrollPane();
             
-            VBox ressourcePanel = new VBox();
+            VBox resourcePanel = new VBox();
 
-            for (RessourceEnum res : RessourceEnum.values()) {
+            for (ResourceEnum res : ResourceEnum.values()) {
                 HBox line = new HBox();
 
-                // Ressource image display :
+                // Resource image display :
                 Image img = null;
 
                 for(ItemImageEnum type : ItemImageEnum.values()){
-                    if(res.getRessource().getName().equals(type.toString())){
+                    if(res.getResource().getName().equals(type.toString())){
                         img = type.getImage();
                         break;
                     }
@@ -140,12 +176,12 @@ public class MarketDialog extends Stage{
                 Text resName = new Text(res.toString().toLowerCase());
                 title.getChildren().add(resName);
 
-                Text price = new Text(res.getRessource().getPrice() +"$");
+                Text price = new Text(res.getResource().getPrice() +"$");
                 title.getChildren().add(price);
 
                 infoBox.getChildren().add(title);
 
-                Text number = new Text(market.getPlayer().numberRessourceInInventory(res) + " already in inventory");
+                Text number = new Text(market.getPlayer().getInventory().countResource(res) + " already in inventory");
                 infoBox.getChildren().add(number);
 
                 line.getChildren().add(infoBox);
@@ -153,14 +189,14 @@ public class MarketDialog extends Stage{
                 Button sellRes = new Button("Sell");
                 //TODO MVC
                 sellRes.setOnAction((e) -> {
-                    market.sellRessource(res.getRessource());
+                    market.sellResource(res.getResource());
                 });
                 
                 line.getChildren().add(sellRes);
 
-                ressourcePanel.getChildren().add(line);
+                resourcePanel.getChildren().add(line);
             }
-            scrollPane.setContent(ressourcePanel);
+            scrollPane.setContent(resourcePanel);
             root.getChildren().add(scrollPane);
         }
     }

@@ -8,7 +8,7 @@ import com.app.main.controllers.input.KeyHandler;
 import com.app.main.models.Player;
 import com.app.main.models.map.GameMap;
 import com.app.main.models.map.Tile;
-import com.app.main.models.ressources.RessourceEnum;
+import com.app.main.models.resources.ResourceEnum;
 import com.app.main.util.Point;
 import com.app.main.util.design_pattern.Observable;
 import com.app.main.util.design_pattern.Observer;
@@ -16,15 +16,23 @@ import com.app.main.views.GameView;
 
 import javafx.scene.input.KeyCode;
 
-public class PlayerController implements Observable{
+/**
+ * This class represents the controller of the player
+ * 
+ * @author Dai Elias
+ */
+public final class PlayerController implements Observable{
     
     private Player player;
+
+    /* Harvest : */
     private boolean harvest = false;
 
     public static final long harvestTime = 5000;
     private long stopHarvestTime;
-    private RessourceEnum ressourceTypeHarvest;
+    private ResourceEnum resourceTypeHarvest;
 
+    /* Movements : */
     private int pathIndex = 0;
     private boolean go = false;
 
@@ -32,11 +40,22 @@ public class PlayerController implements Observable{
 
     private List<Observer> observers = new ArrayList<>();
 
-    public PlayerController(Player player, KeyHandler keyHandler){
+    private PlayerController(Player player, KeyHandler keyHandler){
         this.player = player;
         this.keyHandler = keyHandler;
     }
 
+    /**
+     * Factory method to create a PlayerController
+     * @param player Player the player to control
+     * @param keyHandler KeyHandler the key handler
+     * @return PlayerController the player controller
+     */
+    public static PlayerController createPlayerController(Player player, KeyHandler keyHandler){
+        return new PlayerController(player, keyHandler);
+    }
+
+    /* Getters : */
     public boolean isHarvest() {
         return harvest;
     }
@@ -45,18 +64,26 @@ public class PlayerController implements Observable{
         return player;
     }
 
+    /**
+     * Set the game view as observer
+     * @param gameView GameView the game view
+     */
     public void setGameView(GameView gameView) {
+
+        if(gameView == null){
+            throw new IllegalArgumentException("GameView cannot be null");
+        }
         this.observers.add(gameView);
     }
 
     /**
-     * For harvest the ressource in a tile
-     * @param tile Tile the tile where the ressource is
+     * For harvest the resource in a tile
+     * @param tile Tile the tile where the resource is
      */
     public void harvest(Tile tile){
         harvest = true;
         stopHarvestTime = System.currentTimeMillis() + harvestTime;
-        ressourceTypeHarvest = RessourceEnum.getRessourceEnum(tile.getItem().getName());
+        resourceTypeHarvest = ResourceEnum.getResourceEnum(tile.getItem().getName());
         observers.get(0).update(this, new Point((int) player.getX(), (int) player.getY()), "harvest-sp");
     }
 
@@ -67,7 +94,7 @@ public class PlayerController implements Observable{
 
         if(currentTime >= stopHarvestTime){
             harvest = false;
-            player.addRessource(ressourceTypeHarvest);
+            player.addResource(resourceTypeHarvest);
             this.observers.get(0).update(this, null, "harvest-dp");
         }
 

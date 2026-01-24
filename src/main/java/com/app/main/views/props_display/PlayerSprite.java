@@ -6,16 +6,38 @@ import com.app.main.views.GameView;
 
 import javafx.scene.canvas.GraphicsContext;
 
+/**
+ * The PlayerSprite class represents the visual representation of the player in the game.
+ * Extends Sprite.
+ * @see Sprite
+ * @author Dai Elias
+ */
 public class PlayerSprite extends Sprite{
     
     private Player player;
 
-    public PlayerSprite(Player player){
+    private PlayerSprite(Player player){
         super(0, 0, GameView.TILE_SIZE, GameView.TILE_SIZE, ImageLoader.loadImage("src/main/resources/com/app/image/player.png"));
         this.player = player;
         this.updateCord();
     }
 
+    /**
+     * Factory method to create a PlayerSprite instance.
+     * @param player the Player object associated with this sprite
+     * @return a new PlayerSprite instance
+     */
+    public static PlayerSprite createPlayerSprite(Player player){
+
+        if(player == null){
+            throw new IllegalArgumentException("Player cannot be null");
+        }
+        return new PlayerSprite(player);
+    }
+
+    /**
+     * Updates the sprite's coordinates based on the player's current position.
+     */
     public void updateCord(){
         this.setPosX((int) (player.getX()*GameView.TILE_SIZE));
         this.setPosY((int) (player.getY()*GameView.TILE_SIZE));

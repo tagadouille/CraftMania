@@ -16,6 +16,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
+/**
+ * The GameView class represents the main view of the game.
+ * It handles rendering the game map, player sprite, and other UI elements.
+ * Implements the Observer pattern to update the view based on game events.
+ * @see Observer
+ * @author Dai Elias
+ */
 public final class GameView extends StackPane implements Observer{
 
     private Canvas canvas;
@@ -36,7 +43,7 @@ public final class GameView extends StackPane implements Observer{
     private HarvestBar harvestBar = new HarvestBar();
 
 
-    public GameView(Scene scene, double width, double height, GameController gameController, KeyHandler keyHandler) {
+    private GameView(Scene scene, double width, double height, GameController gameController, KeyHandler keyHandler) {
         super();
         
         this.width = width;
@@ -47,19 +54,54 @@ public final class GameView extends StackPane implements Observer{
         this.gameController = gameController;
         gameController.getPlayerController().setGameView(this);
 
-        this.sprite = new PlayerSprite(gameController.getPlayer());
+        this.sprite = PlayerSprite.createPlayerSprite(gameController.getPlayer());
 
-        this.mapDisplay = new MapDisplay(gameController.getGameMap().getMap());
+        this.mapDisplay = MapDisplay.createMapDisplay(gameController.getGameMap().getMap());
 
         keyHandler.setupInput(scene);
 
-        MouseController mouseController = new MouseController(gameController.getGameMap(), gameController.getPlayer(), gameController.getPlayerController());
+        MouseController mouseController = MouseController.create(
+            gameController.getGameMap(),
+            gameController.getPlayer(),
+            gameController.getPlayerController()
+        );
 
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> mouseController.setUp(e.getX(), e.getY()));
 
         startGameLoop();
         canvas.requestFocus();
     }
+
+    /**
+     * The factory method for creating a GameView instance.
+     * @param scene the scene where the gameview is display
+     * @param width the width of the gameview
+     * @param height the height of the gameview
+     * @param gameController the game controller associated with the gameview
+     * @param keyHandler the key handler for managing keyboard input
+     * @return a new GameView instance
+     */
+    public static GameView createGameView(Scene scene, double width, double height, GameController gameController, KeyHandler keyHandler){
+
+        if(scene == null) {
+            throw new IllegalArgumentException("The scene can't be null");
+        }
+        if(width <= 0) {
+            throw new IllegalArgumentException("The width must be positive");
+        }
+        if(height <= 0) {
+            throw new IllegalArgumentException("The height must be positive");
+        }
+        if(gameController == null) {
+            throw new IllegalArgumentException("The gameController can't be null");
+        }
+        if(keyHandler == null) {
+            throw new IllegalArgumentException("The keyhandler can't be null");
+        }
+        return new GameView(scene, width, height, gameController, keyHandler);
+    }
+
+    /* Getters : */
 
     public static double getMultiplicator() {
         return multiplicator;

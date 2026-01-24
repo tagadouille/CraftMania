@@ -9,9 +9,14 @@ import java.util.Map;
 import java.util.Queue;
 
 import com.app.main.models.map.GameMap;
-import com.app.main.models.map.TileType;
+import com.app.main.models.map.Tile.TileType;
 
-public class PathFinder {
+/**
+ * The PathFinder class provides functionality to find the shortest path between two points on a 
+ * game map using the Breadth-First Search (BFS) algorithm.
+ * It maintains a list of positions that constitute the path to the target.
+ */
+public final class PathFinder {
     
     private static ArrayList<int[]> path = new ArrayList<>(); //ArrayList de tableau de int représentant les positions constituant le chemin vers la cible
     private static int[][] movement = { //déplacement possible du joueur
@@ -85,6 +90,7 @@ public class PathFinder {
         path.add(start);
         Collections.reverse(path);
     }
+    
     /**
      * Méthode permettant d'indiquer si la case est une case est accessible
      * @param line la position de la case par rapport à la ligne ou elle est
@@ -95,7 +101,9 @@ public class PathFinder {
      */
     private static boolean isValid(int line, int col, GameMap map, boolean[][] visité) {
         return line >= 0 && line < map.getHeight() && col >= 0 
-        && col < map.getWidth() && (map.getMap()[line][col].getType() == TileType.EMPTY || map.getMap()[line][col].getType() == TileType.START || map.getMap()[line][col].getType() == TileType.RESSOURCETMP) 
+        && col < map.getWidth() && (map.getMap()[line][col].getType() == TileType.EMPTY || 
+        map.getMap()[line][col].getType() == TileType.START ||
+         map.getMap()[line][col].getType() == TileType.RESOURCETMP) 
         && !visité[line][col];
     }
 }

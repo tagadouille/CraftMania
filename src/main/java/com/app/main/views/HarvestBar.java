@@ -1,8 +1,14 @@
 package com.app.main.views;
 
 import javafx.scene.control.ProgressBar;
-import javafx.scene.layout.StackPane;
 
+/**
+ * The HarvestBar class represents a progress bar used to indicate the progress of a harvesting action in the game.
+ * It extends the JavaFX ProgressBar class and provides methods to spawn, despawn, and
+ * decrease the progress of the harvest bar.
+ * @see ProgressBar
+ * @author Dai Elias
+ */
 public class HarvestBar extends ProgressBar {
     
     public HarvestBar() {
@@ -13,6 +19,7 @@ public class HarvestBar extends ProgressBar {
         /*super(JProgressBar.HORIZONTAL,0, 100);
         this.setString("Récolte en cours..");*/
     }
+    
     /**
      * For add the harvest bar in the pane and reset the value
      * @param pane

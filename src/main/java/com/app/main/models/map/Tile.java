@@ -2,30 +2,70 @@ package com.app.main.models.map;
 
 import com.app.main.models.Item;
 
+/**
+ * Represents a tile on the map with a specific type and an optional item.
+ * Each tile can be of various types such as EMPTY, RESOURCE, START, etc.
+ * It can also hold an item if applicable.
+ * @see TileType
+ * @see Item
+ * @author Dai Elias
+ */
 public class Tile {
 
     private TileType type;
     private Item item;
 
-    public Tile(TileType type){
+    /**
+     * Types of tiles available in the map.
+     */
+    public enum TileType {
+        EMPTY, RESOURCE, START, MARKET, FACTORY, HARVESTER, RESOURCETMP;
+    }
+
+    private Tile(TileType type){
         this.type = type;
     }
-    public Tile(TileType type, Item item){
+
+    private Tile(TileType type, Item item){
         this(type);
         this.item = item;
     }
+
+    /**
+     * Factory method to create a Tile instance.
+     * @param type the type of the tile
+     * @param item the item on the tile, can be null if there is no item
+     * @return a new Tile instance
+     */
+    public static Tile createTile(TileType type, Item item){
+
+        if(item != null){
+            return new Tile(type, item);
+        }
+        return new Tile(type);
+    }
+
+    /* Getters and setters : */
     public TileType getType() {
         return type;
     }
+
     public Item getItem() {
         return item;
     }
+
     public void setItem(Item item) {
         this.item = item;
     }
+
     public void setType(TileType type) {
         this.type = type;
     }
+
+    /**
+     * Checks if the tile is accessible based on its type.
+     * @return true if the tile is of type START or EMPTY, false otherwise.
+     */
     public boolean isAccessible(){
         return this.type == TileType.START || this.type == TileType.EMPTY;
     }

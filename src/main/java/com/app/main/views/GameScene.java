@@ -9,20 +9,33 @@ import com.app.main.models.map.GameMap;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 
+/**
+ * The GameScene class represents the main scene of the game.
+ * Extends the JavaFX Scene class and sets up the game view and controllers.
+ * @author Dai Elias
+ */
 public class GameScene extends Scene{
 
     private VBox parent;
 
+    /**
+     * Constructor for GameScene.
+     */
     public GameScene() {
         super(new VBox());
         this.parent = (VBox) this.getRoot();
 
         KeyHandler keyHandler = new KeyHandler();
 
-        GameMap gameMap = new GameMap(15, 15);
-        PlayerController playerController = new PlayerController(new Player(7, 7), keyHandler);
+        GameMap gameMap = GameMap.createDefaultMap();
+        PlayerController playerController = PlayerController.createPlayerController(Player.createPlayer(7, 7), keyHandler);
 
-        GameView gameView = new GameView(this, 480,480, new GameController(playerController, gameMap), keyHandler);
+        GameView gameView = GameView.createGameView(
+            this, 
+            480,
+            480,
+             GameController.createGameController(playerController, gameMap), keyHandler
+        );
 
         parent.getChildren().add(gameView);
     }
