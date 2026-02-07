@@ -14,7 +14,6 @@ module com.app.main {
     requires com.fasterxml.jackson.annotation;
 
     opens com.app.main to javafx.fxml;
-    opens com.app.main.controllers.menu to javafx.fxml;
 
     exports com.app.main;
 }

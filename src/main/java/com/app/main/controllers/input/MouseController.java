@@ -4,7 +4,9 @@ import java.awt.Point;
 
 import com.app.main.PathFinder;
 import com.app.main.controllers.PlayerController;
-import com.app.main.controllers.view_controller.MarketDialogController;
+import com.app.main.controllers.view_controller.props_ui.HarvestViewController;
+import com.app.main.controllers.view_controller.props_ui.HarvesterView;
+import com.app.main.controllers.view_controller.props_ui.MarketDialogController;
 import com.app.main.models.Player;
 import com.app.main.models.map.GameMap;
 import com.app.main.models.map.Tile;
@@ -80,7 +82,10 @@ public class MouseController {
                     return;
 
                 case TileType.HARVESTER : 
-                    System.out.println("Ouverture de la récolteuse");
+                    HarvesterView harvesterView = new HarvesterView();
+                    HarvestViewController.create(
+                        harvesterView, player, map, (int) mousePos.getY(), (int) mousePos.getX()
+                    );
                     return;
                     
                 case TileType.FACTORY :

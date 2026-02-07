@@ -1,4 +1,4 @@
-package com.app.main.controllers.view_controller;
+package com.app.main.controllers.view_controller.props_ui;
 
 import com.app.main.models.Market;
 import com.app.main.views.props_ui.MarketDialog;

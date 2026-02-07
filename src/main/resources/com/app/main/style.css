@@ -1,3 +1,9 @@
+.menu {
+    -fx-background-image: url("../image/background/fondJeu.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
 .harvest-bar {
     -fx-accent: green;
     -fx-box-border: black;

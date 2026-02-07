@@ -1,6 +1,10 @@
 package com.app.main.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.app.main.models.Player;
+import com.app.main.models.machine.Machine;
 import com.app.main.models.map.GameMap;
 
 /**
@@ -11,6 +15,8 @@ public final class GameController {
     
     private PlayerController playerController;
     private GameMap gameMap;
+
+    private List<Machine> machines = new ArrayList<>();
     
     private GameController(PlayerController playerController, GameMap gameMap) {
         
@@ -54,5 +60,9 @@ public final class GameController {
      */
     public void proceed() {
         playerController.process(gameMap);
+
+        for (Machine machine : machines) {
+            machine.process();
+        }
     }
 }

@@ -16,16 +16,17 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 /**
  * The MarketDialog class represents a dialog window for the market interface in the game.
  * It allows players to buy and sell resources.
  * Extends the Stage class from JavaFX.
+ * Extends PropUI for common UI properties.
+ * 
+ * @see PropUI
  * @author Dai Elias
  */
-public final class MarketDialog extends Stage{
+public final class MarketDialog extends PropUI{
 
     private Scene mainScene;
 
@@ -37,14 +38,8 @@ public final class MarketDialog extends Stage{
      * The constructor initializes the MarketDialog with its properties and UI components.
      */
     public MarketDialog(){
-        
-        this.setAlwaysOnTop(true);
-        this.setTitle("Market Screen");
-        this.setResizable(false);
-        this.setWidth(250);
-        this.setHeight(250);
-        this.requestFocus();
-        this.initModality(Modality.APPLICATION_MODAL);
+
+        super("Market Screen", 250, 250);
 
         HBox root = new HBox(5);
         this.mainScene = new Scene(root);

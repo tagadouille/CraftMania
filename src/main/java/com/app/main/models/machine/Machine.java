@@ -2,6 +2,7 @@ package com.app.main.models.machine;
 
 import com.app.main.models.Inventory;
 import com.app.main.models.Item;
+import com.app.main.models.Player;
 import com.app.main.models.resources.ResourceEnum;
 
 /**
@@ -20,6 +21,8 @@ public sealed abstract class Machine extends Item permits com.app.main.models.ma
     protected Inventory inventory = new Inventory();
 
     protected long capacity;
+
+    protected boolean alreadySetted = false;
 
     /**
      * Constructor for Machine.
@@ -41,6 +44,21 @@ public sealed abstract class Machine extends Item permits com.app.main.models.ma
         this.capacity = capacity;
         this.product = product;
         startProduct(product);
+    }
+
+    public boolean isAlreadySetted() {
+        return alreadySetted;
+    }
+
+    /**
+     * Clear the inventory of the machine by giving the content to the player
+     * @param player the player
+     */
+    public void cleanInventory(Player player) {
+        inventory.getInventory().get(product).forEach(
+            resource -> player.getInventory().addResource(ResourceEnum.getResourceEnum(resource.getName()))
+        );
+        inventory.getInventory().clear();
     }
 
     /**

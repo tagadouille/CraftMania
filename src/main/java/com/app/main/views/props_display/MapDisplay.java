@@ -1,8 +1,12 @@
 package com.app.main.views.props_display;
 
+import com.app.main.models.machine.Factory;
+import com.app.main.models.machine.Harvester;
 import com.app.main.models.map.Tile;
 import com.app.main.models.map.Tile.TileType;
 import com.app.main.views.GameView;
+import com.app.main.views.utilities.FactoryImageEnum;
+import com.app.main.views.utilities.HarvesterImageEnum;
 import com.app.main.views.utilities.ResourceImageEnum;
 import com.app.main.views.utilities.TileImageEnum;
 
@@ -76,6 +80,16 @@ public final class MapDisplay {
                             break;
                         }
                     }
+                }
+
+                // Display factory :
+                else if(tile.getType() == TileType.FACTORY) {
+                    img = FactoryImageEnum.factoryToImage((Factory) tile.getItem());
+                }
+
+                // Display harvester :
+                else if(tile.getType() == TileType.HARVESTER) {
+                    img = HarvesterImageEnum.harvesterToImage((Harvester) tile.getItem());
                 }
 
                 // Display resource : 

@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
  * The ResourceImageEnum enum represents different resource images used in the application.
  * Each enum constant is associated with a specific image loaded from the resources.
  */
-public enum ResourceImageEnum {
+public enum ResourceImageEnum implements ImagePath {
     
     WOOD("wood"),
     QUARTZ("quartz"),
@@ -18,7 +18,7 @@ public enum ResourceImageEnum {
     private Image image;
 
     private ResourceImageEnum(String imageName){
-        this.image = ImageLoader.loadImage("src/main/resources/com/app/image/Ressource/" + imageName + ".png");
+        this.image = ImageLoader.loadImage(ImagePath.IMAGE_PATH + "Ressource/" + imageName + ".png");
     }
 
     /**

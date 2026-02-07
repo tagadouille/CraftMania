@@ -1,0 +1,34 @@
+package com.app.main.controllers;
+
+import com.app.main.models.Inventory;
+import com.app.main.models.resources.Recipe;
+
+public class Crafter {
+    
+    private long craftingStartTime = 0;
+    private long craftingEndTime = 0;
+
+    private Inventory playerInventory;
+
+    private Crafter(Inventory playerInventory) {
+        this.playerInventory = playerInventory;
+    }
+
+    public static Crafter createCrafter(Inventory playerInventory) {
+        if(playerInventory == null) {
+            throw new IllegalArgumentException("Player inventory cannot be null");
+        }
+        return new Crafter(playerInventory);
+    }
+
+    public void startCrafting(Recipe recipe) {
+
+        if(recipe == null) {
+            throw new IllegalArgumentException("Recipe cannot be null");
+        }
+        if(recipe.isTimed()) {
+            //TODO
+        }
+        playerInventory.addResource(recipe.getResult());
+    }
+}

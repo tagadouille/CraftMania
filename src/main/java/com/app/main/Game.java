@@ -6,7 +6,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import com.app.main.views.GameScene;
+import com.app.main.controllers.view_controller.menu.MainMenuController;
+import com.app.main.views.menu.MainMenu;
 
 /**
  * This class is the entry point of the code
@@ -27,10 +28,11 @@ public final class Game extends Application {
     public void start(Stage stage) throws IOException {
         //FXMLLoader fxmlLoader = new FXMLLoader(Game.class.getResource("MainMenu.fxml"));
         //scene = new Scene(fxmlLoader.load());
-        scene = new GameScene();
+        scene = MainMenu.create(400, 400);
+        MainMenuController.create((MainMenu) scene);
 
-        /*css = getClass().getResource("Style.css").toExternalForm();
-        scene.getStylesheets().add(css);*/
+        css = getClass().getResource("style.css").toExternalForm();
+        scene.getStylesheets().add(css);
 
         primaryStage = stage;
 
