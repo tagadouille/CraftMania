@@ -16,61 +16,68 @@ public sealed abstract class Factory extends Machine permits com.app.main.models
 
     private Recipe recipe;
 
-    private Factory(int price, Recipe recipe, long capacity, long production_duration) {
-        super(price, recipe.getResult(), capacity, production_duration);
+    private Factory(int price, long capacity, long production_duration) {
+        super(price, capacity, production_duration);
     }
 
-    private Factory(int price, Recipe recipe) {
-        this(price, recipe, 100,5000);
+    private Factory(int price) {
+        this(price, 100,5000);
     }
 
-    private Factory(int price, Recipe recipe, long capacity){
-        this(price, recipe, capacity, 5000);
+    private Factory(int price, long capacity){
+        this(price, capacity, 5000);
+    }
+
+    /**
+     * Set the recipe of the factory for the config
+     * @param recipeEnum the recipe
+     */
+    public void setRecipe(RecipeEnum recipeEnum) {
+        if(recipe == null) {
+            throw new IllegalArgumentException("Recipe cannot be null.");
+        }
+        this.recipe = recipeEnum.getRecipe();
+        this.setProduct(recipe.getResult());
     }
 
     /**
      * Factory method to create a SimpleFactory.
-     * @param product the resource produced by the factory
      * @return a new SimpleFactory instance
      */
-    public static SimpleFactory createSimpleFactory(RecipeEnum recipe) {
-        return new SimpleFactory(recipe.getRecipe());
+    public static SimpleFactory createSimpleFactory() {
+        return new SimpleFactory();
     }
 
     /**
      * Factory method to create a FastFactory.
-     * @param recipe the resource produced by the factory
      * @return a new FastFactory instance
      */
-    public static FastFactory createFastFactory(RecipeEnum recipe) {
-        return new FastFactory(recipe.getRecipe());
+    public static FastFactory createFastFactory() {
+        return new FastFactory();
     }
 
     /**
      * Factory method to create a XLFactory.
-     * @param recipe the resource produced by the factory
      * @return a new XLFactory instance
      */
-    public static XLFactory createXLFactory(RecipeEnum recipe) {
-        return new XLFactory(recipe.getRecipe());
+    public static XLFactory createXLFactory() {
+        return new XLFactory();
     }
 
     /**
      * Factory method to create a WeakFactory.
-     * @param recipe the resource produced by the factory
      * @return a new WeakFactory instance
      */
-    public static WeakFactory createWeakFactory(RecipeEnum recipe) {
-        return new WeakFactory(recipe.getRecipe());
+    public static WeakFactory createWeakFactory() {
+        return new WeakFactory();
     }
 
     /**
      * Factory method to create a PolyFactory.
-     * @param recipe the resource produced by the factory
      * @return a new PolyFactory instance
      */
-    public static PolyFactory createPolyFactory(RecipeEnum recipe) {
-        return new PolyFactory(recipe.getRecipe());
+    public static PolyFactory createPolyFactory() {
+        return new PolyFactory();
     }
 
     /**
@@ -93,8 +100,8 @@ public sealed abstract class Factory extends Machine permits com.app.main.models
      */
     public static final class SimpleFactory extends Factory {
 
-        private SimpleFactory(Recipe recipe) {
-            super(100, recipe);
+        private SimpleFactory() {
+            super(100);
         }
     }
 
@@ -104,8 +111,8 @@ public sealed abstract class Factory extends Machine permits com.app.main.models
      */
     public static final class XLFactory extends Factory {
 
-        private XLFactory(Recipe recipe) {
-            super(175, recipe, 350);
+        private XLFactory() {
+            super(175, 350);
         }
     }
 
@@ -115,8 +122,8 @@ public sealed abstract class Factory extends Machine permits com.app.main.models
      */
     public static final class FastFactory extends Factory {
 
-        private FastFactory(Recipe recipe) {
-            super(250, recipe, 150, 2500);
+        private FastFactory() {
+            super(250, 150, 2500);
         }
     }
 
@@ -128,8 +135,8 @@ public sealed abstract class Factory extends Machine permits com.app.main.models
 
         private boolean broken = false;
 
-        private WeakFactory(Recipe recipe) {
-            super(50, recipe);
+        private WeakFactory() {
+            super(50);
         }
 
         @Override
@@ -158,8 +165,8 @@ public sealed abstract class Factory extends Machine permits com.app.main.models
      */
     public static final class PolyFactory extends Factory {
 
-        private PolyFactory(Recipe recipe) {
-            super(150, recipe);
+        private PolyFactory() {
+            super(150);
         }
     }
 

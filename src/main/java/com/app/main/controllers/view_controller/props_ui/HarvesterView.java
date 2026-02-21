@@ -8,7 +8,6 @@ import com.app.main.views.props_ui.PropUI;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -25,12 +24,13 @@ public class HarvesterView extends PropUI {
     private Scene mainScene;
     private VBox content;
 
-    private Button harvestButton = new Button("Get Ressource"); 
+    private Button harvestButton = new Button("Get Ressource");
+    private Text harvestText = new Text();
     
     public HarvesterView() {
         super("Harvester", 200, 200);
 
-        HBox root = new HBox(5);
+        VBox root = new VBox(5);
         this.mainScene = new Scene(root);
 
         ScrollPane scrollPane = new ScrollPane();
@@ -40,12 +40,22 @@ public class HarvesterView extends PropUI {
         scrollPane.setContent(content);
 
         root.getChildren().add(scrollPane);
+        root.getChildren().add(harvestText);
+        root.getChildren().add(harvestButton);
 
         this.setScene(mainScene);
     }
 
     public Button getHarvestButton() {
         return harvestButton;
+    }
+
+    public VBox getContent() {
+        return content;
+    }
+
+    public void updateHarvestText(int nb) {
+        this.harvestText.setText("The number of resources \n in the harvester is : " + nb);
     }
 
     /**

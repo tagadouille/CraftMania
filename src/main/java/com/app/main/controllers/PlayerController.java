@@ -17,7 +17,14 @@ import com.app.main.views.GameView;
 import javafx.scene.input.KeyCode;
 
 /**
- * This class represents the controller of the player
+ * This class represents the controller of the player. 
+ * It is responsible for handling the player's movements and actions, 
+ * such as harvesting resources. 
+ * It also implements the Observable interface to notify the GameView of any changes in the player's state.
+ * 
+ * @see Player
+ * @see KeyHandler
+ * @see Observable
  * 
  * @author Dai Elias
  */
@@ -35,6 +42,7 @@ public final class PlayerController implements Observable{
     /* Movements : */
     private int pathIndex = 0;
     private boolean go = false;
+    private static final double EPSILON = 0.01; // Small threshold to determine if the player has reached the target position
 
     private KeyHandler keyHandler;
 
@@ -147,50 +155,52 @@ public final class PlayerController implements Observable{
             }
         }
     }
+
     /**
-     * Méthode permettant de faire déplacer le joueur vers la position trouvée
-     * par la classe PathFinder
+     * Handle the movement of the player to a position on the map
      */
-    public void movementToPos(){
-        go = true;
-        //Si on a atteint la destination
-        if(pathIndex ==  PathFinder.getPath().size()){
+    public void movementToPos() {
+
+        if(pathIndex >= PathFinder.getPath().size()){
             pathIndex = 0;
             go = false;
+            return;
         }
-        double px = (double) Math.round(player.getX() * 100) / 100;
-        double py = (double) Math.round(player.getY() * 100) / 100;
 
-        System.out.println(px + " " + py);
+        go = true;
+
         int[] target = PathFinder.getPath().get(pathIndex);
+        int targetX = target[1];
+        int targetY = target[0];
 
-        if(pathIndex == 0 && px == target[1] && py == target[0]){
+        double px = player.getX();
+        double py = player.getY();
+
+        double dx = targetX - px;
+        double dy = targetY - py;
+
+        // Check if the player is close enough to the target position
+        if(Math.abs(dx) < EPSILON && Math.abs(dy) < EPSILON){
+            player.setX(targetX);
+            player.setY(targetY);
             pathIndex++;
             return;
         }
-        int x = target[1];
-        int y = target[0];
 
-        //Si on a pas atteint la position
-        if(px != x || py != y){
-
-            if(px != x){
-                //on se déplace en x vers l'objectif
-                if(px > x){
-                    player.moveLeft();
-                }else{
-                    player.moveRight();
-                }
-            }else{
-                //On se déplace en y vers l'objectif
-                if(py > y){
-                    player.moveUp();
-                }else{
-                    player.moveDown();
-                }
+        // Prioritize horizontal movement if the player is not close enough to the target position
+        if(Math.abs(dx) > EPSILON){
+            if(dx > 0){
+                player.moveRight();
+            } else {
+                player.moveLeft();
             }
-        }if(px == x && py == y){
-            pathIndex++;
+        }
+        else if(Math.abs(dy) > EPSILON){
+            if(dy > 0){
+                player.moveDown();
+            } else {
+                player.moveUp();
+            }
         }
     }
 

@@ -2,8 +2,6 @@ package com.app.main.models.machine;
 
 import java.util.Random;
 
-import com.app.main.models.resources.ResourceEnum;
-
 /**
  * Harvester class representing a type of machine that harvests resources.
  * This class is sealed and can only be extended by specific harvester types.
@@ -16,32 +14,29 @@ public sealed abstract class Harvester extends Machine permits com.app.main.mode
     /**
      * Constructor for Harvester class.
      * @param price the price of the harvester
-     * @param product the resource produced by the harvester
      * @param capacity the capacity of the harvester
      * @param production_duration the duration of production cycle
      */
-    private Harvester(int price, ResourceEnum product, long capacity, long production_duration) {
-        super(price, product, capacity, production_duration);
+    private Harvester(int price, long capacity, long production_duration) {
+        super(price, capacity, production_duration);
         this.typeName = "harvester";
     }
 
     /**
      * Constructor for Harvester class.
      * @param price the price of the harvester
-     * @param product the resource produced by the harvester
      */
-    private Harvester(int price, ResourceEnum product) {
-        this(price, product, 100,5000);
+    private Harvester(int price) {
+        this(price, 100, 5000);
     }
 
     /**
      * Constructor for Harvester class.
      * @param price the price of the harvester
-     * @param product the resource produced by the harvester
      * @param capacity the capacity of the harvester
      */
-    private Harvester(int price, ResourceEnum product, long capacity){
-        this(price, product, capacity, 5000);
+    private Harvester(int price, long capacity){
+        this(price, capacity, 5000);
     }
 
     @Override
@@ -51,47 +46,42 @@ public sealed abstract class Harvester extends Machine permits com.app.main.mode
     
     /**
      * Factory method to create a SimpleHarvester.
-     * @param product the resource produced by the harvester
      * @return a new SimpleHarvester instance
      */
-    public static SimpleHarvester createSimpleHarvester(ResourceEnum product) {
-        return new SimpleHarvester(product);
+    public static SimpleHarvester createSimpleHarvester() {
+        return new SimpleHarvester();
     }
 
     /**
      * Factory method to create a FastHarvester.
-     * @param product the resource produced by the harvester
      * @return a new FastHarvester instance
      */
-    public static FastHarvester createFastHarvester(ResourceEnum product) {
-        return new FastHarvester(product);
+    public static FastHarvester createFastHarvester() {
+        return new FastHarvester();
     }
 
     /**
      * Factory method to create a XLHarvester.
-     * @param product the resource produced by the harvester
      * @return a new XLHarvester instance
      */
-    public static XLHarvester createXLHarvester(ResourceEnum product) {
-        return new XLHarvester(product);
+    public static XLHarvester createXLHarvester() {
+        return new XLHarvester();
     }
 
     /**
      * Factory method to create a WeakHarvester.
-     * @param product the resource produced by the harvester
      * @return a new WeakHarvester instance
      */
-    public static WeakHarvester createWeakHarvester(ResourceEnum product) {
-        return new WeakHarvester(product);
+    public static WeakHarvester createWeakHarvester() {
+        return new WeakHarvester();
     }
 
     /**
      * Factory method to create a PolyHarvester.
-     * @param product the resource produced by the harvester
      * @return a new PolyHarvester instance
      */
-    public static PolyHarvester createPolyHarvester(ResourceEnum product) {
-        return new PolyHarvester(product);
+    public static PolyHarvester createPolyHarvester() {
+        return new PolyHarvester();
     }
 
     /**
@@ -102,8 +92,8 @@ public sealed abstract class Harvester extends Machine permits com.app.main.mode
      */
     public final static class SimpleHarvester extends Harvester {
 
-        private SimpleHarvester(ResourceEnum product) {
-            super(100, product);
+        private SimpleHarvester() {
+            super(100);
         }
     }
 
@@ -115,8 +105,8 @@ public sealed abstract class Harvester extends Machine permits com.app.main.mode
      */
     public final static class FastHarvester extends Harvester {
         
-        private FastHarvester(ResourceEnum product) {
-            super(250, product, 150, 2500);
+        private FastHarvester() {
+            super(250, 150, 2500);
         }
     }
 
@@ -128,8 +118,8 @@ public sealed abstract class Harvester extends Machine permits com.app.main.mode
      */
     public final static class XLHarvester extends Harvester {
         
-        private XLHarvester(ResourceEnum product) {
-            super(175, product, 350);
+        private XLHarvester() {
+            super(175, 350);
         }
     }
 
@@ -141,8 +131,8 @@ public sealed abstract class Harvester extends Machine permits com.app.main.mode
      */
     public final static class PolyHarvester extends Harvester {
 
-        private PolyHarvester(ResourceEnum product) {
-            super(150, product);
+        private PolyHarvester() {
+            super(150);
         }
     }
 
@@ -156,8 +146,8 @@ public sealed abstract class Harvester extends Machine permits com.app.main.mode
 
         private boolean broken = false;
         
-        private WeakHarvester(ResourceEnum product) {
-            super(50, product);
+        private WeakHarvester() {
+            super(50);
         }
 
         @Override

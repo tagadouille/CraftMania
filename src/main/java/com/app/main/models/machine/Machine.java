@@ -17,7 +17,7 @@ public sealed abstract class Machine extends Item permits com.app.main.models.ma
     protected long production_duration;
     private long production_start;
     
-    protected ResourceEnum product;
+    protected ResourceEnum product = null;
     protected Inventory inventory = new Inventory();
 
     protected long capacity;
@@ -31,7 +31,7 @@ public sealed abstract class Machine extends Item permits com.app.main.models.ma
      * @param capacity the maximum capacity of the machine's inventory
      * @param production_duration the duration required to produce the resource
      */
-    public Machine(int price, ResourceEnum product, long capacity, long production_duration) {
+    public Machine(int price, long capacity, long production_duration) {
         super(price);
 
         if(production_duration <= 0) {
@@ -42,7 +42,6 @@ public sealed abstract class Machine extends Item permits com.app.main.models.ma
         }
         this.production_duration = production_duration;
         this.capacity = capacity;
-        this.product = product;
         startProduct(product);
     }
 
@@ -50,11 +49,29 @@ public sealed abstract class Machine extends Item permits com.app.main.models.ma
         return alreadySetted;
     }
 
+    public void setProduct(ResourceEnum resource) {
+        this.product = resource;
+        this.alreadySetted = true;
+    }
+
+    /**
+     * Returns the number of the resource produced by the machine in its inventory.
+     * @return
+     */
+    public int getNumberOfResource() {
+        return this.inventory.countResource(product);
+    }
+
     /**
      * Clear the inventory of the machine by giving the content to the player
      * @param player the player
      */
     public void cleanInventory(Player player) {
+
+        if(!inventory.getInventory().containsKey(product)) {
+            return;
+        }
+        
         inventory.getInventory().get(product).forEach(
             resource -> player.getInventory().addResource(ResourceEnum.getResourceEnum(resource.getName()))
         );
@@ -67,10 +84,11 @@ public sealed abstract class Machine extends Item permits com.app.main.models.ma
      */
     protected final void product() {
 
-        if(product != null && 
-            inventory.countResource(product) <= capacity && 
+        if(product != null && inventory.countResource(product) <= capacity && 
             production_start + production_duration <= System.currentTimeMillis()) {
+            
             inventory.addResource(product);
+            production_start = System.currentTimeMillis();
         }
     }
 

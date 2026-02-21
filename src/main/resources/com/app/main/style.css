@@ -10,3 +10,11 @@
     -fx-background-color: gray; 
     -fx-padding: 15;
 }
+
+Button {
+    -fx-background-color: rgb(126, 0, 0);
+}
+
+Button:hover {
+    -fx-background-color: rgb(100, 0, 0);
+}

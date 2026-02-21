@@ -4,9 +4,6 @@ import com.app.main.models.Inventory;
 import com.app.main.models.resources.Recipe;
 
 public class Crafter {
-    
-    private long craftingStartTime = 0;
-    private long craftingEndTime = 0;
 
     private Inventory playerInventory;
 
@@ -25,9 +22,6 @@ public class Crafter {
 
         if(recipe == null) {
             throw new IllegalArgumentException("Recipe cannot be null");
-        }
-        if(recipe.isTimed()) {
-            //TODO
         }
         playerInventory.addResource(recipe.getResult());
     }

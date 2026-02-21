@@ -3,6 +3,7 @@ package com.app.main.models.map;
 import java.awt.Point;
 import java.util.Random;
 
+import com.app.main.models.machine.Harvester;
 import com.app.main.models.map.Tile.TileType;
 import com.app.main.models.resources.ResourceEnum;
 
@@ -11,6 +12,7 @@ import com.app.main.models.resources.ResourceEnum;
  * @author Dai Elias
  */
 public final class GameMap {
+
     private Tile[][] map;
     private int width;
     private int height;
@@ -75,6 +77,11 @@ public final class GameMap {
         map[height/2][width/2] = Tile.createTile(TileType.START, null);
         generateMarket();
         generateResource();
+
+        map[2][2].setItem(Harvester.createSimpleHarvester());
+        map[2][2].setType(TileType.HARVESTER);
+        map[2][1].setType(TileType.RESOURCE);
+        map[2][1].setItem(ResourceEnum.WOOD.getResource());
     }
     /**
      * Method for generate the resources of the map

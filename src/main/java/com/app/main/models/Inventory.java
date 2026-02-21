@@ -55,6 +55,13 @@ public final class Inventory {
      * @return the count of the resource
      */
     public int countResource(ResourceEnum resource) {
+
+        if(resource == null) {
+            return 0;
+        }
+        if(!this.inventory.containsKey(resource)) {
+            return 0;
+        }
         return inventory.get(resource).size();
     }
 }

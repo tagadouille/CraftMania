@@ -30,7 +30,7 @@ public final class MarketDialogController {
      * @param market the market
      * @return a new instance of MarketDialogController
      */
-    public static MarketDialogController createMarketDialogController(MarketDialog marketDialog, Market market) {
+    public static MarketDialogController create(MarketDialog marketDialog, Market market) {
 
         if(marketDialog == null) {
             throw new IllegalArgumentException("The market dialog can't be null");

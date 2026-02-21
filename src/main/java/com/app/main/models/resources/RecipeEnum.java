@@ -9,17 +9,17 @@ package com.app.main.models.resources;
  */
 public enum RecipeEnum{
 
-    BRICK(new Recipe(ResourceEnum.HEAT, ResourceEnum.CLAY, ResourceEnum.BRICK,true)),
+    BRICK(new Recipe(ResourceEnum.HEAT, ResourceEnum.CLAY, ResourceEnum.BRICK)),
 
-    HAMMER(new Recipe(ResourceEnum.WOOD, ResourceEnum.QUARTZ, ResourceEnum.HAMMER, false)),
+    HAMMER(new Recipe(ResourceEnum.WOOD, ResourceEnum.QUARTZ, ResourceEnum.HAMMER)),
 
-    DOG(new Recipe(ResourceEnum.QUARTZ, ResourceEnum.CLAY, ResourceEnum.DOG, false)),
+    DOG(new Recipe(ResourceEnum.QUARTZ, ResourceEnum.CLAY, ResourceEnum.DOG)),
 
-    CAT(new Recipe(ResourceEnum.HAMMER, ResourceEnum.QUARTZ, ResourceEnum.CAT, false)),
+    CAT(new Recipe(ResourceEnum.HAMMER, ResourceEnum.QUARTZ, ResourceEnum.CAT)),
 
-    CAR(new Recipe(ResourceEnum.CAT, ResourceEnum.DOG, ResourceEnum.CAR, true)),
+    CAR(new Recipe(ResourceEnum.CAT, ResourceEnum.DOG, ResourceEnum.CAR)),
 
-    TANK(new Recipe(ResourceEnum.CAR, ResourceEnum.WOOD, ResourceEnum.TANK, true));
+    TANK(new Recipe(ResourceEnum.CAR, ResourceEnum.WOOD, ResourceEnum.TANK));
 
     private Recipe recipe; 
 

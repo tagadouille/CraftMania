@@ -22,6 +22,7 @@ public final class GameController {
         
         this.playerController = playerController;
         this.gameMap = gameMap;
+        machines.add((Machine) gameMap.getMap()[2][2].getItem());
     }
 
     /**

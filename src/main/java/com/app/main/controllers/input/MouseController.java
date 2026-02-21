@@ -72,7 +72,7 @@ public class MouseController {
 
                 case TileType.MARKET :
                     MarketDialog marketDialog = new MarketDialog();
-                    MarketDialogController.createMarketDialogController(marketDialog, Market.createMarket(player));
+                    MarketDialogController.create(marketDialog, Market.createMarket(player));
                     marketDialog.show();
                     return;
 
@@ -86,6 +86,7 @@ public class MouseController {
                     HarvestViewController.create(
                         harvesterView, player, map, (int) mousePos.getY(), (int) mousePos.getX()
                     );
+                    harvesterView.show();
                     return;
                     
                 case TileType.FACTORY :

@@ -30,7 +30,7 @@ public class InventoryViewController {
         crafter = Crafter.createCrafter(playerInventory);
     }
 
-    public static InventoryViewController createInventoryViewController(InventoryView inventoryView, Inventory playerInventory) {
+    public static InventoryViewController create(InventoryView inventoryView, Inventory playerInventory) {
 
         if(inventoryView == null) {
             throw new IllegalArgumentException("The inventory view can't be null");

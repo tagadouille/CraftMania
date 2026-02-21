@@ -46,6 +46,22 @@ public class Player {
         return y;
     }
 
+    public void setX(double x) {
+
+        if(x < 0){
+            throw new IllegalArgumentException("X coordinate must be non-negative");
+        }
+        this.x = x;
+    }
+
+    public void setY(double y) {
+
+        if(y < 0){
+            throw new IllegalArgumentException("Y coordinate must be non-negative");
+        }
+        this.y = y;
+    }
+
     public int getMoney() {
         return money;
     }
@@ -62,6 +78,11 @@ public class Player {
         this.money = money;
     }
 
+    /**
+     * Make the player buy something, if they have enough money
+     * @param amount Amount of money to spend
+     * @return true if the purchase was successful, false otherwise
+     */
     public boolean buy(int amount){
 
         if(amount < 0){
@@ -156,11 +177,21 @@ public class Player {
      * @return true if it's the case, false otherwise
      */
     public boolean isPositionIncorrect(GameMap map){
-        int newX = (int) x;
-        int newY = (int) y;
 
-        return x <= 0 || y <= 0 || isTileIncorrect(map, newX, newY) || isTileIncorrect(map, newX + 1, newY)
-        || isTileIncorrect(map, newX, newY + 1) || isTileIncorrect(map, newX + 1, newY + 1);
+        double left   = x;
+        double right  = x + 1;
+        double top    = y;
+        double bottom = y + 1;
+
+        int leftTile   = (int)Math.floor(left);
+        int rightTile  = (int)Math.floor(right - 0.0001);
+        int topTile    = (int)Math.floor(top);
+        int bottomTile = (int)Math.floor(bottom - 0.0001);
+
+        return isTileIncorrect(map, leftTile,  topTile) ||
+            isTileIncorrect(map, rightTile, topTile) ||
+            isTileIncorrect(map, leftTile,  bottomTile) ||
+            isTileIncorrect(map, rightTile, bottomTile);
     }
 
     /**
