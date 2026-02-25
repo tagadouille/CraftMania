@@ -40,6 +40,10 @@ public sealed abstract class Factory extends Machine permits com.app.main.models
         this.setProduct(recipe.getResult());
     }
 
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
     /**
      * Factory method to create a SimpleFactory.
      * @return a new SimpleFactory instance

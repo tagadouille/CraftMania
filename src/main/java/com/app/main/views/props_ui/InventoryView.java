@@ -10,6 +10,7 @@ import com.app.main.util.image.ImageUtil;
 import com.app.main.views.utilities.RecipeImageEnum;
 import com.app.main.views.utilities.ItemImageEnum;
 
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -44,6 +45,8 @@ public class InventoryView extends PropUI {
         this.itemPane = new ItemPane();
         this.craftPane = new CraftPane();
 
+        root.setFillWidth(true);
+
         root.getChildren().add(this.itemPane);
         root.getChildren().add(this.craftPane);
     }
@@ -67,6 +70,7 @@ public class InventoryView extends PropUI {
         
         private ItemPane() {
             super(5);
+            this.setMaxWidth(Double.MAX_VALUE);
             displayItem();
         }
 
@@ -80,8 +84,13 @@ public class InventoryView extends PropUI {
         private void displayItem() {
 
             ScrollPane scrollPane = new ScrollPane();
+            scrollPane.setFitToWidth(true);
+            HBox.setHgrow(scrollPane, javafx.scene.layout.Priority.ALWAYS);
             
-            VBox resourcePanel = new VBox(5);
+            VBox resourcePanel = new VBox(10);
+            resourcePanel.setAlignment(Pos.CENTER);
+
+            resourcePanel.setFillWidth(true);
             HBox currentRow = null;
 
             for (int i = 0; i < ResourceEnum.values().length; i++) {
@@ -90,6 +99,7 @@ public class InventoryView extends PropUI {
                 // Create a new row every 2 items
                 if (i % 2 == 0) {
                     currentRow = new HBox(10);
+                    currentRow.setMaxWidth(Double.MAX_VALUE);
                     resourcePanel.getChildren().add(currentRow);
                 }
 

@@ -62,6 +62,14 @@ public sealed abstract class Machine extends Item permits com.app.main.models.ma
         return this.inventory.countResource(product);
     }
 
+    public ResourceEnum getProduct() {
+        return product;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
     /**
      * Clear the inventory of the machine by giving the content to the player
      * @param player the player

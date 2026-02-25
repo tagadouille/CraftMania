@@ -3,7 +3,9 @@ package com.app.main.models.map;
 import java.awt.Point;
 import java.util.Random;
 
+import com.app.main.models.machine.Factory;
 import com.app.main.models.machine.Harvester;
+import com.app.main.models.machine.Machine;
 import com.app.main.models.map.Tile.TileType;
 import com.app.main.models.resources.ResourceEnum;
 
@@ -66,6 +68,27 @@ public final class GameMap {
     }
 
     /**
+     * Setter for the market position on the map. 
+     * It checks if the new position is valid and updates the map accordingly.
+     * @param marketPos the new position of the market
+     */
+    public void setMarketPos(Point marketPos) {
+
+        if(marketPos == null){
+            throw new IllegalArgumentException("Market position cannot be null.");
+        }
+
+        if(!this.inBound(marketPos.x, marketPos.y)){
+            throw new IllegalArgumentException("Market position must be within the bounds of the map.");
+        }
+
+        // Change the position of the market on the map
+        this.map[this.marketPos.x][this.marketPos.y].setType(TileType.EMPTY);
+        this.marketPos = marketPos;
+        this.map[marketPos.x][marketPos.y].setType(TileType.MARKET);
+    }
+
+    /**
      * Method which generate the map
      */
     private void generateMap(){
@@ -98,10 +121,13 @@ public final class GameMap {
                 do{
                     i = rand.nextInt(height);
                     j = rand.nextInt(width);
-                }while(map[i][j].getType() != TileType.EMPTY);
+                }
+                while(map[i][j].getType() != TileType.EMPTY);
                 map[i][j] = Tile.createTile(TileType.RESOURCE, resType.getResource());
             }
+
             t++;
+
             if(t == 4){
                 break;
             }
@@ -122,7 +148,8 @@ public final class GameMap {
             }
             y = i;
             x = rand.nextInt(width);
-        }else{//If the market is in a col
+        }
+        else{//If the market is in a col
             int j = width - 1;
             if(rand.nextInt(2) == 0){
                 j = 0;
@@ -134,7 +161,40 @@ public final class GameMap {
         marketPos = new Point(6, 6);
     }
     
+    /**
+     * Method to check if the given coordinates are within the bounds of the map
+     * @param x the x coordinate to check
+     * @param y the y coordinate to check
+     * @return true if the coordinates are within the bounds of the map, false otherwise
+     */
     public boolean inBound(int x, int y){
         return x >= 0 && x < this.width && y >=0 && y < this.height;
+    }
+
+    /**
+     * Method to add a machine on the map at the given coordinates
+     * @param x the x coordinate where the machine should be added
+     * @param y the y coordinate where the machine should be added
+     * @param machine the machine to add on the map
+     */
+    public void addMachine(int x, int y, Machine machine){
+
+        if(!inBound(x, y)){
+            throw new IllegalArgumentException("Coordinates must be within the bounds of the map.");
+        }
+
+        if(machine == null){
+            throw new IllegalArgumentException("Machine cannot be null.");
+        }
+
+        if(machine instanceof Harvester){
+            map[x][y] = Tile.createTile(TileType.HARVESTER, machine);
+        }
+        else if(machine instanceof Factory){
+            map[x][y] = Tile.createTile(TileType.FACTORY, machine);
+        }
+        else{
+            throw new IllegalArgumentException("Unsupported machine type.");
+        }
     }
 }
