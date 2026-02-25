@@ -71,6 +71,8 @@ public class HarvestViewController {
 
     private void harvestNearbyUpdate() {
 
+        if(harvester.isAlreadySetted()) return;
+
         List<ResourceEnum> nearbyResource = new ArrayList<>();
 
         int[][] directions = {{-1,0}, {1,0}, {0,-1}, {0,1}};
@@ -114,6 +116,7 @@ public class HarvestViewController {
                     if(ressourceEnum != null) {
                         harvester.setProduct(ressourceEnum);
                         harvesterView.getContent().getChildren().clear();
+                        harvestNearbyUpdate();
                     }
                 });
             }

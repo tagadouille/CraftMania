@@ -11,6 +11,10 @@ public class Crafter {
         this.playerInventory = playerInventory;
     }
 
+    public Inventory getPlayerInventory() {
+        return playerInventory;
+    }
+
     public static Crafter createCrafter(Inventory playerInventory) {
         if(playerInventory == null) {
             throw new IllegalArgumentException("Player inventory cannot be null");

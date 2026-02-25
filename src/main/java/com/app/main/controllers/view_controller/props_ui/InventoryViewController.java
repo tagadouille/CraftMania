@@ -1,11 +1,13 @@
 package com.app.main.controllers.view_controller.props_ui;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.app.main.controllers.Crafter;
 import com.app.main.models.Inventory;
 import com.app.main.models.resources.RecipeEnum;
 import com.app.main.views.props_ui.InventoryView;
+import com.app.main.models.resources.ResourceEnum;
 
 import javafx.scene.layout.VBox;
 
@@ -28,6 +30,7 @@ public class InventoryViewController {
         this.inventoryView = inventoryView;
         craftingBehavior();
         crafter = Crafter.createCrafter(playerInventory);
+        updateItemNb();
     }
 
     public static InventoryViewController create(InventoryView inventoryView, Inventory playerInventory) {
@@ -38,13 +41,23 @@ public class InventoryViewController {
         return new InventoryViewController(inventoryView, playerInventory);
     }
 
+    private void updateItemNb() {
+
+        int i = 0;
+
+        for (ResourceEnum res : new ArrayList<>(crafter.getPlayerInventory().getInventory().keySet())) {
+            inventoryView.getItemNb()[i].setText(crafter.getPlayerInventory().countResource(res) + "");
+            i++;
+        }
+    }
+
     private void craftingBehavior() {
         
         List<VBox> lines = inventoryView.getCraftPane().getLines();
 
         int i = 0;
 
-        for(VBox line : lines) {
+        /*for(VBox line : lines) {
             
             for (VBox vBox : line.getChildren().stream().map(node -> (VBox) node).toList()) {
                 
@@ -53,10 +66,11 @@ public class InventoryViewController {
                 vBox.setOnMouseClicked(event -> {
                     RecipeEnum recipeEnum = RecipeEnum.values()[index];
                     crafter.startCrafting(recipeEnum.getRecipe());
+                    updateItemNb();
                 });
                 i++;
             }
-        }
+        }*/
         
     }
 }

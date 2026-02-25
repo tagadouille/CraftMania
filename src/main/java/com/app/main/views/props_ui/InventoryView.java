@@ -22,6 +22,8 @@ import javafx.scene.text.Text;
  * The InventoryView class represents the inventory user interface in the application.
  * It extends the PropUI class to inherit common UI properties and behaviors.
  * 
+ * @see PropUI
+ * 
  * @author Dai Elias
  */
 public class InventoryView extends PropUI {
@@ -29,32 +31,47 @@ public class InventoryView extends PropUI {
     private Scene mainScene;
 
     private CraftPane craftPane;
+    private ItemPane itemPane;
     
     public InventoryView() {
-        super("Inventory", 200, 200);
+        super("Inventory", 300, 300);
 
         VBox root = new VBox(5);
         this.mainScene = new Scene(root);
 
         this.setScene(mainScene);
 
-        root.getChildren().add(new ItemPane());
-        root.getChildren().add(new CraftPane());
+        this.itemPane = new ItemPane();
+        this.craftPane = new CraftPane();
+
+        root.getChildren().add(this.itemPane);
+        root.getChildren().add(this.craftPane);
     }
 
     public CraftPane getCraftPane() {
         return craftPane;
     }
 
+    public Text[] getItemNb() {
+        return itemPane.getItemNb();
+    }
+
+
     /**
      * The ItemPane class represents a pane that displays items in the inventory.
      * @author Dai Elias
      */
     private static class ItemPane extends HBox {
+
+        private Text[] itemNb = new Text[ResourceEnum.values().length];
         
         private ItemPane() {
             super(5);
             displayItem();
+        }
+
+        public Text[] getItemNb() {
+            return itemNb;
         }
 
         /**
@@ -64,10 +81,19 @@ public class InventoryView extends PropUI {
 
             ScrollPane scrollPane = new ScrollPane();
             
-            HBox resourcePanel = new HBox(5);
+            VBox resourcePanel = new VBox(5);
+            HBox currentRow = null;
 
-            for (ResourceEnum res : ResourceEnum.values()) {
-                HBox line = new HBox();
+            for (int i = 0; i < ResourceEnum.values().length; i++) {
+                ResourceEnum res = ResourceEnum.values()[i];
+
+                // Create a new row every 2 items
+                if (i % 2 == 0) {
+                    currentRow = new HBox(10);
+                    resourcePanel.getChildren().add(currentRow);
+                }
+
+                HBox itemBox = new HBox();
 
                 // Resource image display :
                 Image img = null;
@@ -82,7 +108,7 @@ public class InventoryView extends PropUI {
                 try {
                     ImageView imageView = new ImageView(ImageUtil.resizeImage(img, 50, 50));
 
-                    line.getChildren().add(imageView);
+                    itemBox.getChildren().add(imageView);
                 }
                 catch(IOException e){
 
@@ -95,11 +121,14 @@ public class InventoryView extends PropUI {
                 Text resName = new Text(res.toString().toLowerCase());
                 title.getChildren().add(resName);
 
+                itemNb[res.ordinal()] = new Text("0");
+
                 infoBox.getChildren().add(title);
+                infoBox.getChildren().add(itemNb[res.ordinal()]);
 
-                line.getChildren().add(infoBox);
+                itemBox.getChildren().add(infoBox);
 
-                resourcePanel.getChildren().add(line);
+                currentRow.getChildren().add(itemBox);
             }
             scrollPane.setContent(resourcePanel);
             this.getChildren().add(scrollPane);
