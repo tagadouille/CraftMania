@@ -7,10 +7,10 @@ package com.app.main.models.resources;
  */
 public enum ResourceEnum {
 
-    WOOD(new Resource(5)),
+    WOOD(new ResourceTMP(5)),
     QUARTZ(new Resource(10)),
     CLAY(new Resource(10)),
-    HEAT(new Resource(5)),
+    HEAT(new ResourceTMP(5)),
     BRICK(new Resource(15)),
     CAR(new Resource(15)),
     CAT(new Resource(15)),
@@ -19,11 +19,17 @@ public enum ResourceEnum {
     DOG(new Resource(15));
 
     private Resource ressource;
+    private boolean isTmp = false;
     
     private ResourceEnum(Resource ressource){
         this.ressource = ressource;
         ressource.setName(this.toString());
-        ressource.setTypeName("ressource");
+        ressource.setTypeName("resource");
+    }
+
+    private ResourceEnum(Resource ressource, boolean isTmp){
+        this(ressource);
+        this.isTmp = isTmp;
     }
 
     /**
@@ -32,6 +38,14 @@ public enum ResourceEnum {
      */
     public Resource getResource() {
         return ressource.clone();
+    }
+
+    /**
+     * Checks if the resource associated with this enum constant is temporary.
+     * @return true if the resource is temporary, false otherwise.
+     */
+    public boolean isTmp() {
+        return isTmp;
     }
 
     /**

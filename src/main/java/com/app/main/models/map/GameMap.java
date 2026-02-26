@@ -123,7 +123,13 @@ public final class GameMap {
                     j = rand.nextInt(width);
                 }
                 while(map[i][j].getType() != TileType.EMPTY);
-                map[i][j] = Tile.createTile(TileType.RESOURCE, resType.getResource());
+
+                if(resType.isTmp()){
+                    map[i][j] = Tile.createTile(TileType.RESOURCETMP, resType.getResource());
+                }
+                else{
+                    map[i][j] = Tile.createTile(TileType.RESOURCE, resType.getResource());
+                }
             }
 
             t++;
@@ -136,7 +142,8 @@ public final class GameMap {
     /**
      * Method for generate the market of the map
      */
-    private void generateMarket(){
+    private void generateMarket() { //TODO REPLACER
+
         Random rand = new Random();
         int x, y;
 

@@ -9,7 +9,7 @@ import com.app.main.models.Item;
  * @see Cloneable
  * @author Dai Elias
  */
-public final class Resource extends Item implements Cloneable{
+public sealed class Resource extends Item implements Cloneable permits ResourceTMP {
 
     /**
      * Constructor for Ressource class.

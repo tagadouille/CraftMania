@@ -10,10 +10,23 @@ import com.app.main.models.machine.Factory;
 import com.app.main.models.machine.Harvester;
 import com.app.main.models.map.GameMap;
 import com.app.main.models.map.Tile.TileType;
+import com.app.main.models.resources.Recipe;
+import com.app.main.models.resources.RecipeEnum;
 import com.app.main.models.resources.Resource;
+import com.app.main.models.resources.ResourceEnum;
 
-
-public class LoadSave {
+/**
+ * The LoadSave class is responsible for loading the saved state of 
+ * the game from an encrypted file.
+ * It reads the player's information and the game map data, 
+ * including the positions of resources and machines
+ * 
+ * @see Saving
+ * @see CaesarEncrypt
+ * 
+ * @author Dai Elias
+ */
+public final class LoadSave {
 
     private static final String PATH = Saving.getPath();
     private static final String DECRYPTIONFILEPATH = "src/fichier/sauvegarde/dechiffr.txt";
@@ -37,7 +50,7 @@ public class LoadSave {
             try{
                 CaesarEncrypt.decryptFile(file, Saving.getKey(), DECRYPTIONFILEPATH);
             }
-            //TODO err
+
             catch(FileNotFoundException e){
                 System.out.println("Unexistant file");
                 return false;
@@ -62,7 +75,7 @@ public class LoadSave {
                     // Delete of map data :
                     for (int i = 0; i < map.getHeight(); i++) {
                         for (int j = 0; j < map.getWidth(); j++) {
-                            map.setCase(j, i, new Case(j*(GamePannel.getSpriteSize()), i*(GamePannel.getSpriteSize())));
+                            map.setCase(j, i, new Case(j*), i*)));
                         }
                     }
                     System.out.println("Corrupted save");
@@ -114,7 +127,7 @@ public class LoadSave {
             for (; i < line.length; i++) {
                 for (int j = 0; j < Integer.parseInt(line[i]) ; j++) {
                     player.addResource(null);
-                    //! player.ajouterRessourceInventaire(obtenirRessource(player.getNameRes()[i - 2]));
+                    //! player.addResourceInventaire(obtenirRessource(player.getNameRes()[i - 2]));
                 }
             }
         }
@@ -131,18 +144,18 @@ public class LoadSave {
         }
 
         // Market position recovery:
-        String[] ligne = reader.nextLine().split(" ");
+        String[] line = reader.nextLine().split(" ");
 
-        if(ligne.length != 3){
+        if(line.length != 3){
             return false;
         }
 
-        if(!ligne[0].equals("Market")) {
+        if(!line[0].equals("Market")) {
             return false;
         }
         try{
-            int x = Integer.parseInt(ligne[2]);
-            int y = Integer.parseInt(ligne[1]);
+            int x = Integer.parseInt(line[2]);
+            int y = Integer.parseInt(line[1]);
 
             try{
                 map.setMarketPos(new Point(x, y));
@@ -185,7 +198,7 @@ public class LoadSave {
             int x = Integer.parseInt(line[0]);
             int y = Integer.parseInt(line[1]);
 
-            if(!coordValide(x, y)){
+            if(!map.inBound(x, y)){
                 return false;
             }
             map.getMap()[x][y].setType(TileType.RESOURCETMP);
@@ -214,7 +227,7 @@ public class LoadSave {
             int x = Integer.parseInt(line[1]);
             int y = Integer.parseInt(line[2]);
             
-            if(!coordValide(x,y)){
+            if(!map.inBound(x, y)){
                 return false;
             }
 
@@ -227,7 +240,7 @@ public class LoadSave {
             boolean flag = false;
             RessourceTMP res2 = null;
 
-            for (RessourceTMP ressource : RessourceEnum.getLesRessourceTMP()) {
+            for (RessourceTMP ressource : ResourceEnum.getLesRessourceTMP()) {
 
                 if(res.getNom().equals(ressource.getNom())){
                     res2 = ressource;
@@ -251,26 +264,19 @@ public class LoadSave {
             }
             if(res2 == null){
 
-               // Resource positioning:
-                res.setPosX(x*GamePannel.getSpriteSize());
-                res.setPosY(y*GamePannel.getSpriteSize());
-
                 // Test if there is already a resource on the case :
-                if(map.getMap()[x][y].getRessource() == null ){
-                    map.getMap()[x][y].setRessource(res);
+                if(map.getMap()[x][y].getResource() == null ){
+                    map.getMap()[x][y].setResource(res);
                 }
                 else{
                     return false;
                 }
             }
             else{
-                // Resource positioning:
-                res2.setPosX(x*GamePannel.getSpriteSize());
-                res2.setPosY(y*GamePannel.getSpriteSize());
 
                 // Test if there is already a resource on the case :
-                if(map.getMap()[x][y].getRessource() == null ){
-                    map.getMap()[x][y].setRessource(res2);
+                if(map.getMap()[x][y].getResource() == null ){
+                    map.getMap()[x][y].setResource(res2);
                 }
                 else{
                     return false;
@@ -312,11 +318,10 @@ public class LoadSave {
         int x = Integer.parseInt(line[2]);
         int y = Integer.parseInt(line[3]);
 
-        if(!coordValide(x/GamePannel.getSpriteSize(), y/GamePannel.getSpriteSize())){
+        if(!map.inBound(x, y)){
             return false;
         }
 
-        // TODO method for add a factory in the map with the type of the factory as parameter
         switch (line[1]) {
             case "factory":
                 factory = Factory.createSimpleFactory();
@@ -339,16 +344,16 @@ public class LoadSave {
         
         if(line[4].equals("null")){
             if(Integer.parseInt(line[5]) == 0 && Integer.parseInt(line[6]) == 0 && Integer.parseInt(line[7]) == 0){
-                return map.placerfactory(x/GamePannel.getSpriteSize(), y/GamePannel.getSpriteSize(), factory);
+                return map.placerfactory(x, y, factory);
             }
             return false;
         }
         boolean flag = false;
-        for (Craft craft : Craft.values()) {
+        for (RecipeEnum recipe : RecipeEnum.values()) {
 
-            //Vérification du nom du craft et paramétrage
-            if(craft.toString().equals(line[4])){
-                factory.setRecette(craft.recette);
+            // Verfication of the recipe of the factory:
+            if(recipe.toString().equals(line[4])){
+                factory.setRecipe(recipe);
                 flag = true;
                 break;
             }
@@ -356,17 +361,18 @@ public class LoadSave {
         if(!flag){
             return false;
         }
-        //Remplissage de l'factory:
+
+        // Factory inventory filling:
         for (int i = 0; i < Integer.parseInt(line[5]); i++) {
-            factory.getInventaire().ajouterRessource(obtenirRessource(factory.getRessource1Nom()));
+            factory.getInventory().addResource(factory.getRecipe().getIngredient1());
         }
         for (int i = 0; i < Integer.parseInt(line[6]); i++) {
-            factory.getInventaire().ajouterRessource(obtenirRessource(factory.getRessource2Nom()));
+            factory.getInventory().addResource(factory.getRecipe().getIngredient2());
         }
         for (int i = 0; i < Integer.parseInt(line[7]); i++) {
-            factory.getInventaire().ajouterRessource(obtenirRessource(factory.getResultatNom()));
+            factory.getInventory().addResource(factory.getRecipe().getResult());
         }
-        return map.placerfactory(x/GamePannel.getSpriteSize(), y/GamePannel.getSpriteSize(), factory);
+        return map.placerfactory(x, y, factory);
     }
 
     private static boolean recupharvester(GameMap map, String[] ligne){
@@ -402,7 +408,7 @@ public class LoadSave {
         //TODO PLACER
         if(ligne[4].equals("null")){
             if(ligne[5].equals("0")){
-                return map.placerharvester(x/GamePannel.getSpriteSize(), y/GamePannel.getSpriteSize(), harvester);
+                return map.placerharvester(x, y, harvester);
             }
         }
 
@@ -411,9 +417,9 @@ public class LoadSave {
 
             //Remplissage de l'inventaire de la récolteuse
             for (int i = 0; i < Integer.parseInt(ligne[5]); i++) {
-                harvester.getInventaire().ajouterRessource(obtenirRessource(ligne[4]));
+                harvester.getInventory().addResource(obtenirRessource(ligne[4]));
             }
-            return map.placerharvester(x/GamePannel.getSpriteSize(), y/GamePannel.getSpriteSize(), harvester);
+            return map.placerharvester(x, y, harvester);
         }
         return false;
     }

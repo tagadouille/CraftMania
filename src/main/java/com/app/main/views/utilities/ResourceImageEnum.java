@@ -13,12 +13,13 @@ public enum ResourceImageEnum implements ImagePath {
     WOOD("wood"),
     QUARTZ("quartz"),
     CLAY("clay"),
-    HEAT("fire");
+    HEAT("fire"),
+    Empty("empty");
 
     private Image image;
 
     private ResourceImageEnum(String imageName){
-        this.image = ImageLoader.loadImage(ImagePath.IMAGE_PATH + "Ressource/" + imageName + ".png");
+        this.image = ImageLoader.loadImage(ImagePath.IMAGE_PATH + "ressource/" + imageName + ".png");
     }
 
     /**

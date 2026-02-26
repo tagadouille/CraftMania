@@ -95,12 +95,16 @@ public final class MapDisplay {
                 // Display resource : 
                 else if(tile.getType() == TileType.RESOURCE){
                     
-                    for(ResourceImageEnum type : ResourceImageEnum.values()){
-                        if(tile.getItem().getName().equals(type.toString())){
+                    for(ResourceImageEnum type : ResourceImageEnum.values()) {
+                        if(tile.getItem().getName().equals(type.toString())) {
+
                             img = type.getImage();
                             break;
                         }
                     }
+                }
+                else if(tile.getType() == TileType.RESOURCETMP) {
+                    img = ResourceImageEnum.Empty.getImage();
                 }
 
                 if(img != null){

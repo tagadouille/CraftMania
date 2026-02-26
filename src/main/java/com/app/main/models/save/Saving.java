@@ -15,13 +15,20 @@ import com.app.main.models.map.Tile.TileType;
 import com.app.main.models.resources.Resource;
 import com.app.main.models.resources.ResourceEnum;
 
-
-public class Saving {
+/**
+ * This class is responsible for saving the current state of the game, 
+ * including the player's information and the game map, to an encrypted file.
+ * 
+ * @see CaesarEncrypt
+ * 
+ * @author Dai Elias
+ */
+public final class Saving {
 
     private static final String PATH = "src/fichier/sauvegarde/sauvegarde.txt";
-    private static final int KEY = 11904; //La clé de chiffrement
-    private static boolean noPath; //Informe si le chemin vers un fichier est introuvable
-    private static boolean success; //Informe si la sauvegarde a réussie
+    private static final int KEY = 11904; // Encryption key for the Caesar cipher
+    private static boolean noPath;
+    private static boolean success;
 
 
     public static String getPath() {
@@ -243,8 +250,9 @@ public class Saving {
             }
             else{
                 ligne += factory.getRecipe().getResult().toString() + " "
-                + factory.getInventory().getQuantite(factory.getRessource1Nom()) + " " + factory.getInventory().getQuantite(factory.getRessource2Nom())
-                + " " + factory.getInventory().getQuantite(factory.getResultatNom());
+                + factory.getInventory().countResource(factory.getRecipe().getIngredient1()) + " " + 
+                factory.getInventory().countResource(factory.getRecipe().getIngredient2())
+                + " " + factory.getInventory().countResource(factory.getRecipe().getResult());
             }
             CaesarEncrypt.writeEncrypt(ligne + "\n", writer, KEY);
             return true;

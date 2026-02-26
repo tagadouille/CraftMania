@@ -1,6 +1,10 @@
 package com.app.main.models.map;
 
+import java.util.Optional;
+
 import com.app.main.models.Item;
+import com.app.main.models.machine.Machine;
+import com.app.main.models.resources.Resource;
 
 /**
  * Represents a tile on the map with a specific type and an optional item.
@@ -60,6 +64,38 @@ public class Tile {
 
     public void setType(TileType type) {
         this.type = type;
+    }
+
+    /**
+     * Returns an Optional containing the Machine on the tile if it exists 
+     * and is of the correct type, otherwise returns an empty Optional.
+     */
+    public Optional<Machine> getMachine(){
+
+        if(this.item == null){
+            return Optional.empty();
+        }
+
+        if(this.type == TileType.FACTORY || this.type == TileType.HARVESTER){
+            return Optional.of((Machine) this.item);
+        }
+        return null;
+    }
+
+   /**
+    * Returns an Optional containing the Resource on the tile if it exists
+    * and is of the correct type, otherwise returns an empty Optional.
+    */
+    public Optional<Resource> getResource(){
+
+        if(this.item == null){
+            return Optional.empty();
+        }
+
+        if(this.type == TileType.RESOURCE || this.type == TileType.RESOURCETMP){
+            return Optional.of((Resource) this.item);
+        }
+        return null;
     }
 
     /**

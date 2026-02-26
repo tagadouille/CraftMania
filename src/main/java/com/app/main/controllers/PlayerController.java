@@ -2,13 +2,17 @@ package com.app.main.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.app.main.PathFinder;
 import com.app.main.controllers.input.KeyHandler;
+import com.app.main.models.Item;
 import com.app.main.models.Player;
 import com.app.main.models.map.GameMap;
 import com.app.main.models.map.Tile;
+import com.app.main.models.resources.Resource;
 import com.app.main.models.resources.ResourceEnum;
+import com.app.main.models.resources.ResourceTMP;
 import com.app.main.util.Point;
 import com.app.main.util.design_pattern.Observable;
 import com.app.main.util.design_pattern.Observer;
@@ -23,6 +27,7 @@ import javafx.scene.input.KeyCode;
  * It also implements the Observable interface to notify the GameView of any changes in the player's state.
  * 
  * @see Player
+ * @see GameView
  * @see KeyHandler
  * @see Observable
  * 
@@ -88,7 +93,20 @@ public final class PlayerController implements Observable{
      * For harvest the resource in a tile
      * @param tile Tile the tile where the resource is
      */
-    public void harvest(Tile tile){
+    public void harvest(Tile tile) {
+
+        Optional<Resource> resOpt = tile.getResource();
+        if(!resOpt.isPresent()){
+            return;
+        }
+        if(resOpt.get() instanceof ResourceTMP){
+            ResourceTMP resTmp = (ResourceTMP) resOpt.get();
+            if(!resTmp.isRespawned()){
+                return;
+            }
+            resTmp.pick(this.player);
+            return;
+        }
         harvest = true;
         stopHarvestTime = System.currentTimeMillis() + harvestTime;
         resourceTypeHarvest = ResourceEnum.getResourceEnum(tile.getItem().getName());
@@ -114,7 +132,8 @@ public final class PlayerController implements Observable{
     public void process(GameMap map){
         if(harvest){
             stuckInHarvest();
-        }else{
+        }
+        else{
             globalMove(map);
         }
     }
@@ -125,7 +144,8 @@ public final class PlayerController implements Observable{
     private void globalMove(GameMap map){
         if(go){
             this.movementToPos();
-        }else{
+        }
+        else{
             if(keyHandler.keylist.contains(KeyCode.Z)){
                 player.moveUp();
                 if(player.isPositionIncorrect(map)){
