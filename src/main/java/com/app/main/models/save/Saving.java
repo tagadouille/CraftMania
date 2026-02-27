@@ -25,8 +25,8 @@ import com.app.main.models.resources.ResourceEnum;
  */
 public final class Saving {
 
-    private static final String PATH = "src/fichier/sauvegarde/sauvegarde.txt";
-    private static final int KEY = 11904; // Encryption key for the Caesar cipher
+    private static final String PATH = "files/saves/save.txt";
+    public static final int KEY = 0; // Encryption key for the Caesar cipher 11904
     private static boolean noPath;
     private static boolean success;
 
@@ -41,10 +41,6 @@ public final class Saving {
 
     public static boolean isNoPath() {
         return noPath;
-    }
-
-    public static int getKey() {
-        return KEY;
     }
 
     public static void setSuccess(boolean success) {
@@ -79,6 +75,7 @@ public final class Saving {
         }
         catch(IOException e){
             noPath = true;
+            System.err.println("The file wasn't created");
             return false;
         }
         noPath = false;
@@ -94,7 +91,7 @@ public final class Saving {
             writer.close();
         }
         catch (IOException e) {
-            System.out.println("Saving of the player or the map failed");
+            System.err.println("Saving of the player or the map failed");
             e.printStackTrace();
             return false;
         }
@@ -116,7 +113,7 @@ public final class Saving {
             CaesarEncrypt.writeEncrypt("\n", writer, KEY);
         }
         catch(IOException e){
-            System.out.println("Error while saving the player");
+            System.err.println("Error while saving the player");
             return false;
         }
         return true;
@@ -128,7 +125,7 @@ public final class Saving {
         //Save of the position of the market on the map:
         try{
             CaesarEncrypt.writeEncrypt(
-                "Marche " + (int) map.getMarketPos().getY() 
+                "Market " + (int) map.getMarketPos().getY() 
                 + " " + (int) map.getMarketPos().getX() + "\n",
                 writer, KEY
             );
@@ -146,11 +143,6 @@ public final class Saving {
     private static boolean saveResources(BufferedWriter writer, GameMap map){
 
         try{
-            // Start with position of the temporary resources :
-            for (Integer[] position : map.getCaseRessourceListe()) {
-                CaesarEncrypt.writeEncrypt(position[1] + " " + position[0] + "\n", writer, KEY);
-            }
-
             //For the others resources, we save their name and position :
             for (int i = 0; i < map.getHeight(); i++) {
                 for (int j = 0; j < map.getWidth(); j++) {
@@ -174,15 +166,14 @@ public final class Saving {
                         else{
                             nom = ResourceEnum.WOOD.toString();
                         }
-                        CaesarEncrypt.writeEncrypt(nom + " " + i + " " + j + "\n", writer, KEY);
-                        
+                        CaesarEncrypt.writeEncrypt(nom + " " + i + " " + j + "\n", writer, KEY); 
                     }
                 }
             }
             
         }
         catch(IOException e){
-            System.out.println("Error while saving resources");
+            System.err.println("Error while saving resources");
             return false;
         }
         return true;
@@ -194,9 +185,9 @@ public final class Saving {
             for (int i = 0; i < map.getHeight(); i++) {
                 for (int j = 0; j < map.getWidth(); j++) {
 
-                    if(map.getMap()[i][j].getMachine() != null){
+                    if(map.getMap()[i][j].getMachine().isPresent()){
 
-                        Machine machine = map.getMap()[i][j].getMachine();
+                        Machine machine = map.getMap()[i][j].getMachine().get();
                         if(machine instanceof Harvester){
                             
                             if(!saveHarvester(writer, (Harvester) machine, j, i)){

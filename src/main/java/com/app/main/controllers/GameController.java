@@ -77,7 +77,7 @@ public final class GameController { //TODO OBSERVER, SINGLETON
                 Tile tile = gameMap.getMap()[i][j];
 
                 if(tile.getMachine() != null){
-                    if(Optional.ofNullable(tile.getMachine()).isPresent()){
+                    if(tile.getMachine().isPresent()){
                         machines.add(tile.getMachine().get());
                     }
                 }

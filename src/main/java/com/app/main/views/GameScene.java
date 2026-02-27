@@ -42,7 +42,7 @@ public class GameScene extends Scene{
 
         GameBar gameBar = new GameBar();
 
-        GameBarController.create(player, gameBar);
+        GameBarController.create(player, gameBar, gameMap);
 
         parent.getChildren().add(gameBar);
         parent.getChildren().add(gameView);

@@ -1,0 +1,12 @@
+player 0 0 0 0 0 0 0 0 0 0 0 
+Marche 6 6
+WOOD 0 8
+WOOD 2 1
+HEAT 2 12
+QUARTZ 5 0
+CLAY 5 6
+QUARTZ 9 13
+WOOD 12 9
+HEAT 13 1
+CLAY 14 1
+harvester SimpleHarvester 2 2 null 0

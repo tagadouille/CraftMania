@@ -79,7 +79,7 @@ public class Tile {
         if(this.type == TileType.FACTORY || this.type == TileType.HARVESTER){
             return Optional.of((Machine) this.item);
         }
-        return null;
+        return Optional.empty();
     }
 
    /**
@@ -95,7 +95,7 @@ public class Tile {
         if(this.type == TileType.RESOURCE || this.type == TileType.RESOURCETMP){
             return Optional.of((Resource) this.item);
         }
-        return null;
+        return Optional.empty();
     }
 
     /**
