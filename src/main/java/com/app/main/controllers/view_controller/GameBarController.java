@@ -9,7 +9,17 @@ import com.app.main.views.GameBar;
 import com.app.main.views.menu.MainMenu;
 import com.app.main.views.props_ui.InventoryView;
 
-public class GameBarController {
+/**
+ * The GameBarController class manages the interactions and behaviors of the GameBar view,
+ * which includes handling button actions for quitting the game, 
+ * saving the game, and accessing the inventory.
+ * 
+ * @see GameBar
+ * @see MainMenu
+ * 
+ * @author Dai Elias
+ */
+public final class GameBarController {
 
     private Player player;
     private GameBar gameBar;
@@ -24,6 +34,15 @@ public class GameBarController {
         buttonBehavior();
     }
 
+    /**
+     * Factory method to create a GameBarController instance
+     *  with the specified player, game bar, and game map.
+     * @param player the player of the game
+     * @param gameBar the game bar to be controlled
+     * @param gameMap the game map to be used for saving the game state
+     * @return a new GameBarController instance with the specified player, game bar, and game map
+     * @throws IllegalArgumentException if any of the parameters are null
+    */
     public static GameBarController create(Player player, GameBar gameBar, GameMap gameMap) {
 
         if(player == null) {

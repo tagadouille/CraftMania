@@ -2,7 +2,10 @@ package com.app.main.views.menu;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -69,6 +72,24 @@ public class MainMenu extends Scene {
 
     public Button getQuit() {
         return quit;
+    }
+
+    /**
+     * This method displays a notification alert based on the success of loading a save.
+     * @param success a boolean indicating whether the save was loaded successfully or not
+     */
+    public void loadNotif(boolean success) {
+
+        if(success) {
+            Alert alert = new Alert(AlertType.INFORMATION, "The save was loaded with success ! ", ButtonType.OK);
+            alert.setHeaderText("Loading");
+            alert.showAndWait();
+        }
+        else {
+            Alert alert = new Alert(AlertType.ERROR, "An error occured while loading the save", ButtonType.OK);
+            alert.setHeaderText("Loading");
+            alert.showAndWait();
+        }
     }
 
 }

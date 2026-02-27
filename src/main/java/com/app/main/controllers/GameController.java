@@ -2,7 +2,6 @@ package com.app.main.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import com.app.main.models.Player;
 import com.app.main.models.machine.Machine;
@@ -26,7 +25,6 @@ public final class GameController { //TODO OBSERVER, SINGLETON
         
         this.playerController = playerController;
         this.gameMap = gameMap;
-        machines.add((Machine) gameMap.getMap()[2][2].getItem());
         addItemToLists();
     }
 

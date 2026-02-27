@@ -41,6 +41,7 @@ public final class GameView extends StackPane implements Observer{
     private PlayerSprite sprite;
 
     private HarvestBar harvestBar = new HarvestBar();
+    private boolean harvestBarDisplayed = false;
 
 
     private GameView(Scene scene, double width, double height, GameController gameController, KeyHandler keyHandler) {
@@ -116,11 +117,11 @@ public final class GameView extends StackPane implements Observer{
     }
 
     public void addHarvestBar(){
-        this.getChildren().addLast(harvestBar);
+        this.harvestBarDisplayed = true;
     }
 
     public void removeHarvestBar(){
-        this.getChildren().remove(harvestBar);
+        this.harvestBarDisplayed = false;
     }
 
     /**
@@ -172,6 +173,10 @@ public final class GameView extends StackPane implements Observer{
 
         mapDisplay.displayMap(gc);
         sprite.display(gc);
+
+        if(harvestBarDisplayed) {
+            harvestBar.display(gc);
+        }
     }
 
     @Override

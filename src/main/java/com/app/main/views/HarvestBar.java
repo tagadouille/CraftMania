@@ -1,23 +1,40 @@
 package com.app.main.views;
 
-import javafx.scene.control.ProgressBar;
+import com.app.main.views.props_display.Sprite;
+
+import javafx.scene.canvas.GraphicsContext;
 
 /**
  * The HarvestBar class represents a progress bar used to indicate the progress of a harvesting action in the game.
- * It extends the JavaFX ProgressBar class and provides methods to spawn, despawn, and
- * decrease the progress of the harvest bar.
- * @see ProgressBar
+ * It extends Sprite and provides methods to spawn, despawn, 
+ * and decrease the progress of the harvest bar.
+ * @see Sprite
  * @author Dai Elias
  */
-public class HarvestBar extends ProgressBar {
-    
-    public HarvestBar() {
-        
-        this.setProgress(0);
-        this.getStyleClass().add("harvest-bar");
+public class HarvestBar extends Sprite {
 
-        /*super(JProgressBar.HORIZONTAL,0, 100);
-        this.setString("Récolte en cours..");*/
+    private int progress = 0;
+
+    /**
+     * Constructor for the HarvestBar class, initializes the progress to 0 
+     * and sets up the progress bar.
+     * The progress bar is initialized with a width of 75 and a height of 25.
+     */
+    public HarvestBar() {
+        super(0, 0, 75, 25, null);
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    /**
+     * Sets the progress of the harvest bar, ensuring that the value is between 0 and 100.
+     * @param progress the new progress value to be set for the harvest bar
+     */
+    public void setProgress(int progress) {
+
+        this.progress = Math.min(Math.max(0, progress), 100);
     }
     
     /**
@@ -27,9 +44,8 @@ public class HarvestBar extends ProgressBar {
     public void spawn(int x, int y, GameView gameView){
 
         this.setProgress(100);
-        this.setLayoutX(x);
-        this.setLayoutY(y);
-        this.setPrefSize(GameView.getSpriteSize()*2, GameView.getSpriteSize()/2);
+        this.setPosX(x);
+        this.setPosY(y);
         gameView.addHarvestBar();
     }
 
@@ -47,5 +63,16 @@ public class HarvestBar extends ProgressBar {
      */
     public void decrease(int amount){
         this.setProgress(this.getProgress() - amount);
+    }
+
+    /**
+     * Displays the harvest bar on the screen using the provided GraphicsContext.
+     * @param gc the GraphicsContext used to draw the harvest bar on the screen
+     */
+    public void display(GraphicsContext gc) {
+        gc.setFill(javafx.scene.paint.Color.RED);
+        gc.fillRect(getPosX(), getPosY(), getWidth() * (getProgress() / 100.0), getHeight());
+        gc.setStroke(javafx.scene.paint.Color.BLACK);
+        gc.strokeRect(getPosX(), getPosY(), getWidth(), getHeight());
     }
 }

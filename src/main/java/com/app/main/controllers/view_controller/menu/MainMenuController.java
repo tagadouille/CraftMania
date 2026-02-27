@@ -1,5 +1,8 @@
 package com.app.main.controllers.view_controller.menu;
 
+import com.app.main.models.Player;
+import com.app.main.models.map.GameMap;
+import com.app.main.models.save.LoadSave;
 import com.app.main.views.GameScene;
 import com.app.main.views.menu.MainMenu;
 
@@ -40,11 +43,20 @@ public class MainMenuController {
         });
 
         mainMenu.getNewGame().setOnAction((e) -> {
-            MenuSwitcher.switchScene(new GameScene());
+            MenuSwitcher.switchScene(GameScene.create());
         });
 
         mainMenu.getLoad().setOnAction((e) -> {
-            
+            Player player = Player.createPlayer(7, 7);
+            GameMap gameMap = GameMap.createDefaultMap();
+
+            boolean success = LoadSave.load(player, gameMap);
+
+            mainMenu.loadNotif(success);
+
+            if(success) {
+                MenuSwitcher.switchScene(GameScene.create(player, gameMap));
+            }
         });
     }
 }

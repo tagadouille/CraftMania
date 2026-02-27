@@ -49,7 +49,7 @@ public final class LoadSave {
      * @return true if the loading process is successful, 
      * false if there are errors (e.g., corrupted save)
      */
-    public static boolean recuperation(Player player, GameMap map){
+    public static boolean load(Player player, GameMap map){
 
         File file = new File(PATH);
         bufferedLines.clear();
