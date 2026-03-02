@@ -22,32 +22,53 @@ public final class GameMap {
     private Point marketPos = new Point();
 
     private GameMap(int width, int height){
+
         this.height = height;
         this.width = width;
+
         map = new Tile[width][height];
-        generateMap();
+
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                map[i][j] = Tile.createTile(TileType.EMPTY, null);
+            }
+        }
     }
 
     /**
      * Factory method to create a default GameMap with size 15x15
+     * @param generate whether to generate the map with resources and market or not
      * @return the created map
      */
-    public static GameMap createDefaultMap(){
-        return new GameMap(15, 15);
+    public static GameMap createDefaultMap(boolean generate){
+
+        GameMap gameMap = new GameMap(15, 15);
+
+        if(generate){
+            gameMap.generateMap();
+        }
+        return gameMap;
     }
 
     /**
      * Factory method to create a GameMap with given width and height
      * @param width the width of the map
      * @param height the height of the map
+     * @param generate whether to generate the map with resources and market or not
      * @return the created map
      */
-    public static GameMap createMap(int width, int height){
+    public static GameMap createMap(int width, int height, boolean generate){
 
         if(width <= 0 || height <= 0){
             throw new IllegalArgumentException("Width and height must be positive integers.");
         }
-        return new GameMap(width, height);
+
+        GameMap gameMap = new GameMap(width, height);
+
+        if (generate) {
+            gameMap.generateMap();
+        }
+        return gameMap;
     }
 
     /* Getters : */
@@ -100,11 +121,6 @@ public final class GameMap {
         map[height/2][width/2] = Tile.createTile(TileType.START, null);
         generateMarket();
         generateResource();
-
-        map[2][2].setItem(Harvester.createSimpleHarvester());
-        map[2][2].setType(TileType.HARVESTER);
-        map[2][1].setType(TileType.RESOURCE);
-        map[2][1].setItem(ResourceEnum.WOOD.getResource());
     }
     /**
      * Method for generate the resources of the map

@@ -7,7 +7,6 @@ import com.app.main.models.Player;
 import com.app.main.models.machine.Harvester;
 import com.app.main.models.map.GameMap;
 import com.app.main.models.map.Tile.TileType;
-import com.app.main.models.resources.Resource;
 import com.app.main.models.resources.ResourceEnum;
 
 import javafx.scene.Node;
@@ -36,7 +35,7 @@ public class HarvestViewController {
         this.y = y;
 
         this.map = map;
-        this.harvester = (Harvester) map.getMap()[y][x].getItem();
+        this.harvester = (Harvester) map.getMap()[y][x].getMachine().get();
         this.player = player;
 
         harvestBehavior();
@@ -88,7 +87,7 @@ public class HarvestViewController {
                 if(map.getMap()[newY][newX].getType() == TileType.RESOURCE) {
                     nearbyResource.add(
                         ResourceEnum.getResourceEnum(
-                            ((Resource) (map.getMap()[newY][newX].getItem())).getName()
+                            (map.getMap()[newY][newX].getResource()).get().getName()
                         )
                     );
                 }

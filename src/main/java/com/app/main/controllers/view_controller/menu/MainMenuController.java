@@ -48,7 +48,7 @@ public class MainMenuController {
 
         mainMenu.getLoad().setOnAction((e) -> {
             Player player = Player.createPlayer(7, 7);
-            GameMap gameMap = GameMap.createDefaultMap();
+            GameMap gameMap = GameMap.createDefaultMap(false);
 
             boolean success = LoadSave.load(player, gameMap);
 

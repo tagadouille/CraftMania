@@ -75,9 +75,9 @@ public class MouseController {
                     MarketDialogController.create(marketDialog, Market.createMarket(player));
                     marketDialog.show();
                     return;
-
+                    
+                case TileType.RESOURCETMP :
                 case TileType.RESOURCE :
-                    System.out.println("Récolte");
                     playerController.harvest(clickedTile);
                     return;
 

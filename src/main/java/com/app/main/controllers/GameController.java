@@ -7,7 +7,8 @@ import com.app.main.models.Player;
 import com.app.main.models.machine.Machine;
 import com.app.main.models.map.GameMap;
 import com.app.main.models.map.Tile;
-import com.app.main.models.resources.ResourceTMP;
+import com.app.main.models.map.Tile.TileType;
+import com.app.main.models.resources.Resource;
 
 /**
  * GameController is a class that manages the main game logic
@@ -19,7 +20,7 @@ public final class GameController { //TODO OBSERVER, SINGLETON
     private GameMap gameMap;
 
     private List<Machine> machines = new ArrayList<>();
-    private List<ResourceTMP> resourcesTMP = new ArrayList<>();
+    private List<Resource> resourcesTMP = new ArrayList<>();
     
     private GameController(PlayerController playerController, GameMap gameMap) {
         
@@ -63,7 +64,7 @@ public final class GameController { //TODO OBSERVER, SINGLETON
         return machines;
     }
 
-    public List<ResourceTMP> getResourcesTMP() {
+    public List<Resource> getResourcesTMP() {
         return resourcesTMP;
     }
 
@@ -74,13 +75,11 @@ public final class GameController { //TODO OBSERVER, SINGLETON
                 
                 Tile tile = gameMap.getMap()[i][j];
 
-                if(tile.getMachine() != null){
-                    if(tile.getMachine().isPresent()){
-                        machines.add(tile.getMachine().get());
-                    }
+                if(tile.getMachine().isPresent()){
+                    machines.add(tile.getMachine().get());
                 }
-                else if(tile.getResource().isPresent() && tile.getResource().get() instanceof ResourceTMP){
-                    resourcesTMP.add((ResourceTMP) tile.getResource().get());
+                else if(tile.getResource().isPresent() && tile.getType() == TileType.RESOURCETMP){
+                    resourcesTMP.add(tile.getResource().get());
                 }
             }
         }
@@ -96,7 +95,7 @@ public final class GameController { //TODO OBSERVER, SINGLETON
             machine.process();
         }
 
-        for (ResourceTMP resource : resourcesTMP) {
+        for (Resource resource : resourcesTMP) {
             resource.processRespawn();
         }
     }

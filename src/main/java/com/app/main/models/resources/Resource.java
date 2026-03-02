@@ -1,6 +1,7 @@
 package com.app.main.models.resources;
 
 import com.app.main.models.Item;
+import com.app.main.models.Player;
 
 /**
  * Class representing a resource in the game.
@@ -9,7 +10,11 @@ import com.app.main.models.Item;
  * @see Cloneable
  * @author Dai Elias
  */
-public sealed class Resource extends Item implements Cloneable permits ResourceTMP {
+public final class Resource extends Item implements Cloneable {
+
+    public static final long RESPAWN_TIME = 5000;
+    private long lastRespawnTime = 0;
+    private boolean isRespawned = true;
 
     /**
      * Constructor for Ressource class.
@@ -19,10 +24,40 @@ public sealed class Resource extends Item implements Cloneable permits ResourceT
         super(price);
     }
 
+    
+    public boolean isRespawned() {
+        return isRespawned;
+    }
+
     @Override
     public Resource clone(){
         Resource ret = new Resource(price);
         ret.setName(this.name);
         return ret;
+    }
+
+    /**
+     * The resource is added to player inventory, setting it to not respawned 
+     * and updating the last respawn time.
+     * @param player the player who picks the resource
+     */
+    public void pick(Player player) {
+        if (isRespawned) {
+            isRespawned = false;
+            lastRespawnTime = System.currentTimeMillis();
+            player.addResource(ResourceEnum.getResourceEnum(this.getName()));
+        }
+    }
+
+    /**
+     * Processes the respawn logic, checking if the resource can be respawned 
+     * based on the last respawn time and the defined respawn time.
+     */
+    public void processRespawn() {
+        if (!isRespawned) {
+            if (System.currentTimeMillis() - lastRespawnTime >= RESPAWN_TIME) {
+                isRespawned = true;
+            }
+        }
     }
 }

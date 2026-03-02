@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Random;
 
 import com.app.main.models.Player;
@@ -147,14 +148,19 @@ public final class Saving {
             for (int i = 0; i < map.getHeight(); i++) {
                 for (int j = 0; j < map.getWidth(); j++) {
 
-                    Resource res = map.getMap()[i][j].getItem() instanceof Resource ? (Resource) map.getMap()[i][j].getItem() : null;
+                    Optional<Resource> resOpt = map.getMap()[i][j].getResource();
+
+                    if(resOpt.isEmpty()){
+                        continue;
+                    }
+                    Resource res = resOpt.get();
 
                     if(res != null){
                         CaesarEncrypt.writeEncrypt(res.getName() + " " + i + " " + j + "\n", writer, KEY);
                     }
 
                     // The case where there is a temporary resource that has disappeared :
-                    if(map.getMap()[i][j].getType() == TileType.RESOURCETMP && res == null){
+                    if(map.getMap()[i][j].getType() == TileType.RESOURCETMP && !res.isRespawned()){
                         
                         Random rand = new Random();
                         String nom = "";

@@ -54,8 +54,12 @@ public class Tile {
         return type;
     }
 
-    public Item getItem() {
-        return item;
+    public Optional<Item> getItem() {
+
+        if(this.item == null){
+            return Optional.empty();
+        }
+        return Optional.of(item);
     }
 
     public void setItem(Item item) {

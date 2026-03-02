@@ -75,6 +75,7 @@ public class CaesarEncrypt {
                     
                     while(reader.hasNext()){
                         writer.write(decrypt(reader.nextLine(), key));
+                        writer.newLine();
                     }
                     writer.close();
                 }

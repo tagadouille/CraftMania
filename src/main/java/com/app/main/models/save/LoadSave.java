@@ -115,10 +115,12 @@ public final class LoadSave {
         // Verification of the number of data and the first word of the line
         // Format: player <money> <res1count> <res2count> ... <resNcount>
         if(line.length != 2 + ResourceEnum.values().length){
+            System.err.println("The player line must contain exactly " + (2 + ResourceEnum.values().length) + " elements \n the length of the line is " + line.length);
             return false;
         }
 
         if(!line[0].equals("player")){
+            System.err.println("The player line must start with 'player'");
             return false;
         }
 
@@ -134,6 +136,7 @@ public final class LoadSave {
             }
         }
         catch(NumberFormatException e){
+            System.err.println("Invalid number format in player data");
             return false;
         }
         return true;

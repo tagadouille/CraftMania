@@ -48,7 +48,7 @@ public class GameScene extends Scene{
      * @return a new GameScene instance
      */
     public static GameScene create() {
-        return new GameScene(Player.createPlayer(7, 7), GameMap.createDefaultMap());
+        return new GameScene(Player.createPlayer(7, 7), GameMap.createDefaultMap(true));
     }
 
     /**

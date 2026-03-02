@@ -71,8 +71,8 @@ public final class MapDisplay {
                 Image img = null;
                 Tile tile = map[i][j];
 
-                if(tile.getType() != TileType.HARVESTER && tile.getType() != 
-                    TileType.FACTORY && tile.getType() != TileType.RESOURCE){
+                if(tile.getType() == TileType.EMPTY || tile.getType() == TileType.START
+                 || tile.getType() == TileType.MARKET) {
                     
                     for(TileImageEnum type : TileImageEnum.values()){
                         if(tile.getType().toString().equals(type.toString())){
@@ -84,29 +84,34 @@ public final class MapDisplay {
 
                 // Display factory :
                 else if(tile.getType() == TileType.FACTORY) {
-                    img = FactoryImageEnum.factoryToImage((Factory) tile.getItem());
+                    img = FactoryImageEnum.factoryToImage((Factory) tile.getMachine().get());
                 }
 
                 // Display harvester :
                 else if(tile.getType() == TileType.HARVESTER) {
-                    img = HarvesterImageEnum.harvesterToImage((Harvester) tile.getItem());
+                    img = HarvesterImageEnum.harvesterToImage((Harvester) tile.getMachine().get());
                 }
 
                 // Display resource : 
-                else if(tile.getType() == TileType.RESOURCE){
+                else if(tile.getType() == TileType.RESOURCE || tile.getType() == TileType.RESOURCETMP) {
                     
-                    for(ResourceImageEnum type : ResourceImageEnum.values()) {
-                        if(tile.getItem().getName().equals(type.toString())) {
+                    if(tile.getResource().isEmpty()){
+                        continue;
+                    }
+                    if(!tile.getResource().get().isRespawned()){
+                        img = ResourceImageEnum.Empty.getImage();
+                    }
+                    else {
+                        for(ResourceImageEnum type : ResourceImageEnum.values()) {
+                            if(tile.getResource().get().getName().equals(type.toString())) {
 
-                            img = type.getImage();
-                            break;
+                                img = type.getImage();
+                                break;
+                            }
                         }
                     }
                 }
-                else if(tile.getType() == TileType.RESOURCETMP) {
-                    img = ResourceImageEnum.Empty.getImage();
-                }
-
+                
                 if(img != null){
                     new Sprite(j * GameView.TILE_SIZE, i * GameView.TILE_SIZE, GameView.TILE_SIZE, GameView.TILE_SIZE, img).display(g);
                 }

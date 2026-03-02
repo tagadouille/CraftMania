@@ -53,7 +53,7 @@ public final class Game extends Application {
 
     public static void setScene(Scene scene) {
         Game.scene = scene;
-        //Game.scene.getStylesheets().add(css);
+        Game.scene.getStylesheets().add(css);
     }
 
     public static Stage getPrimaryStage() {

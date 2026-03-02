@@ -185,18 +185,17 @@ public final class GameView extends StackPane implements Observer{
         switch (action) {
             case "harvest":
                 if(arg instanceof Integer) {
-                    System.out.println("harvest");
                     this.harvestBar.decrease(((Integer) arg).intValue());
                 }
                 break;
             case "harvest-sp":
                 if(arg instanceof Point){
                     this.harvestBar.spawn(((Point) arg).x(), ((Point) arg).y(), this);
-                    System.out.println("spawn");
                 }
+                break;
             case "harvest-dp":
-                System.out.println("despawn");
                 this.harvestBar.despawn(this);
+                break;
             default:
                 break;
         }

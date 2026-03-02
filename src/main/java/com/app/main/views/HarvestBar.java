@@ -3,6 +3,7 @@ package com.app.main.views;
 import com.app.main.views.props_display.Sprite;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 /**
  * The HarvestBar class represents a progress bar used to indicate the progress of a harvesting action in the game.
@@ -18,10 +19,10 @@ public class HarvestBar extends Sprite {
     /**
      * Constructor for the HarvestBar class, initializes the progress to 0 
      * and sets up the progress bar.
-     * The progress bar is initialized with a width of 75 and a height of 25.
+     * The progress bar is initialized with a width of 50 and a height of 10.
      */
     public HarvestBar() {
-        super(0, 0, 75, 25, null);
+        super(0, 0, 50, 10, null);
     }
 
     public int getProgress() {
@@ -43,9 +44,9 @@ public class HarvestBar extends Sprite {
      */
     public void spawn(int x, int y, GameView gameView){
 
-        this.setProgress(100);
-        this.setPosX(x);
-        this.setPosY(y);
+        this.setProgress(0);
+        this.setPosX((int) (x * GameView.getSpriteSize()));
+        this.setPosY((int) (y * GameView.getSpriteSize()) - 15);
         gameView.addHarvestBar();
     }
 
@@ -62,7 +63,7 @@ public class HarvestBar extends Sprite {
      * @param amount
      */
     public void decrease(int amount){
-        this.setProgress(this.getProgress() - amount);
+        this.setProgress(amount);
     }
 
     /**
@@ -70,8 +71,13 @@ public class HarvestBar extends Sprite {
      * @param gc the GraphicsContext used to draw the harvest bar on the screen
      */
     public void display(GraphicsContext gc) {
-        gc.setFill(javafx.scene.paint.Color.RED);
-        gc.fillRect(getPosX(), getPosY(), getWidth() * (getProgress() / 100.0), getHeight());
+
+        gc.setFill(Color.GRAY);
+        gc.fillRect(getPosX(), getPosY(), getWidth(), getHeight());
+
+        gc.setFill(Color.GREEN);
+        gc.fillRect(getPosX(), getPosY(), getWidth() * (getProgress() / 100.0) , getHeight());
+        
         gc.setStroke(javafx.scene.paint.Color.BLACK);
         gc.strokeRect(getPosX(), getPosY(), getWidth(), getHeight());
     }

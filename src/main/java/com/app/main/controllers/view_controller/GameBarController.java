@@ -1,5 +1,6 @@
 package com.app.main.controllers.view_controller;
 
+import com.app.main.controllers.view_controller.menu.MainMenuController;
 import com.app.main.controllers.view_controller.menu.MenuSwitcher;
 import com.app.main.controllers.view_controller.props_ui.InventoryViewController;
 import com.app.main.models.Player;
@@ -58,7 +59,10 @@ public final class GameBarController {
     private void buttonBehavior() {
 
         gameBar.getQuit().setOnAction((e) -> {
-            MenuSwitcher.switchScene(MainMenu.create(480, 480));
+
+            MainMenu mainMenu = MainMenu.create(480, 480);
+            MainMenuController.create(mainMenu);
+            MenuSwitcher.switchScene(mainMenu);
         });
 
         gameBar.getInventory().setOnAction((e) -> {

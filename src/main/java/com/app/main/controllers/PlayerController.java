@@ -6,13 +6,12 @@ import java.util.Optional;
 
 import com.app.main.PathFinder;
 import com.app.main.controllers.input.KeyHandler;
-import com.app.main.models.Item;
 import com.app.main.models.Player;
 import com.app.main.models.map.GameMap;
 import com.app.main.models.map.Tile;
+import com.app.main.models.map.Tile.TileType;
 import com.app.main.models.resources.Resource;
 import com.app.main.models.resources.ResourceEnum;
-import com.app.main.models.resources.ResourceTMP;
 import com.app.main.util.Point;
 import com.app.main.util.design_pattern.Observable;
 import com.app.main.util.design_pattern.Observer;
@@ -96,34 +95,46 @@ public final class PlayerController implements Observable{
     public void harvest(Tile tile) {
 
         Optional<Resource> resOpt = tile.getResource();
+
         if(!resOpt.isPresent()){
+            System.out.println("Nothing to harvest");
             return;
         }
-        if(resOpt.get() instanceof ResourceTMP){
-            ResourceTMP resTmp = (ResourceTMP) resOpt.get();
-            if(!resTmp.isRespawned()){
+        Resource res = resOpt.get();
+        System.out.println(res.getName() + " harvested");
+        if(tile.getType() == TileType.RESOURCETMP){
+
+            System.out.println("Harvesting a temporary resource");
+
+            if(!res.isRespawned()){
+                System.err.println("Error : the resource is not respawned");
                 return;
             }
-            resTmp.pick(this.player);
+            res.pick(this.player);
             return;
         }
         harvest = true;
         stopHarvestTime = System.currentTimeMillis() + harvestTime;
-        resourceTypeHarvest = ResourceEnum.getResourceEnum(tile.getItem().getName());
-        observers.get(0).update(this, new Point((int) player.getX(), (int) player.getY()), "harvest-sp");
+        resourceTypeHarvest = ResourceEnum.getResourceEnum(res.getName());
+
+        observers.get(0).update(this, 
+            new Point((int) player.getX(), 
+            (int) player.getY()), "harvest-sp"
+        );
     }
 
     private void stuckInHarvest(){
         long currentTime = System.currentTimeMillis();
 
-        observers.get(0).update(this, (int) ((stopHarvestTime - currentTime) / 50), "harvest");
+        observers.get(0).update(
+            this, 100 - (int) ((stopHarvestTime - currentTime) / 50),
+            "harvest");
 
         if(currentTime >= stopHarvestTime){
             harvest = false;
             player.addResource(resourceTypeHarvest);
             this.observers.get(0).update(this, null, "harvest-dp");
         }
-
     }
     /**
      * Handle the behavior of the player
