@@ -42,6 +42,7 @@ public final class Resource extends Item implements Cloneable {
      * @param player the player who picks the resource
      */
     public void pick(Player player) {
+
         if (isRespawned) {
             isRespawned = false;
             lastRespawnTime = System.currentTimeMillis();

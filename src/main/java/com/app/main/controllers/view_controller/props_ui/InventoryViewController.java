@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.app.main.controllers.Crafter;
 import com.app.main.models.Inventory;
-import com.app.main.models.resources.RecipeEnum;
 import com.app.main.views.props_ui.InventoryView;
 import com.app.main.models.resources.ResourceEnum;
 
@@ -43,11 +42,8 @@ public class InventoryViewController {
 
     private void updateItemNb() {
 
-        int i = 0;
-
         for (ResourceEnum res : new ArrayList<>(crafter.getPlayerInventory().getInventory().keySet())) {
-            inventoryView.getItemNb()[i].setText(crafter.getPlayerInventory().countResource(res) + "");
-            i++;
+            inventoryView.getItemNb()[res.ordinal()].setText(crafter.getPlayerInventory().countResource(res) + "");
         }
     }
 

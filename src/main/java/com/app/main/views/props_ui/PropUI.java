@@ -35,7 +35,7 @@ public abstract class PropUI extends Stage {
         this.setAlwaysOnTop(true);
         this.requestFocus();
 
-        this.initModality(Modality.WINDOW_MODAL);
+        this.initModality(Modality.APPLICATION_MODAL);
         this.setResizable(false);
     }
     

@@ -100,8 +100,9 @@ public final class PlayerController implements Observable{
             System.out.println("Nothing to harvest");
             return;
         }
+
         Resource res = resOpt.get();
-        System.out.println(res.getName() + " harvested");
+
         if(tile.getType() == TileType.RESOURCETMP){
 
             System.out.println("Harvesting a temporary resource");
