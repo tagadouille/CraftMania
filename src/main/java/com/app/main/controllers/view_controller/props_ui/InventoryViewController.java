@@ -6,9 +6,11 @@ import java.util.List;
 import com.app.main.controllers.Crafter;
 import com.app.main.models.Inventory;
 import com.app.main.views.props_ui.InventoryView;
+import com.app.main.models.resources.RecipeEnum;
 import com.app.main.models.resources.ResourceEnum;
 
 import javafx.scene.layout.VBox;
+import javafx.scene.Node;
 
 /**
  * The InventoryViewController class is responsible for managing the interactions between the InventoryView
@@ -53,20 +55,22 @@ public class InventoryViewController {
 
         int i = 0;
 
-        /*for(VBox line : lines) {
+        for(VBox line : lines) {
             
-            for (VBox vBox : line.getChildren().stream().map(node -> (VBox) node).toList()) {
-                
-                int index = i;
+            for(Node box : line.getChildren()) {
 
-                vBox.setOnMouseClicked(event -> {
-                    RecipeEnum recipeEnum = RecipeEnum.values()[index];
-                    crafter.startCrafting(recipeEnum.getRecipe());
+                int finalI = i;
+
+                box.setOnMouseClicked(e -> {
+                    RecipeEnum recipe = RecipeEnum.values()[finalI];
+
+                    crafter.crafting(recipe.getRecipe());
                     updateItemNb();
                 });
+                
                 i++;
             }
-        }*/
+        }
         
     }
 }

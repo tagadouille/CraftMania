@@ -14,7 +14,7 @@ import com.app.main.models.resources.Resource;
  * GameController is a class that manages the main game logic
  * @author Dai Elias
  */
-public final class GameController { //TODO OBSERVER, SINGLETON
+public final class GameController { //TODO OBSERVER
     
     private PlayerController playerController;
     private GameMap gameMap;

@@ -22,7 +22,7 @@ public enum RecipeImageEnum implements ImagePath {
     private Image image;
 
     private RecipeImageEnum(String imageName){
-        this.image = ImageLoader.loadImage( ImagePath.IMAGE_PATH + "item/" + imageName + ".png");
+        this.image = ImageLoader.loadImage( ImagePath.IMAGE_PATH + "craft/" + imageName + ".png");
     }
 
     /**
