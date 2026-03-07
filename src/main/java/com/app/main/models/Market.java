@@ -48,10 +48,14 @@ public class Market {
 
     /**
      * Method for a player to sell an item to the market.
-     * @param item the item to be sold
+     * @param resource the resource to be sold
      */
-    public void sellResource(Item item){
-        this.player.gain(item.price);
-        this.player.removeResource(ResourceEnum.getResourceEnum(item.getName()));
+    public void sellResource(ResourceEnum resource){
+
+        if(player.getInventory().countResource(resource) == 0) {
+            return;
+        }
+        this.player.gain(resource.getResource().price);
+        this.player.removeResource(resource);
     }
 }

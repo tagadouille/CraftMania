@@ -26,13 +26,16 @@ import javafx.scene.text.Text;
  * @see PropUI
  * @author Dai Elias
  */
-public final class MarketDialog extends PropUI{
+public final class MarketDialog extends PropUI {
 
     private Scene mainScene;
 
     private Button buy = new Button("Buy");
     private Button sell = new Button("Sell");
-    private Text money;
+
+    private Text money = new Text("Money : 0$");
+
+    private HBox root;
 
     /**
      * The constructor initializes the MarketDialog with its properties and UI components.
@@ -41,14 +44,14 @@ public final class MarketDialog extends PropUI{
 
         super("Market Screen", 250, 250);
 
-        HBox root = new HBox(5);
+        root = new HBox(5);
         this.mainScene = new Scene(root);
 
         this.setScene(mainScene);
 
         root.getChildren().add(buy);
         root.getChildren().add(sell);
-        //root.getChildren().add(money);
+        root.getChildren().add(money);
     }
 
     /* Getters : */
@@ -65,12 +68,22 @@ public final class MarketDialog extends PropUI{
     }
 
     /**
+     * Updates the money display in the market dialog.
+     * @param money the new amount of money to display
+     */
+    public void updateMoney(int money){
+        this.money.setText("Money : " + money + "$");
+    }
+
+    /**
      * The BuyPanel class represents the panel where the user can buy items
      */
     public static class BuyPanel extends Scene{
 
         private GridPane root;
         private Button back = new Button("Back");
+
+        private Text money = new Text("Money : 0$");
 
         /**
          * Constructor for BuyPanel
@@ -81,6 +94,7 @@ public final class MarketDialog extends PropUI{
 
             Text title = new Text("What do you want to buy ?");
             root.getChildren().add(title);
+            root.add(money, 0, 0);
             
             root.getChildren().add(back);
         }
@@ -88,6 +102,20 @@ public final class MarketDialog extends PropUI{
         /* Getters : */
         public Button getBack() {
             return back;
+        }
+
+        /**
+         * Updates the money display in the buy panel.
+         * @param money the new amount of money to display
+         */
+        public void updateMoney(int money){
+            this.money.setText("Money : " + money + "$");
+        }
+
+        private void displayResources() {
+
+
+
         }
     }
 
@@ -98,13 +126,17 @@ public final class MarketDialog extends PropUI{
      */
     public static class SellPanel extends Scene{
 
-        private String imagePath;
-
         private VBox root;
 
         private Button back = new Button("Back");
 
         private Market market;
+
+        private Text money = new Text("Money : 0$");
+
+        private Button[] sellButtons = new Button[ResourceEnum.values().length];
+
+        private ScrollPane scrollPane = new ScrollPane();
 
         private SellPanel(Market market){
             super(new VBox());
@@ -114,6 +146,7 @@ public final class MarketDialog extends PropUI{
 
             Text title = new Text("What do you want to sell ?");
             root.getChildren().add(title);
+            root.getChildren().add(money);
 
             displayResources();
             root.getChildren().add(back);
@@ -131,15 +164,28 @@ public final class MarketDialog extends PropUI{
             return new SellPanel(market);
         }
 
+        /**
+         * Updates the money display in the sell panel.
+         * @param money the new amount of money to display
+         */
+        public void updateMoney(int money){
+            this.money.setText("Money : " + money + "$");
+        }
+
         /* Getters */
 
         public Button getBack() {
             return back;
         }
 
-        private void displayResources(){
-            ScrollPane scrollPane = new ScrollPane();
-            
+        public Button[] getSellButtons() {
+            return sellButtons;
+        }
+
+        /**
+         * Updates the view of the sell panel to reflect the current state of the market and player's inventory.
+         */
+        public void updateView() {
             VBox resourcePanel = new VBox();
 
             for (ResourceEnum res : ResourceEnum.values()) {
@@ -182,16 +228,24 @@ public final class MarketDialog extends PropUI{
                 line.getChildren().add(infoBox);
 
                 Button sellRes = new Button("Sell");
-                //TODO MVC
-                sellRes.setOnAction((e) -> {
-                    market.sellResource(res.getResource());
-                });
+
+                sellButtons[res.ordinal()] = sellRes;
                 
                 line.getChildren().add(sellRes);
 
                 resourcePanel.getChildren().add(line);
             }
+            
+            scrollPane.setContent(null);
             scrollPane.setContent(resourcePanel);
+        }
+
+        /**
+         * Displays the resources available for selling in the sell panel.
+         */
+        private void displayResources(){
+            
+            updateView();
             root.getChildren().add(scrollPane);
         }
     }

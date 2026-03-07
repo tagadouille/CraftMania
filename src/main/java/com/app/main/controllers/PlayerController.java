@@ -105,8 +105,6 @@ public final class PlayerController implements Observable{
 
         if(tile.getType() == TileType.RESOURCETMP){
 
-            System.out.println("Harvesting a temporary resource");
-
             if(!res.isRespawned()){
                 System.err.println("Error : the resource is not respawned");
                 return;

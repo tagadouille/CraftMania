@@ -4,13 +4,6 @@
     -fx-background-size: cover;
 }
 
-.harvest-bar {
-    -fx-accent: green;
-    -fx-box-border: black;
-    -fx-background-color: gray; 
-    -fx-padding: 15;
-}
-
 Button {
     -fx-background-color: rgb(126, 0, 0);
 }

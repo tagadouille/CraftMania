@@ -1,4 +1,4 @@
-player 10 2 0 2 0 0 0 0 0 0 0 
+player 100 100 100 2 100 100 100 100 100 100 100 
 Market 6 6
 QUARTZ 2 5
 HEAT 7 1

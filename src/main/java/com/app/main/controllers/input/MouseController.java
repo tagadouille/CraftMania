@@ -72,7 +72,7 @@ public class MouseController {
 
                 case TileType.MARKET :
                     MarketDialog marketDialog = new MarketDialog();
-                    MarketDialogController.create(marketDialog, Market.createMarket(player));
+                    MarketDialogController.create(marketDialog, player);
                     marketDialog.show();
                     return;
                     
