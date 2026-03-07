@@ -1,5 +1,7 @@
 package com.app.main.models;
 
+import com.app.main.models.machine.FactoryEnum;
+import com.app.main.models.machine.HarvesterEnum;
 import com.app.main.models.resources.ResourceEnum;
 
 /**
@@ -34,16 +36,39 @@ public class Market {
 
     /**
      * Method for a player to buy an item from the market.
-     * @param item the item to be purchased
+     * @param resource the resource to be bought
      */
-    public void buy(Item item){
-        this.player.buy(item.price);
+    public void buyResource(ResourceEnum resource) {
 
-        if(item.getTypeName().equals("resource")){
-            this.player.addResource(ResourceEnum.getResourceEnum(item.getName()));
-        }else{
-            //TODO Placer l'usine et déterminer si on peut la placer
+        if(player.getMoney() < resource.getResource().price) {
+            return;
         }
+        this.player.buy(resource.getResource().price);
+        this.player.addResource(resource);
+    }
+
+    /**
+     * Method for a player to buy a factory from the market.
+     * @param factory the factory to be bought
+     */
+    public void buyFactory(FactoryEnum factory) {
+
+        if(player.getMoney() < factory.getFactory().getPrice()) {
+            return;
+        }
+        this.player.buy(factory.getFactory().getPrice());
+    }
+
+    /**
+     * Method for a player to buy a harvester from the market.
+     * @param harvester the harvester to be bought
+     */
+    public void buyHarvester(HarvesterEnum harvester) {
+
+        if(player.getMoney() < harvester.getHarvester().getPrice()) {
+            return;
+        }
+        this.player.buy(harvester.getHarvester().getPrice());
     }
 
     /**

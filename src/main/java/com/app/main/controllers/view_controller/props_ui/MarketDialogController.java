@@ -2,6 +2,8 @@ package com.app.main.controllers.view_controller.props_ui;
 
 import com.app.main.models.Market;
 import com.app.main.models.Player;
+import com.app.main.models.machine.FactoryEnum;
+import com.app.main.models.machine.HarvesterEnum;
 import com.app.main.models.resources.ResourceEnum;
 import com.app.main.views.props_ui.MarketDialog;
 import com.app.main.views.props_ui.MarketDialog.BuyPanel;
@@ -73,6 +75,36 @@ public final class MarketDialogController {
             marketDialog.setScene(marketDialog.getMainScene());
             marketDialog.updateMoney(player.getMoney());
         });
+
+        for (int i = 0; i < buyPanel.getHarvesterBuyButtons().length; i++) {
+            int index = i;
+            buyPanel.getHarvesterBuyButtons()[i].setOnAction((e) -> {
+                market.buyHarvester(HarvesterEnum.values()[index]);
+                buyPanel.updateMoney(player.getMoney());
+                buyPanel.updateView();
+                buyPannelBehavior();
+            });
+        }
+
+        for (int i = 0; i < buyPanel.getFactoryBuyButtons().length; i++) {
+            int index = i;
+            buyPanel.getFactoryBuyButtons()[i].setOnAction((e) -> {
+                market.buyFactory(FactoryEnum.values()[index]);
+                buyPanel.updateMoney(player.getMoney());
+                buyPanel.updateView();
+                buyPannelBehavior();
+            });
+        }
+
+        for (int i = 0; i < buyPanel.getResBuyButtons().length; i++) {
+            int index = i;
+            buyPanel.getResBuyButtons()[i].setOnAction((e) -> {
+                market.buyResource(ResourceEnum.values()[index]);
+                buyPanel.updateMoney(player.getMoney());
+                buyPanel.updateView();
+                buyPannelBehavior();
+            });
+        }
     }
 
     private void sellPanelBehavior(){
