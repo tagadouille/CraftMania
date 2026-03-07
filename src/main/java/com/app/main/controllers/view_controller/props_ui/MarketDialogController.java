@@ -53,7 +53,7 @@ public final class MarketDialogController {
         marketDialog.updateMoney(player.getMoney());
 
         marketDialog.getBuy().setOnAction((e) -> {
-            buyPanel = new BuyPanel();
+            buyPanel = BuyPanel.create(market);
             marketDialog.setScene(buyPanel);
             buyPannelBehavior();
         });

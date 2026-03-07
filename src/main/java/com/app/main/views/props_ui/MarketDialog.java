@@ -3,8 +3,13 @@ package com.app.main.views.props_ui;
 import java.io.IOException;
 
 import com.app.main.models.Market;
+import com.app.main.models.machine.Factory;
+import com.app.main.models.machine.FactoryEnum;
+import com.app.main.models.machine.HarvesterEnum;
 import com.app.main.models.resources.ResourceEnum;
 import com.app.main.util.image.ImageUtil;
+import com.app.main.views.utilities.FactoryImageEnum;
+import com.app.main.views.utilities.HarvesterImageEnum;
 import com.app.main.views.utilities.ItemImageEnum;
 
 import javafx.scene.Scene;
@@ -83,25 +88,65 @@ public final class MarketDialog extends PropUI {
         private GridPane root;
         private Button back = new Button("Back");
 
+        private Market market;
+
         private Text money = new Text("Money : 0$");
+
+        private ScrollPane scrollPane = new ScrollPane();
+
+        private Button[] resBuyButtons = new Button[ResourceEnum.values().length];
+
+        private Button[] factoryBuyButtons = new Button[FactoryEnum.values().length];
+
+        private Button[] harvesterBuyButtons = new Button[HarvesterEnum.values().length];
 
         /**
          * Constructor for BuyPanel
          */
-        public BuyPanel(){
-            super(new GridPane(2, 1));
+        private BuyPanel(Market market){
+            super(new GridPane(2, 2));
+
             root = (GridPane) this.getRoot();
+
+            this.market = market;
 
             Text title = new Text("What do you want to buy ?");
             root.getChildren().add(title);
             root.add(money, 0, 0);
+
+            displayResources();
             
             root.getChildren().add(back);
+        }
+
+        /**
+         * Factory method to create a BuyPanel instance.
+         * @param market the market associated with the BuyPanel
+         * @return a new BuyPanel instance
+         */
+        public static BuyPanel create(Market market) {
+
+            if(market == null){
+                throw new IllegalArgumentException("Market cannot be null");
+            }
+            return new BuyPanel(market);
         }
 
         /* Getters : */
         public Button getBack() {
             return back;
+        }
+
+        public Button[] getResBuyButtons() {
+            return resBuyButtons;
+        }
+
+        public Button[] getFactoryBuyButtons() {
+            return factoryBuyButtons;
+        }
+
+        public Button[] getHarvesterBuyButtons() {
+            return harvesterBuyButtons;
         }
 
         /**
@@ -112,10 +157,167 @@ public final class MarketDialog extends PropUI {
             this.money.setText("Money : " + money + "$");
         }
 
-        private void displayResources() {
+        private void displayResources(){
+            
+            updateView();
+            root.getChildren().add(scrollPane);
+        }
 
+        /**
+         * Updates the view of the sell panel to reflect the current state of the market and player's inventory.
+         */
+        public void updateView() {
 
+            VBox mainBox = new VBox();
 
+            resUpdate(mainBox);
+            facUpdate(mainBox);
+            harvUpdate(mainBox);
+            
+            
+            scrollPane.setContent(null);
+            scrollPane.setContent(mainBox);
+        }
+
+        private void resUpdate(VBox mainPanel){
+            VBox resourcePanel = new VBox();
+
+            for (ResourceEnum res : ResourceEnum.values()) {
+                HBox line = new HBox();
+
+                // Resource image display :
+                Image img = null;
+
+                for(ItemImageEnum type : ItemImageEnum.values()){
+                    if(res.getResource().getName().equals(type.toString())){
+                        img = type.getImage();
+                        break;
+                    }
+                }
+
+                try {
+                    ImageView imageView = new ImageView(ImageUtil.resizeImage(img, 50, 50));
+
+                    line.getChildren().add(imageView);
+                }
+                catch(IOException e){
+
+                }
+
+                VBox infoBox = new VBox(0);
+                HBox title = new HBox(1);
+
+                // Informations display :
+                Text resName = new Text(res.toString().toLowerCase());
+                title.getChildren().add(resName);
+
+                Text price = new Text(res.getResource().getPrice() +"$");
+                title.getChildren().add(price);
+
+                infoBox.getChildren().add(title);
+
+                Text number = new Text(market.getPlayer().getInventory().countResource(res) + " already in inventory");
+                infoBox.getChildren().add(number);
+
+                line.getChildren().add(infoBox);
+
+                Button sellRes = new Button("Buy");
+
+                resBuyButtons[res.ordinal()] = sellRes;
+                
+                line.getChildren().add(sellRes);
+
+                resourcePanel.getChildren().add(line);
+            }
+            mainPanel.getChildren().add(resourcePanel);
+        }
+
+        private void facUpdate(VBox mainPanel) {
+
+            VBox factoryPanel = new VBox();
+
+            for (FactoryEnum fac : FactoryEnum.values()) {
+                HBox line = new HBox();
+
+                // Resource image display :
+                Image img = FactoryImageEnum.factoryToImage(fac);
+
+                try {
+                    ImageView imageView = new ImageView(ImageUtil.resizeImage(img, 50, 50));
+
+                    line.getChildren().add(imageView);
+                }
+                catch(IOException e){
+
+                }
+
+                VBox infoBox = new VBox(0);
+                HBox title = new HBox(1);
+
+                // Informations display :
+                Text resName = new Text(fac.toString().toLowerCase());
+                title.getChildren().add(resName);
+
+                Text price = new Text("Factory " + fac.getFactory().getPrice() +"$");
+                title.getChildren().add(price);
+
+                infoBox.getChildren().add(title);
+
+                line.getChildren().add(infoBox);
+
+                Button sellRes = new Button("Buy");
+
+                resBuyButtons[fac.ordinal()] = sellRes;
+                
+                line.getChildren().add(sellRes);
+
+                factoryPanel.getChildren().add(line);
+            }
+            mainPanel.getChildren().add(factoryPanel);
+        }
+
+        private void harvUpdate(VBox mainPanel){
+            
+            VBox harvestPanel = new VBox();
+
+            for (HarvesterEnum fac : HarvesterEnum.values()) {
+                HBox line = new HBox();
+
+                // Resource image display :
+                Image img = HarvesterImageEnum.harvesterToImage(fac);
+
+                try {
+                    ImageView imageView = new ImageView(ImageUtil.resizeImage(img, 50, 50));
+
+                    line.getChildren().add(imageView);
+                }
+                catch(IOException e){
+
+                }
+
+                VBox infoBox = new VBox(0);
+                HBox title = new HBox(1);
+
+                // Informations display :
+                Text resName = new Text(fac.toString().toLowerCase());
+                title.getChildren().add(resName);
+
+                Text price = new Text("Harvester " + fac.getHarvester().getPrice() +"$");
+                title.getChildren().add(price);
+
+                infoBox.getChildren().add(title);
+
+                line.getChildren().add(infoBox);
+
+                Button sellRes = new Button("Buy");
+
+                resBuyButtons[fac.ordinal()] = sellRes;
+                
+                line.getChildren().add(sellRes);
+
+                harvestPanel.getChildren().add(line);
+            }
+            mainPanel.getChildren().add(harvestPanel);
         }
     }
 
@@ -235,7 +437,7 @@ public final class MarketDialog extends PropUI {
 
                 resourcePanel.getChildren().add(line);
             }
-            
+
             scrollPane.setContent(null);
             scrollPane.setContent(resourcePanel);
         }
