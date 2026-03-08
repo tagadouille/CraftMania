@@ -21,7 +21,7 @@ import javafx.scene.Node;
  * @see Crafter
  * @author Dai Elias
  */
-public class InventoryViewController {
+public final class InventoryViewController {
     
     private InventoryView inventoryView;
 

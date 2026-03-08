@@ -9,10 +9,11 @@ import javafx.scene.paint.Color;
  * The HarvestBar class represents a progress bar used to indicate the progress of a harvesting action in the game.
  * It extends Sprite and provides methods to spawn, despawn, 
  * and decrease the progress of the harvest bar.
+ * 
  * @see Sprite
  * @author Dai Elias
  */
-public class HarvestBar extends Sprite {
+public final class HarvestBar extends Sprite {
 
     private int progress = 0;
 

@@ -34,7 +34,7 @@ import javafx.scene.control.Alert.AlertType;
  * 
  * @author Dai Elias
  */
-public class MouseController implements Observable{
+public final class MouseController implements Observable{
     
     private GameMap map;
     private Player player;

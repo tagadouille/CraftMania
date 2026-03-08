@@ -12,7 +12,7 @@ import javafx.scene.canvas.GraphicsContext;
  * @see Sprite
  * @author Dai Elias
  */
-public class PlayerSprite extends Sprite{
+public final class PlayerSprite extends Sprite{
     
     private Player player;
 

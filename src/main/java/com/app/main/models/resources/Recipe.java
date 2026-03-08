@@ -4,7 +4,7 @@ package com.app.main.models.resources;
  * The Recipe class represents a crafting recipe in the game.
  * @author Dai Elias
  */
-public class Recipe {
+public final class Recipe {
 
     private final ResourceEnum ingredient1, ingredient2; //The name of the ingredient resources
     private final ResourceEnum result;

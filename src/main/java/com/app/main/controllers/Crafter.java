@@ -13,7 +13,7 @@ import com.app.main.models.resources.Recipe;
  * 
  * @author Dai Elias
  */
-public class Crafter {
+public final class Crafter {
 
     private Inventory playerInventory;
 

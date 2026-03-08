@@ -15,7 +15,7 @@ import javafx.scene.layout.VBox;
  * Extends the JavaFX Scene class and sets up the game view and controllers.
  * @author Dai Elias
  */
-public class GameScene extends Scene{
+public final class GameScene extends Scene{
 
     private VBox parent;
 

@@ -12,7 +12,7 @@ import com.app.main.views.menu.MainMenu;
  * 
  * @author Dai Elias
  */
-public class MainMenuController {
+public final class MainMenuController {
     
     private MainMenu mainMenu;
 

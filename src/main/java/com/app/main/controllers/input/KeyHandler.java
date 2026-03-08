@@ -13,7 +13,7 @@ import javafx.scene.input.KeyEvent;
  * set up event handlers for key press and release events.
  * @author Dai Elias
  */
-public class KeyHandler {
+public final class KeyHandler {
 
     public final Set<KeyCode> keylist = new HashSet<>();
 

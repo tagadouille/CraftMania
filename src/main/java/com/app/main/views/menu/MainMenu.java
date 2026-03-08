@@ -15,7 +15,7 @@ import javafx.scene.layout.VBox;
  * 
  * @author Dai Elias
  */
-public class MainMenu extends Scene {
+public final class MainMenu extends Scene {
 
     private Button newGame = new Button("New Game");
     private Button quit = new Button("Quit");

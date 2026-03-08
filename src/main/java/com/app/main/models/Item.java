@@ -1,10 +1,13 @@
 package com.app.main.models;
 
+import com.app.main.models.machine.Machine;
+import com.app.main.models.resources.Resource;
+
 /**
  * Abstract class Item representing an item in the game
  * @author Dai Elias
  */
-public abstract class Item {
+public sealed abstract class Item permits Resource, Machine {
     
     protected String name = "";
     protected final int price;

@@ -23,7 +23,7 @@ import javafx.scene.text.Text;
  * 
  * @author Dai Elias
  */
-public class InventoryView extends PropUI {
+public final class InventoryView extends PropUI {
 
     private Scene mainScene;
 

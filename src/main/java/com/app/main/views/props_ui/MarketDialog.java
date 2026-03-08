@@ -17,7 +17,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -83,7 +82,7 @@ public final class MarketDialog extends PropUI {
     /**
      * The BuyPanel class represents the panel where the user can buy items
      */
-    public static class BuyPanel extends Scene{
+    public final static class BuyPanel extends Scene{
 
         private VBox root;
         private Button back = new Button("Back");
@@ -330,7 +329,7 @@ public final class MarketDialog extends PropUI {
      * Extends Scene class from JavaFX.
      * @author Dai Elias
      */
-    public static class SellPanel extends Scene{
+    public final static class SellPanel extends Scene{
 
         private VBox root;
 

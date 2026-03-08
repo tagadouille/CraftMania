@@ -10,7 +10,7 @@ import com.app.main.models.resources.ResourceEnum;
  * Player class representing the player in the game
  * @author Dai Elias
  */
-public class Player {
+public final class Player {
 
     private double x, y;
     private int money = 0;

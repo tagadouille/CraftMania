@@ -11,7 +11,7 @@ import java.util.Scanner;
  * The CaesarEncrypt class provides methods for encrypting and decrypting strings using the Caesar cipher technique.
  * It also includes methods for encrypting and decrypting files.
  */
-public class CaesarEncrypt {
+public final class CaesarEncrypt {
     
     /**
      * This method takes a string and a key, and returns the encrypted string using the Caesar cipher technique.
@@ -67,7 +67,8 @@ public class CaesarEncrypt {
 
                 try{
                     fic.createNewFile(); // Create the file if it doesn't exist
-                }catch(IOException e){
+                }
+                catch(IOException e){
                     e.getStackTrace();
                 }
                 // Write in the new file the dicypherment of fic

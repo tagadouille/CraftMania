@@ -9,7 +9,7 @@ import com.app.main.models.resources.ResourceEnum;
  * It interacts with the Player class to manage transactions.
  * @author Dai Elias
  */
-public class Market {
+public final class Market {
     
     private Player player;
 

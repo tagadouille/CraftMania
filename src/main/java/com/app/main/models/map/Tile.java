@@ -14,7 +14,7 @@ import com.app.main.models.resources.Resource;
  * @see Item
  * @author Dai Elias
  */
-public class Tile {
+public final class Tile {
 
     private TileType type;
     private Item item;
