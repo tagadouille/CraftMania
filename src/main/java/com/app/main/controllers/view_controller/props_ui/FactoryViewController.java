@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.app.main.models.Player;
 import com.app.main.models.machine.Factory;
+import com.app.main.models.machine.Factory.PolyFactory;
 import com.app.main.models.resources.RecipeEnum;
 import com.app.main.views.props_ui.FactoryView;
 
@@ -53,7 +54,7 @@ public final class FactoryViewController {
     private void buttonBehavior() {
 
         // Configuration of the factory
-        if(!factory.isAlreadySetted()) {
+        if(!factory.isAlreadySetted() || factory instanceof PolyFactory) {
             factoryView.displayCraft();
 
 
@@ -68,6 +69,18 @@ public final class FactoryViewController {
                     int finalI = i;
 
                     box.setOnMouseClicked(e -> {
+
+                        if(factory instanceof PolyFactory && factory.getRecipe() != null) {
+                            factory.cleanInventory(player);
+
+                            for(int j = 0; j < factory.getInventory().countResource(factory.getRecipe().getIngredient1()); j++) {
+                                player.getInventory().addResource(factory.getRecipe().getIngredient1());
+                            }
+
+                            for(int j = 0; j < factory.getInventory().countResource(factory.getRecipe().getIngredient2()); j++) {
+                                player.getInventory().addResource(factory.getRecipe().getIngredient2());
+                            }
+                        }
                         RecipeEnum recipe = RecipeEnum.values()[finalI];
 
                         factory.setRecipe(recipe);
@@ -112,7 +125,7 @@ public final class FactoryViewController {
     }
 
     private void update() {
-        factoryView.updateResText(factory.getInventory().countResource(factory.getProduct()));
+        factoryView.updateResText(factory.getInventory().countResource(factory.getProduct().get()));
         factoryView.updateIg1Text(factory.getInventory().countResource(factory.getRecipe().getIngredient1()));
         factoryView.updateIg2Text(factory.getInventory().countResource(factory.getRecipe().getIngredient2()));
     }

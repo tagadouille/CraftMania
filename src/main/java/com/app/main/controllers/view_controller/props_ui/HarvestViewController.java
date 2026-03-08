@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.app.main.models.Player;
+import com.app.main.models.machine.Harvester.PolyHarvester;
 import com.app.main.models.machine.Harvester;
 import com.app.main.models.map.GameMap;
 import com.app.main.models.resources.ResourceEnum;
@@ -70,7 +71,7 @@ public class HarvestViewController {
 
     private void harvestNearbyUpdate() {
 
-        if(harvester.isAlreadySetted()) return;
+        if(harvester.isAlreadySetted() && !(harvester instanceof PolyHarvester)) return;
 
         List<ResourceEnum> nearbyResource = new ArrayList<>();
 
@@ -113,6 +114,12 @@ public class HarvestViewController {
                     ResourceEnum ressourceEnum = ResourceEnum.getResourceEnum(button.getText());
 
                     if(ressourceEnum != null) {
+
+                        // If the harvester is a polyharvester, we need to clean the inventory before 
+                        // setting the new product
+                        if(harvester instanceof PolyHarvester) {
+                            harvester.cleanInventory(player);
+                        }
                         harvester.setProduct(ressourceEnum);
                         harvesterView.getContent().getChildren().clear();
                         harvestNearbyUpdate();

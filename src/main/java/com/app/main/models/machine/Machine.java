@@ -1,5 +1,7 @@
 package com.app.main.models.machine;
 
+import java.util.Optional;
+
 import com.app.main.models.Inventory;
 import com.app.main.models.Item;
 import com.app.main.models.Player;
@@ -50,6 +52,10 @@ public sealed abstract class Machine extends Item permits com.app.main.models.ma
     }
 
     public void setProduct(ResourceEnum resource) {
+
+        if(resource == null) {
+            throw new IllegalArgumentException("Product cannot be null.");
+        }
         this.product = resource;
         this.alreadySetted = true;
     }
@@ -62,8 +68,12 @@ public sealed abstract class Machine extends Item permits com.app.main.models.ma
         return this.inventory.countResource(product);
     }
 
-    public ResourceEnum getProduct() {
-        return product;
+    public Optional<ResourceEnum> getProduct() {
+
+        if(product == null) {
+            return Optional.empty();
+        }
+        return Optional.of(product);
     }
 
     public Inventory getInventory() {
@@ -76,7 +86,7 @@ public sealed abstract class Machine extends Item permits com.app.main.models.ma
      */
     public void cleanInventory(Player player) {
 
-        if(!inventory.getInventory().containsKey(product)) {
+        if(product == null || !inventory.getInventory().containsKey(product)) {
             return;
         }
         

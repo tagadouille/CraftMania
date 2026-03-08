@@ -222,12 +222,12 @@ public final class Saving {
         try{
             String ligne = "harvester " + harvester.getClass().getSimpleName() + " " + x + " " + y + " ";
 
-            if(harvester.getProduct() == null){
+            if(harvester.getProduct().isEmpty()){
                 ligne += "null 0";
             }
             else{
-                ligne += harvester.getProduct().toString() + " "
-                + harvester.getInventory().countResource(harvester.getProduct());
+                ligne += harvester.getProduct().get().toString() + " "
+                + harvester.getInventory().countResource(harvester.getProduct().get());
             }
             CaesarEncrypt.writeEncrypt(ligne + "\n", writer, KEY);
             return true;
