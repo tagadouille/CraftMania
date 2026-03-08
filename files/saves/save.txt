@@ -1,5 +1,5 @@
-player 100 100 100 2 100 100 100 100 100 100 100 
-Market 6 6
+player 225 100 100 2 100 100 100 100 100 100 100 
+Market 0 7
 QUARTZ 2 5
 HEAT 7 1
 CLAY 8 11
@@ -8,3 +8,8 @@ QUARTZ 11 0
 CLAY 11 13
 HEAT 13 2
 WOOD 13 7
+harvester PolyHarvester 6 2 null 0
+factory WeakFactory 0 7 null 0 0 0
+factory FastFactory 4 9 null 0 0 0
+harvester XLHarvester 9 9 null 0
+factory PolyFactory 11 13 null 0 0 0

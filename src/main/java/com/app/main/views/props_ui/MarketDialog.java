@@ -85,7 +85,7 @@ public final class MarketDialog extends PropUI {
      */
     public static class BuyPanel extends Scene{
 
-        private GridPane root;
+        private VBox root;
         private Button back = new Button("Back");
 
         private Market market;
@@ -104,19 +104,23 @@ public final class MarketDialog extends PropUI {
          * Constructor for BuyPanel
          */
         private BuyPanel(Market market){
-            super(new GridPane(2, 2));
+            super(new VBox());
 
-            root = (GridPane) this.getRoot();
+            root = (VBox) this.getRoot();
 
             this.market = market;
 
+            HBox header = new HBox(5);
+
             Text title = new Text("What do you want to buy ?");
-            root.getChildren().add(title);
-            root.add(money, 0, 0);
+            header.getChildren().add(title);
+
+            header.getChildren().add(money);
+
+            root.getChildren().add(back);
+            root.getChildren().add(header);
 
             displayResources();
-            
-            root.getChildren().add(back);
         }
 
         /**
@@ -221,11 +225,11 @@ public final class MarketDialog extends PropUI {
 
                 line.getChildren().add(infoBox);
 
-                Button sellRes = new Button("Buy");
+                Button buyRes = new Button("Buy");
 
-                resBuyButtons[res.ordinal()] = sellRes;
+                resBuyButtons[res.ordinal()] = buyRes;
                 
-                line.getChildren().add(sellRes);
+                line.getChildren().add(buyRes);
 
                 resourcePanel.getChildren().add(line);
             }
@@ -265,11 +269,11 @@ public final class MarketDialog extends PropUI {
 
                 line.getChildren().add(infoBox);
 
-                Button sellRes = new Button("Buy");
+                Button buyRes = new Button("Buy");
 
-                resBuyButtons[fac.ordinal()] = sellRes;
+                factoryBuyButtons[fac.ordinal()] = buyRes;
                 
-                line.getChildren().add(sellRes);
+                line.getChildren().add(buyRes);
 
                 factoryPanel.getChildren().add(line);
             }
@@ -309,11 +313,11 @@ public final class MarketDialog extends PropUI {
 
                 line.getChildren().add(infoBox);
 
-                Button sellRes = new Button("Buy");
+                Button buyRes = new Button("Buy");
 
-                resBuyButtons[fac.ordinal()] = sellRes;
+                harvesterBuyButtons[fac.ordinal()] = buyRes;
                 
-                line.getChildren().add(sellRes);
+                line.getChildren().add(buyRes);
 
                 harvestPanel.getChildren().add(line);
             }

@@ -91,6 +91,8 @@ public sealed abstract class Factory extends Machine permits com.app.main.models
     @Override
     public void process() {
 
+        if(recipe == null) return;
+
         if(inventory.countResource(recipe.getIngredient1()) > 0 && inventory.countResource(recipe.getIngredient2()) > 0) {
             inventory.removeResource(recipe.getIngredient1());
             inventory.removeResource(recipe.getIngredient2());

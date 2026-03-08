@@ -26,13 +26,15 @@ public final class GameMap {
         this.height = height;
         this.width = width;
 
+        // Starting with an empty map
         map = new Tile[width][height];
 
-        for (int i = 0; i < map.length; i++) {
+                for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
                 map[i][j] = Tile.createTile(TileType.EMPTY, null);
             }
         }
+        map[height/2][width/2] = Tile.createTile(TileType.START, null);
     }
 
     /**
@@ -104,21 +106,15 @@ public final class GameMap {
         }
 
         // Change the position of the market on the map
-        this.map[this.marketPos.x][this.marketPos.y].setType(TileType.EMPTY);
+        this.map[this.marketPos.y][this.marketPos.x].setType(TileType.EMPTY);
         this.marketPos = marketPos;
-        this.map[marketPos.x][marketPos.y].setType(TileType.MARKET);
+        this.map[marketPos.y][marketPos.x].setType(TileType.MARKET);
     }
 
     /**
      * Method which generate the map
      */
     private void generateMap(){
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[i].length; j++) {
-                map[i][j] = Tile.createTile(TileType.EMPTY, null);
-            }
-        }
-        map[height/2][width/2] = Tile.createTile(TileType.START, null);
         generateMarket();
         generateResource();
     }
@@ -158,7 +154,7 @@ public final class GameMap {
     /**
      * Method for generate the market of the map
      */
-    private void generateMarket() { //TODO REPLACER
+    private void generateMarket() {
 
         Random rand = new Random();
         int x, y;
@@ -180,8 +176,7 @@ public final class GameMap {
             y = rand.nextInt(height);
             x = j;
         }
-        map[6][6] = Tile.createTile(TileType.MARKET, null);
-        marketPos = new Point(6, 6);
+        setMarketPos(new Point(x, y));
     }
     
     /**

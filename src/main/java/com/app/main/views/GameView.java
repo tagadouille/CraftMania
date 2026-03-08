@@ -69,6 +69,8 @@ public final class GameView extends StackPane implements Observer{
 
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> mouseController.setUp(e.getX(), e.getY()));
 
+        mouseController.addObserver(gameController);
+
         startGameLoop();
         canvas.requestFocus();
     }

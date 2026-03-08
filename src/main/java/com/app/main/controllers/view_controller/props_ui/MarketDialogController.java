@@ -1,5 +1,6 @@
 package com.app.main.controllers.view_controller.props_ui;
 
+import com.app.main.controllers.input.MouseController;
 import com.app.main.models.Market;
 import com.app.main.models.Player;
 import com.app.main.models.machine.FactoryEnum;
@@ -22,12 +23,15 @@ public final class MarketDialogController {
 
     private Market market;
 
+    private MouseController mouseController;
+
     private Player player;
 
-    private MarketDialogController(MarketDialog marketDialog, Market market, Player player){
+    private MarketDialogController(MarketDialog marketDialog, Market market, Player player, MouseController mouseController) {
         this.marketDialog = marketDialog;
         this.market = market;
         this.player = player;
+        this.mouseController = mouseController;
         buttonBehavior();
     }
 
@@ -37,7 +41,7 @@ public final class MarketDialogController {
      * @param market the market
      * @return a new instance of MarketDialogController
      */
-    public static MarketDialogController create(MarketDialog marketDialog, Player player) {
+    public static MarketDialogController create(MarketDialog marketDialog, Player player, MouseController mouseController) {
 
         if(marketDialog == null) {
             throw new IllegalArgumentException("The market dialog can't be null");
@@ -45,7 +49,7 @@ public final class MarketDialogController {
         if(player == null) {
             throw new IllegalArgumentException("The player can't be null");
         }
-        return new MarketDialogController(marketDialog, Market.createMarket(player), player);
+        return new MarketDialogController(marketDialog, Market.createMarket(player), player, mouseController);
     }
 
     /* Setting the behavior of the components : */
@@ -83,6 +87,8 @@ public final class MarketDialogController {
                 buyPanel.updateMoney(player.getMoney());
                 buyPanel.updateView();
                 buyPannelBehavior();
+                mouseController.setMachinePlacement(HarvesterEnum.values()[index].getHarvester());
+                marketDialog.close();
             });
         }
 
@@ -93,6 +99,8 @@ public final class MarketDialogController {
                 buyPanel.updateMoney(player.getMoney());
                 buyPanel.updateView();
                 buyPannelBehavior();
+                mouseController.setMachinePlacement(FactoryEnum.values()[index].getFactory());
+                marketDialog.close();
             });
         }
 

@@ -3,18 +3,21 @@ package com.app.main.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.app.main.controllers.input.MouseController;
 import com.app.main.models.Player;
 import com.app.main.models.machine.Machine;
 import com.app.main.models.map.GameMap;
 import com.app.main.models.map.Tile;
 import com.app.main.models.map.Tile.TileType;
 import com.app.main.models.resources.Resource;
+import com.app.main.util.design_pattern.Observable;
+import com.app.main.util.design_pattern.Observer;
 
 /**
  * GameController is a class that manages the main game logic
  * @author Dai Elias
  */
-public final class GameController { //TODO OBSERVER
+public final class GameController implements Observer{ //TODO OBSERVER
     
     private PlayerController playerController;
     private GameMap gameMap;
@@ -97,6 +100,19 @@ public final class GameController { //TODO OBSERVER
 
         for (Resource resource : resourcesTMP) {
             resource.processRespawn();
+        }
+    }
+
+    @Override
+    public void update(Observable o, Object arg, String action) {
+        
+        if(o instanceof MouseController) {
+            Machine machine = (Machine) arg;
+            machines.add(machine);
+
+            int x = Integer.parseInt(action.split(" ")[1]);
+            int y = Integer.parseInt(action.split(" ")[0]);
+            gameMap.addMachine(x, y, machine);
         }
     }
 }
