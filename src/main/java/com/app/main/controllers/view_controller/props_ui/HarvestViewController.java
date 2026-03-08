@@ -7,6 +7,7 @@ import com.app.main.models.Player;
 import com.app.main.models.machine.Harvester;
 import com.app.main.models.map.GameMap;
 import com.app.main.models.resources.ResourceEnum;
+import com.app.main.views.props_ui.HarvesterView;
 
 import javafx.scene.Node;
 import javafx.scene.control.Button;

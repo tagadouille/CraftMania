@@ -1,9 +1,8 @@
-package com.app.main.controllers.view_controller.props_ui;
+package com.app.main.views.props_ui;
 
 import java.util.List;
 
 import com.app.main.models.resources.ResourceEnum;
-import com.app.main.views.props_ui.PropUI;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,14 +18,17 @@ import javafx.scene.text.Text;
  * 
  * @author Dai Elias
  */
-public class HarvesterView extends PropUI {
+public final class HarvesterView extends PropUI {
 
     private Scene mainScene;
     private VBox content;
 
-    private Button harvestButton = new Button("Get Ressource");
+    private Button harvestButton = new Button("Get Resources");
     private Text harvestText = new Text();
     
+    /**
+     * Constructor for the HarvesterView class. Initializes the UI components and layout for the harvester view.
+     */
     public HarvesterView() {
         super("Harvester", 200, 200);
 
@@ -45,6 +47,8 @@ public class HarvesterView extends PropUI {
 
         this.setScene(mainScene);
     }
+
+    /* Getters */
 
     public Button getHarvestButton() {
         return harvestButton;

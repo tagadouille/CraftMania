@@ -33,7 +33,7 @@ public sealed abstract class Factory extends Machine permits com.app.main.models
      * @param recipeEnum the recipe
      */
     public void setRecipe(RecipeEnum recipeEnum) {
-        if(recipe == null) {
+        if(recipeEnum == null) {
             throw new IllegalArgumentException("Recipe cannot be null.");
         }
         this.recipe = recipeEnum.getRecipe();

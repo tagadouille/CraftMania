@@ -6,10 +6,11 @@ import java.util.Optional;
 
 import com.app.main.PathFinder;
 import com.app.main.controllers.PlayerController;
+import com.app.main.controllers.view_controller.props_ui.FactoryViewController;
 import com.app.main.controllers.view_controller.props_ui.HarvestViewController;
-import com.app.main.controllers.view_controller.props_ui.HarvesterView;
 import com.app.main.controllers.view_controller.props_ui.MarketDialogController;
 import com.app.main.models.Player;
+import com.app.main.models.machine.Factory;
 import com.app.main.models.machine.Harvester;
 import com.app.main.models.machine.Machine;
 import com.app.main.models.map.GameMap;
@@ -18,6 +19,8 @@ import com.app.main.models.map.Tile.TileType;
 import com.app.main.util.design_pattern.Observable;
 import com.app.main.util.design_pattern.Observer;
 import com.app.main.views.GameView;
+import com.app.main.views.props_ui.FactoryView;
+import com.app.main.views.props_ui.HarvesterView;
 import com.app.main.views.props_ui.MarketDialog;
 
 import javafx.scene.control.Alert;
@@ -138,13 +141,15 @@ public class MouseController implements Observable{
                 case TileType.HARVESTER : 
                     HarvesterView harvesterView = new HarvesterView();
                     HarvestViewController.create(
-                        harvesterView, player, map, (int) mousePos.getY(), (int) mousePos.getX()
+                        harvesterView, player, map, (int) mousePos.getX(), (int) mousePos.getY()
                     );
                     harvesterView.show();
                     return;
                     
                 case TileType.FACTORY :
-                    System.out.println("Ouverture de l'usine");
+                    FactoryView factoryView = new FactoryView();
+                    FactoryViewController.create((Factory) clickedTile.getMachine().get(), factoryView, player);
+                    factoryView.show();
                     return;
                 
                 default:
