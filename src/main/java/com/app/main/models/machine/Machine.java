@@ -89,15 +89,19 @@ public sealed abstract class Machine extends Item permits com.app.main.models.ma
     /**
      * Handles the production process of the machine.
      * Checks if the machine can produce the resource based on capacity and production time.
+     * 
+     * @return true if the machine produced, false otherwise
      */
-    protected final void product() {
+    protected final boolean product() {
 
         if(product != null && inventory.countResource(product) <= capacity && 
             production_start + production_duration <= System.currentTimeMillis()) {
             
             inventory.addResource(product);
             production_start = System.currentTimeMillis();
+            return true;
         }
+        return false;
     }
 
     /**

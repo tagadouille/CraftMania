@@ -94,9 +94,11 @@ public sealed abstract class Factory extends Machine permits com.app.main.models
         if(recipe == null) return;
 
         if(inventory.countResource(recipe.getIngredient1()) > 0 && inventory.countResource(recipe.getIngredient2()) > 0) {
-            inventory.removeResource(recipe.getIngredient1());
-            inventory.removeResource(recipe.getIngredient2());
-            super.product();
+            
+            if(super.product()) {
+                inventory.removeResource(recipe.getIngredient1());
+                inventory.removeResource(recipe.getIngredient2());
+            }
         }
     }
 

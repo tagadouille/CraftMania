@@ -113,5 +113,7 @@ public final class FactoryViewController {
 
     private void update() {
         factoryView.updateResText(factory.getInventory().countResource(factory.getProduct()));
+        factoryView.updateIg1Text(factory.getInventory().countResource(factory.getRecipe().getIngredient1()));
+        factoryView.updateIg2Text(factory.getInventory().countResource(factory.getRecipe().getIngredient2()));
     }
 }

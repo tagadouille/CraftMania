@@ -28,10 +28,13 @@ public final class FactoryView extends PropUI {
     private Spinner<Integer> nbIg1 = new Spinner<>(1, 500, 1);
     private Spinner<Integer> nbIg2 = new Spinner<>(1, 500, 1);
 
+    private Text fillIg1Text = new Text("Number of ingredient 1 :");
+    private Text fillIg2Text = new Text("Number of ingredient 2 :");
+
     private Button fillIg1 = new Button("");
     private Button fillIg2 = new Button("");
 
-    private VBox root;
+    private VBox box = new VBox(5);
 
     private CraftPane craftPane =  new CraftPane();
     
@@ -41,8 +44,8 @@ public final class FactoryView extends PropUI {
     public FactoryView() {
         super("Factory", 200, 200);
 
-        root = new VBox();
-        this.mainScene = new Scene(root);
+        ScrollPane mainPane = new ScrollPane();
+        this.mainScene = new Scene(mainPane);
 
         ScrollPane scrollPane = new ScrollPane();
 
@@ -53,14 +56,21 @@ public final class FactoryView extends PropUI {
         HBox ig1Box = new HBox(5);
         ig1Box.getChildren().addAll(fillIg1, nbIg1);
 
+        nbIg1.setMaxWidth(200);
+        nbIg2.setMaxWidth(200);
+
         HBox ig2Box = new HBox(5);
         ig2Box.getChildren().addAll(fillIg2, nbIg2);
 
-        root.getChildren().add(scrollPane);
-        root.getChildren().add(resText);
-        root.getChildren().add(ig1Box);
-        root.getChildren().add(ig2Box);
-        root.getChildren().add(getButton);
+        box.getChildren().add(scrollPane);
+        box.getChildren().add(resText);
+        box.getChildren().add(fillIg1Text);
+        box.getChildren().add(ig1Box);
+        box.getChildren().add(fillIg2Text);
+        box.getChildren().add(ig2Box);
+        box.getChildren().add(getButton);
+
+        mainPane.setContent(box);
 
         this.setScene(mainScene);
     }
@@ -124,10 +134,34 @@ public final class FactoryView extends PropUI {
     }
 
     /**
+     * Updates the text displaying the number of ingredient 1 to be added to the factory.
+     * @param nb the number of ingredient 1 to be added to the factory
+     */
+    public void updateIg1Text(int nb) {
+
+        if(nb < 0) {
+            throw new IllegalArgumentException("Number of resources cannot be negative");
+        }
+        this.fillIg1Text.setText("Number of ingredient 1 : " + nb);
+    }
+
+    /**
+     * Updates the text displaying the number of ingredient 2 to be added to the factory.
+     * @param nb the number of ingredient 2 to be added to the factory
+     */
+    public void updateIg2Text(int nb) {
+
+        if(nb < 0) {
+            throw new IllegalArgumentException("Number of resources cannot be negative");
+        }
+        this.fillIg2Text.setText("Number of ingredient 2 : " + nb);
+    }
+
+    /**
      * Display the recipe choosing menu
      */
     public void displayCraft() {
-        root.getChildren().addFirst(this.craftPane);
+        box.getChildren().addFirst(this.craftPane);
     }
 
     /**
@@ -135,6 +169,6 @@ public final class FactoryView extends PropUI {
      * Use it after calling displayCraft()
      */
     public void hideCraft() {
-        root.getChildren().remove(0);
+        box.getChildren().remove(0);
     }
 }
