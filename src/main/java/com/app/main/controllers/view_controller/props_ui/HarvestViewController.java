@@ -6,7 +6,6 @@ import java.util.List;
 import com.app.main.models.Player;
 import com.app.main.models.machine.Harvester;
 import com.app.main.models.map.GameMap;
-import com.app.main.models.map.Tile.TileType;
 import com.app.main.models.resources.ResourceEnum;
 
 import javafx.scene.Node;
@@ -84,7 +83,7 @@ public class HarvestViewController {
             if(map.inBound(newX, newY)) {
 
                 // Add the resource to the list of nearby resources if the tile is a resource tile
-                if(map.getMap()[newY][newX].getType() == TileType.RESOURCE) {
+                if(map.getMap()[newY][newX].getResource().isPresent()) {
                     nearbyResource.add(
                         ResourceEnum.getResourceEnum(
                             (map.getMap()[newY][newX].getResource()).get().getName()
