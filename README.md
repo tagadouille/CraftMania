@@ -106,7 +106,7 @@ Chaque machine existe en plusieurs variantes :
 * **Simple** : version de base
 * **Fast** : production plus rapide
 * **XL** : capacité de stockage plus grande
-* **Weak** : fragile mais peu coûteuse
+* **Weak** : fragile mais peu coûteuse, il y a une chance sur huit qu'elle se casse et il faut aller la réparer dans son interface
 * **Poly** : configurable plusieurs fois
 
 ---
