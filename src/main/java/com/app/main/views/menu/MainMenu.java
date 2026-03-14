@@ -87,7 +87,7 @@ public final class MainMenu extends Scene {
         }
         else {
             Alert alert = new Alert(AlertType.ERROR, "An error occured while loading the save", ButtonType.OK);
-            alert.setHeaderText("Loading");
+            alert.setHeaderText("File corrupted or not found");
             alert.showAndWait();
         }
     }

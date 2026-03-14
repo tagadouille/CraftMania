@@ -31,6 +31,8 @@ import javafx.scene.text.Text;
  */
 public final class MarketDialog extends PropUI {
 
+    private static final int ITEM_IMAGE_SIZE = 50;
+
     private Scene mainScene;
 
     private Button buy = new Button("Buy");
@@ -76,6 +78,50 @@ public final class MarketDialog extends PropUI {
      */
     public void updateMoney(int money){
         this.money.setText("Money : " + money + "$");
+    }
+
+    private static Image findResourceImage(ResourceEnum resource) {
+        for(ItemImageEnum type : ItemImageEnum.values()){
+            if(resource.getResource().getName().equals(type.toString())){
+                return type.getImage();
+            }
+        }
+        return null;
+    }
+
+    private static void addItemImage(HBox line, Image image) {
+        if (image == null) {
+            return;
+        }
+
+        try {
+            ImageView imageView = new ImageView(ImageUtil.resizeImage(image, ITEM_IMAGE_SIZE, ITEM_IMAGE_SIZE));
+            line.getChildren().add(imageView);
+        }
+        catch(IOException e){
+
+        }
+    }
+
+    private static VBox createInfoBox(String itemName, String priceText, String detailText) {
+        VBox infoBox = new VBox(0);
+        HBox title = new HBox(1);
+
+        title.getChildren().add(new Text(itemName));
+        title.getChildren().add(new Text(priceText));
+        infoBox.getChildren().add(title);
+
+        if (detailText != null) {
+            infoBox.getChildren().add(new Text(detailText));
+        }
+
+        return infoBox;
+    }
+
+    private static Button createActionButton(HBox line, String label) {
+        Button actionButton = new Button(label);
+        line.getChildren().add(actionButton);
+        return actionButton;
     }
 
     /**
@@ -187,47 +233,14 @@ public final class MarketDialog extends PropUI {
             for (ResourceEnum res : ResourceEnum.values()) {
                 HBox line = new HBox();
 
-                // Resource image display :
-                Image img = null;
+                addItemImage(line, findResourceImage(res));
+                line.getChildren().add(createInfoBox(
+                    res.toString().toLowerCase(),
+                    res.getResource().getPrice() + "$",
+                    market.getPlayer().getInventory().countResource(res) + " already in inventory"
+                ));
 
-                for(ItemImageEnum type : ItemImageEnum.values()){
-                    if(res.getResource().getName().equals(type.toString())){
-                        img = type.getImage();
-                        break;
-                    }
-                }
-
-                try {
-                    ImageView imageView = new ImageView(ImageUtil.resizeImage(img, 50, 50));
-
-                    line.getChildren().add(imageView);
-                }
-                catch(IOException e){
-
-                }
-
-                VBox infoBox = new VBox(0);
-                HBox title = new HBox(1);
-
-                // Informations display :
-                Text resName = new Text(res.toString().toLowerCase());
-                title.getChildren().add(resName);
-
-                Text price = new Text(res.getResource().getPrice() +"$");
-                title.getChildren().add(price);
-
-                infoBox.getChildren().add(title);
-
-                Text number = new Text(market.getPlayer().getInventory().countResource(res) + " already in inventory");
-                infoBox.getChildren().add(number);
-
-                line.getChildren().add(infoBox);
-
-                Button buyRes = new Button("Buy");
-
-                resBuyButtons[res.ordinal()] = buyRes;
-                
-                line.getChildren().add(buyRes);
+                resBuyButtons[res.ordinal()] = createActionButton(line, "Buy");
 
                 resourcePanel.getChildren().add(line);
             }
@@ -241,37 +254,14 @@ public final class MarketDialog extends PropUI {
             for (FactoryEnum fac : FactoryEnum.values()) {
                 HBox line = new HBox();
 
-                // Resource image display :
-                Image img = FactoryImageEnum.factoryToImage(fac);
+                addItemImage(line, FactoryImageEnum.factoryToImage(fac));
+                line.getChildren().add(createInfoBox(
+                    fac.toString().toLowerCase(),
+                    "Factory " + fac.getFactory().getPrice() + "$",
+                    null
+                ));
 
-                try {
-                    ImageView imageView = new ImageView(ImageUtil.resizeImage(img, 50, 50));
-
-                    line.getChildren().add(imageView);
-                }
-                catch(IOException e){
-
-                }
-
-                VBox infoBox = new VBox(0);
-                HBox title = new HBox(1);
-
-                // Informations display :
-                Text resName = new Text(fac.toString().toLowerCase());
-                title.getChildren().add(resName);
-
-                Text price = new Text("Factory " + fac.getFactory().getPrice() +"$");
-                title.getChildren().add(price);
-
-                infoBox.getChildren().add(title);
-
-                line.getChildren().add(infoBox);
-
-                Button buyRes = new Button("Buy");
-
-                factoryBuyButtons[fac.ordinal()] = buyRes;
-                
-                line.getChildren().add(buyRes);
+                factoryBuyButtons[fac.ordinal()] = createActionButton(line, "Buy");
 
                 factoryPanel.getChildren().add(line);
             }
@@ -285,37 +275,14 @@ public final class MarketDialog extends PropUI {
             for (HarvesterEnum fac : HarvesterEnum.values()) {
                 HBox line = new HBox();
 
-                // Resource image display :
-                Image img = HarvesterImageEnum.harvesterToImage(fac);
+                addItemImage(line, HarvesterImageEnum.harvesterToImage(fac));
+                line.getChildren().add(createInfoBox(
+                    fac.toString().toLowerCase(),
+                    "Harvester " + fac.getHarvester().getPrice() + "$",
+                    null
+                ));
 
-                try {
-                    ImageView imageView = new ImageView(ImageUtil.resizeImage(img, 50, 50));
-
-                    line.getChildren().add(imageView);
-                }
-                catch(IOException e){
-
-                }
-
-                VBox infoBox = new VBox(0);
-                HBox title = new HBox(1);
-
-                // Informations display :
-                Text resName = new Text(fac.toString().toLowerCase());
-                title.getChildren().add(resName);
-
-                Text price = new Text("Harvester " + fac.getHarvester().getPrice() +"$");
-                title.getChildren().add(price);
-
-                infoBox.getChildren().add(title);
-
-                line.getChildren().add(infoBox);
-
-                Button buyRes = new Button("Buy");
-
-                harvesterBuyButtons[fac.ordinal()] = buyRes;
-                
-                line.getChildren().add(buyRes);
+                harvesterBuyButtons[fac.ordinal()] = createActionButton(line, "Buy");
 
                 harvestPanel.getChildren().add(line);
             }
@@ -395,47 +362,14 @@ public final class MarketDialog extends PropUI {
             for (ResourceEnum res : ResourceEnum.values()) {
                 HBox line = new HBox();
 
-                // Resource image display :
-                Image img = null;
+                addItemImage(line, findResourceImage(res));
+                line.getChildren().add(createInfoBox(
+                    res.toString().toLowerCase(),
+                    res.getResource().getPrice() + "$",
+                    market.getPlayer().getInventory().countResource(res) + " already in inventory"
+                ));
 
-                for(ItemImageEnum type : ItemImageEnum.values()){
-                    if(res.getResource().getName().equals(type.toString())){
-                        img = type.getImage();
-                        break;
-                    }
-                }
-
-                try {
-                    ImageView imageView = new ImageView(ImageUtil.resizeImage(img, 50, 50));
-
-                    line.getChildren().add(imageView);
-                }
-                catch(IOException e){
-
-                }
-
-                VBox infoBox = new VBox(0);
-                HBox title = new HBox(1);
-
-                // Informations display :
-                Text resName = new Text(res.toString().toLowerCase());
-                title.getChildren().add(resName);
-
-                Text price = new Text(res.getResource().getPrice() +"$");
-                title.getChildren().add(price);
-
-                infoBox.getChildren().add(title);
-
-                Text number = new Text(market.getPlayer().getInventory().countResource(res) + " already in inventory");
-                infoBox.getChildren().add(number);
-
-                line.getChildren().add(infoBox);
-
-                Button sellRes = new Button("Sell");
-
-                sellButtons[res.ordinal()] = sellRes;
-                
-                line.getChildren().add(sellRes);
+                sellButtons[res.ordinal()] = createActionButton(line, "Sell");
 
                 resourcePanel.getChildren().add(line);
             }
