@@ -34,6 +34,8 @@ public final class FactoryView extends PropUI {
     private Button fillIg1 = new Button("");
     private Button fillIg2 = new Button("");
 
+    private Button repair = new Button("Repair");
+
     private VBox box = new VBox(5);
 
     private CraftPane craftPane =  new CraftPane();
@@ -105,6 +107,10 @@ public final class FactoryView extends PropUI {
         return nbIg2;
     }
 
+    public Button getRepairButton() {
+        return repair;
+    }
+
     /**
      * Changes the text of the fillIg1 button to the name of the given resource.
      * @param res the resource whose name will be displayed on the fillIg1 button
@@ -170,5 +176,19 @@ public final class FactoryView extends PropUI {
      */
     public void hideCraft() {
         box.getChildren().remove(0);
+    }
+
+    /**
+     * The method addRepairButton adds the repair button to the factory view.
+     */
+    public void addRepairButton() {
+        box.getChildren().add(repair);
+    }
+
+    /**
+     * The method removeRepairButton removes the repair button from the factory view.
+     */
+    public void removeRepairButton() {
+        box.getChildren().remove(repair);
     }
 }

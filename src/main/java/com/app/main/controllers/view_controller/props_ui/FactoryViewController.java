@@ -5,6 +5,7 @@ import java.util.List;
 import com.app.main.models.Player;
 import com.app.main.models.machine.Factory;
 import com.app.main.models.machine.Factory.PolyFactory;
+import com.app.main.models.machine.Factory.WeakFactory;
 import com.app.main.models.resources.RecipeEnum;
 import com.app.main.views.props_ui.FactoryView;
 
@@ -28,7 +29,9 @@ public final class FactoryViewController {
         this.factory = factory;
         this.factoryView = factoryView;
         this.player = player;
+
         buttonBehavior();
+        repairBehavior();
     }
 
     /**
@@ -128,5 +131,22 @@ public final class FactoryViewController {
         factoryView.updateResText(factory.getInventory().countResource(factory.getProduct().get()));
         factoryView.updateIg1Text(factory.getInventory().countResource(factory.getRecipe().getIngredient1()));
         factoryView.updateIg2Text(factory.getInventory().countResource(factory.getRecipe().getIngredient2()));
+    }
+
+    private void repairBehavior() {
+
+        if(!(factory instanceof WeakFactory)) return;
+
+        if(((WeakFactory) factory).isBroken()) {
+            factoryView.addRepairButton();
+        }
+
+        factoryView.getRepairButton().setOnAction(e -> {
+
+            if(((WeakFactory) factory).isBroken()) {
+                ((WeakFactory) factory).repair();
+                factoryView.removeRepairButton();
+            }
+        });
     }
 }

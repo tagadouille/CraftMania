@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.app.main.models.Player;
 import com.app.main.models.machine.Harvester.PolyHarvester;
+import com.app.main.models.machine.Harvester.WeakHarvester;
 import com.app.main.models.machine.Harvester;
 import com.app.main.models.map.GameMap;
 import com.app.main.models.resources.ResourceEnum;
@@ -41,6 +42,7 @@ public class HarvestViewController {
 
         harvestBehavior();
         updateHarvestNb();
+        repairBehavior();
     }
 
     /**
@@ -127,5 +129,26 @@ public class HarvestViewController {
                 });
             }
         }
+
+        if(harvester instanceof WeakHarvester) {
+            harvesterView.addRepairButton();
+        }
+    }
+
+    private void repairBehavior() {
+
+        if(!(harvester instanceof WeakHarvester)) return;
+
+        if(((WeakHarvester) harvester).isBroken()) {
+            harvesterView.addRepairButton();
+        }
+
+        harvesterView.getRepairButton().setOnAction(e -> {
+
+            if(((WeakHarvester) harvester).isBroken()) {
+                ((WeakHarvester) harvester).repair();
+                harvesterView.removeRepairButton();
+            }
+        });
     }
 }

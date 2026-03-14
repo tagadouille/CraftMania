@@ -153,7 +153,7 @@ public sealed abstract class Factory extends Machine permits com.app.main.models
          */
         public void process() {
 
-            if(new Random().nextInt(4) == 0) {
+            if(this.alreadySetted && new Random().nextInt(480) == 0) {
                 broken = true;
             }
             if(!broken) super.process();
@@ -164,6 +164,10 @@ public sealed abstract class Factory extends Machine permits com.app.main.models
          */
         public void repair() {
             broken = false;
+        }
+
+        public boolean isBroken() {
+            return broken;
         }
     }
 

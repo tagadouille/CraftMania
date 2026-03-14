@@ -17,7 +17,7 @@ import com.app.main.util.design_pattern.Observer;
  * GameController is a class that manages the main game logic
  * @author Dai Elias
  */
-public final class GameController implements Observer{ //TODO OBSERVER
+public final class GameController implements Observer{
     
     private PlayerController playerController;
     private GameMap gameMap;

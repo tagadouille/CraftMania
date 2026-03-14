@@ -27,7 +27,7 @@ import com.app.main.models.resources.ResourceEnum;
 public final class Saving {
 
     private static final String PATH = "files/saves/save.txt";
-    public static final int KEY = 0; // Encryption key for the Caesar cipher 11904
+    public static final int KEY = 11904; // Encryption key for the Caesar cipher
     private static boolean noPath;
     private static boolean success;
 

@@ -156,10 +156,14 @@ public sealed abstract class Harvester extends Machine permits com.app.main.mode
          */
         public void process() {
 
-            if(new Random().nextInt(4) == 0) {
+            if(this.alreadySetted && new Random().nextInt(480) == 0) {
                 broken = true;
             }
             if(!broken) product();
+        }
+
+        public boolean isBroken() {
+            return broken;
         }
 
         /**

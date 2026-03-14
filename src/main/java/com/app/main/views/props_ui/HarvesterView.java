@@ -25,6 +25,8 @@ public final class HarvesterView extends PropUI {
 
     private Button harvestButton = new Button("Get Resources");
     private Text harvestText = new Text();
+
+    private Button repair = new Button("Repair");
     
     /**
      * Constructor for the HarvesterView class. Initializes the UI components and layout for the harvester view.
@@ -58,6 +60,10 @@ public final class HarvesterView extends PropUI {
         return content;
     }
 
+    public Button getRepairButton() {
+        return repair;
+    }
+
     public void updateHarvestText(int nb) {
         this.harvestText.setText("The number of resources \n in the harvester is : " + nb);
     }
@@ -76,7 +82,20 @@ public final class HarvesterView extends PropUI {
             Button button = new Button(res.name());
             content.getChildren().add(button);
         }
+    }
 
+    /**
+     * The method addRepairButton adds the repair button to the harvester view.
+     */
+    public void addRepairButton() {
+        content.getChildren().add(repair);
+    }
+
+    /**
+     * The method removeRepairButton removes the repair button from the harvester view.
+     */
+    public void removeRepairButton() {
+        content.getChildren().remove(repair);
     }
     
 }

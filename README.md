@@ -142,8 +142,6 @@ Fonctionnement :
 
 Le projet utilise une architecture **MVC (Model-View-Controller)**. 
 
-_Il y a un UML pour plus d'informations._
-
 ## Design Patterns utilisés
 
 * **Static Factory**

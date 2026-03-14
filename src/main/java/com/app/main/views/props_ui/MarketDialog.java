@@ -3,7 +3,6 @@ package com.app.main.views.props_ui;
 import java.io.IOException;
 
 import com.app.main.models.Market;
-import com.app.main.models.machine.Factory;
 import com.app.main.models.machine.FactoryEnum;
 import com.app.main.models.machine.HarvesterEnum;
 import com.app.main.models.resources.ResourceEnum;
