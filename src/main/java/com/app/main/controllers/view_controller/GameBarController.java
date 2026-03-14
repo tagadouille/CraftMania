@@ -7,6 +7,7 @@ import com.app.main.models.Player;
 import com.app.main.models.map.GameMap;
 import com.app.main.models.save.Saving;
 import com.app.main.views.GameBar;
+import com.app.main.views.GameView;
 import com.app.main.views.menu.MainMenu;
 import com.app.main.views.props_ui.InventoryView;
 
@@ -60,7 +61,7 @@ public final class GameBarController {
 
         gameBar.getQuit().setOnAction((e) -> {
 
-            MainMenu mainMenu = MainMenu.create(480, 480);
+            MainMenu mainMenu = MainMenu.create((int) ((GameView.getMultiplicator() * 480) / 2));
             MainMenuController.create(mainMenu);
             MenuSwitcher.switchScene(mainMenu);
         });

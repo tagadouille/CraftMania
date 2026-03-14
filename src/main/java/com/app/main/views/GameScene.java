@@ -19,7 +19,7 @@ public final class GameScene extends Scene{
 
     private VBox parent;
 
-    private GameScene(Player player, GameMap gameMap) {
+    private GameScene(Player player, GameMap gameMap, int screenSize) {
         super(new VBox());
         this.parent = (VBox) this.getRoot();
 
@@ -29,9 +29,8 @@ public final class GameScene extends Scene{
 
         GameView gameView = GameView.createGameView(
             this, 
-            480,
-            480,
-             GameController.createGameController(playerController, gameMap), keyHandler
+            screenSize,
+            GameController.createGameController(playerController, gameMap), keyHandler
         );
 
         GameBar gameBar = new GameBar();
@@ -45,19 +44,21 @@ public final class GameScene extends Scene{
     /**
      * Factory method to create a default GameScene instance
      *  with a new player and a default game map.
+     * @param screenSize the size of the game scene
      * @return a new GameScene instance
      */
-    public static GameScene create() {
-        return new GameScene(Player.createPlayer(7, 7), GameMap.createDefaultMap(true));
+    public static GameScene create(int screenSize) {
+        return new GameScene(Player.createPlayer(7, 7), GameMap.createDefaultMap(true), screenSize);
     }
 
     /**
      * Factory method to create a GameScene instance with the specified player and game map.
      * @param player the player to be used in the game scene
      * @param gameMap the game map to be used in the game scene
+     * @param screensize the size of the game scene
      * @return a new GameScene instance with the specified player and game map
      */
-    public static GameScene create(Player player, GameMap gameMap) {
+    public static GameScene create(Player player, GameMap gameMap, int screensize) {
 
         if(player == null) {
             throw new IllegalArgumentException("The player can't be null");
@@ -66,6 +67,6 @@ public final class GameScene extends Scene{
         if(gameMap == null) {
             throw new IllegalArgumentException("The game map can't be null");
         }
-        return new GameScene(player, gameMap);
+        return new GameScene(player, gameMap, screensize);
     }
 }

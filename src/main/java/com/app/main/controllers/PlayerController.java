@@ -147,6 +147,11 @@ public final class PlayerController implements Observable{
             globalMove(map);
         }
     }
+
+    public void setGo(boolean go) {
+        this.go = go;
+    }
+    
     /**
      * handle the movement of the player in fonction of wich key is pressed
      * @param map
@@ -154,6 +159,7 @@ public final class PlayerController implements Observable{
     private void globalMove(GameMap map){
         if(go){
             this.movementToPos();
+            return;
         }
         else{
             if(keyHandler.keylist.contains(KeyCode.Z)){
@@ -196,8 +202,6 @@ public final class PlayerController implements Observable{
             go = false;
             return;
         }
-
-        go = true;
 
         int[] target = PathFinder.getPath().get(pathIndex);
         int targetX = target[1];

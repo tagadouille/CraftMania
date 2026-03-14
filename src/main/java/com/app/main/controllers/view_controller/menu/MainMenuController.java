@@ -5,6 +5,7 @@ import com.app.main.models.map.GameMap;
 import com.app.main.models.save.LoadSave;
 import com.app.main.views.GameScene;
 import com.app.main.views.menu.MainMenu;
+import com.app.main.views.menu.Settings;
 
 /**
  * The MainMenuController class handles the interactions and behaviors of the MainMenu view.
@@ -39,11 +40,13 @@ public final class MainMenuController {
         mainMenu.getQuit().setOnAction((e) -> System.exit(0));
 
         mainMenu.getSettings().setOnAction((e) -> {
-
+            Settings settings = Settings.create((int) mainMenu.getWidth());
+            MenuSwitcher.switchScene(settings);
+            SettingsController.create(settings);
         });
 
         mainMenu.getNewGame().setOnAction((e) -> {
-            MenuSwitcher.switchScene(GameScene.create());
+            MenuSwitcher.switchScene(GameScene.create((int) mainMenu.getWidth()));
         });
 
         mainMenu.getLoad().setOnAction((e) -> {
@@ -55,7 +58,7 @@ public final class MainMenuController {
             mainMenu.loadNotif(success);
 
             if(success) {
-                MenuSwitcher.switchScene(GameScene.create(player, gameMap));
+                MenuSwitcher.switchScene(GameScene.create(player, gameMap, (int) mainMenu.getWidth()));
             }
         });
     }

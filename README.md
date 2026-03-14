@@ -35,6 +35,7 @@ Depuis le menu principal, il est possible de :
 
 * **Lancer une nouvelle partie**
 * **Charger une sauvegarde existante**
+* **Modifier les paramètres du jeu**
 
 ⚠️ Lancer une nouvelle partie **n'écrase pas les sauvegardes existantes** tant que vous n’effectuez pas une sauvegarde par la suite.
 

@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 import com.app.main.controllers.view_controller.menu.MainMenuController;
+import com.app.main.controllers.view_controller.menu.SettingsController;
 import com.app.main.views.menu.MainMenu;
 
 /**
@@ -20,15 +21,16 @@ public final class Game extends Application {
     private static Stage primaryStage;
     private static String css;
 
+    private static int resolution = SettingsController.getSettings();
+
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage stage) throws IOException {
-        //FXMLLoader fxmlLoader = new FXMLLoader(Game.class.getResource("MainMenu.fxml"));
-        //scene = new Scene(fxmlLoader.load());
-        scene = MainMenu.create(400, 400);
+
+        scene = MainMenu.create(resolution);
         MainMenuController.create((MainMenu) scene);
 
         css = getClass().getResource("style.css").toExternalForm();

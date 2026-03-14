@@ -93,6 +93,9 @@ public final class MouseController implements Observable{
 
         Point mousePos = new Point((int) (mouseX/GameView.getSpriteSize()), (int) (mouseY/GameView.getSpriteSize()));
 
+        if(!map.inBound((int) mousePos.x, mousePos.y)) {
+            return;
+        }
         Tile clickedTile = map.getMap()[(int) mousePos.getY()][(int) mousePos.getX()];
 
         // If the player has selected a machine to place, attempt to place it on the clicked tile
@@ -163,6 +166,7 @@ public final class MouseController implements Observable{
                 map, new int[]{(int) player.getY(), (int) player.getX()},
                 new int[]{(int) mousePos.getY(), (int) mousePos.getX()}
             );
+            playerController.setGo(true);
             playerController.movementToPos();
         }
     }

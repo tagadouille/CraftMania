@@ -22,12 +22,12 @@ public final class MainMenu extends Scene {
     private Button settings = new Button("Settings");
     private Button load = new Button("Load save");
 
-    private MainMenu(int width, int height) {
+    private MainMenu(int size) {
         super(new HBox(0));
         HBox root = (HBox) this.getRoot();
 
-        root.setPrefHeight(height);
-        root.setPrefWidth(width);
+        root.setPrefHeight(size);
+        root.setPrefWidth(size);
         root.setAlignment(Pos.CENTER);
 
         root.getStyleClass().add("menu");
@@ -42,20 +42,15 @@ public final class MainMenu extends Scene {
 
     /**
      * Creates a MainMenu instance with the specified width and height.
-     * @param width the width of the main menu
-     * @param height the height of the main menu
+     * @param size the width and the height of the main menu
      * @return a new MainMenu instance
      */
-    public static MainMenu create(int width, int height) {
+    public static MainMenu create(int size) {
 
-        if(width <= 0) {
+        if(size <= 0) {
             throw new IllegalArgumentException("The width can't be null");
         }
-
-        if(height <= 0) {
-            throw new IllegalArgumentException("The height can't be null");
-        }
-        return new MainMenu(width, height);
+        return new MainMenu(size);
     }
 
     public Button getNewGame() {

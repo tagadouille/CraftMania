@@ -44,11 +44,14 @@ public final class GameView extends StackPane implements Observer{
     private boolean harvestBarDisplayed = false;
 
 
-    private GameView(Scene scene, double width, double height, GameController gameController, KeyHandler keyHandler) {
+    private GameView(Scene scene, int size, GameController gameController, KeyHandler keyHandler) {
         super();
         
-        this.width = width;
-        this.height = height;
+        this.width = size;
+        this.height = size;
+
+        multiplicator = (size * 2) / 480.0;
+
         this.canvas = new Canvas(width, height);
         this.getChildren().add(canvas);
 
@@ -78,22 +81,18 @@ public final class GameView extends StackPane implements Observer{
     /**
      * The factory method for creating a GameView instance.
      * @param scene the scene where the gameview is display
-     * @param width the width of the gameview
-     * @param height the height of the gameview
+     * @param size the width and the height of the gameview
      * @param gameController the game controller associated with the gameview
      * @param keyHandler the key handler for managing keyboard input
      * @return a new GameView instance
      */
-    public static GameView createGameView(Scene scene, double width, double height, GameController gameController, KeyHandler keyHandler){
+    public static GameView createGameView(Scene scene, int size, GameController gameController, KeyHandler keyHandler){
 
         if(scene == null) {
             throw new IllegalArgumentException("The scene can't be null");
         }
-        if(width <= 0) {
-            throw new IllegalArgumentException("The width must be positive");
-        }
-        if(height <= 0) {
-            throw new IllegalArgumentException("The height must be positive");
+        if(size <= 0) {
+            throw new IllegalArgumentException("The size must be positive");
         }
         if(gameController == null) {
             throw new IllegalArgumentException("The gameController can't be null");
@@ -101,7 +100,7 @@ public final class GameView extends StackPane implements Observer{
         if(keyHandler == null) {
             throw new IllegalArgumentException("The keyhandler can't be null");
         }
-        return new GameView(scene, width, height, gameController, keyHandler);
+        return new GameView(scene, size, gameController, keyHandler);
     }
 
     /* Getters : */
