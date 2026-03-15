@@ -7,7 +7,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 /**
  * The MainMenu class represents the main menu scene of the application.
@@ -34,9 +36,19 @@ public final class MainMenu extends Scene {
 
         VBox menuBox = new VBox(10);
 
-        menuBox.setAlignment(Pos.CENTER);
+        Pane filler = new Pane();
+        filler.setPrefHeight(size / 5);
 
-        menuBox.getChildren().addAll(newGame, load, settings, quit);
+        menuBox.setAlignment(Pos.TOP_CENTER);
+
+        Font font = Font.font(size / 40);
+
+        newGame.setFont(font);
+        load.setFont(font);
+        settings.setFont(font);
+        quit.setFont(font);
+
+        menuBox.getChildren().addAll(filler, newGame, load, settings, quit);
         root.getChildren().add(menuBox);
     }
 
@@ -48,7 +60,7 @@ public final class MainMenu extends Scene {
     public static MainMenu create(int size) {
 
         if(size <= 0) {
-            throw new IllegalArgumentException("The width can't be null");
+            throw new IllegalArgumentException("The size can't be null");
         }
         return new MainMenu(size);
     }
